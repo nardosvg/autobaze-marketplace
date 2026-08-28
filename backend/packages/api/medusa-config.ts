@@ -19,6 +19,15 @@ const dashboardAppDir = (name: string) => {
 module.exports = withMercur({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
+    // SSL desligado explicitamente: em producao o Medusa assume SSL no
+    // Postgres, e o nosso vive numa rede Docker privada, sem certificado.
+    // Sem isto a migration fica 60s tentando adquirir conexao e morre com
+    // "Knex: Timeout acquiring a connection. The pool is probably full",
+    // enquanto o banco esta ocioso e aceitando TCP normalmente.
+    databaseDriverOptions:
+      process.env.DATABASE_SSL === 'true'
+        ? { connection: { ssl: { rejectUnauthorized: false } } }
+        : { connection: { ssl: false } },
     http: {
       storeCors: process.env.STORE_CORS!,
       adminCors: process.env.ADMIN_CORS!,
