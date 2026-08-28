@@ -94,7 +94,7 @@ services:
       AUTOBAZE_WEBHOOK_URL: http://operify-app:3000/api/webhooks/marketplace/pedido
       # Medusa e' pesado no boot; teto de heap ABAIXO do mem_limit pro GC ter
       # chance antes do OOMKill do kernel.
-      NODE_OPTIONS: --max-old-space-size=1536
+      NODE_OPTIONS: --max-old-space-size=3072
       # O default de 10s nao cobre o bootstrap do grafo de modulos aqui: a
       # migration morria com "Could not connect to the database", mensagem
       # que aponta pra URL/SSL quando na verdade o banco respondia na hora
@@ -106,9 +106,13 @@ services:
       - '127.0.0.1:9000:9000'
     networks:
       - supabase_default
-    mem_limit: 2g
-    memswap_limit: 2g
-    cpus: 2.0
+    # 4g/4cpu porque o bootstrap do Medusa (grafo de modulos + migrations)
+    # trava o event loop quando falta CPU ou o heap aperta, e o sintoma nao
+    # aponta pra ca: knex estoura com "pool is probably full" enquanto o
+    # Postgres esta com 7 de 100 conexoes.
+    mem_limit: 4g
+    memswap_limit: 4g
+    cpus: 4.0
     healthcheck:
       test: ['CMD-SHELL', 'wget -qO- http://127.0.0.1:9000/health || exit 1']
       interval: 300s
