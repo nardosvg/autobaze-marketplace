@@ -95,6 +95,11 @@ services:
       # Medusa e' pesado no boot; teto de heap ABAIXO do mem_limit pro GC ter
       # chance antes do OOMKill do kernel.
       NODE_OPTIONS: --max-old-space-size=1536
+      # O default de 10s nao cobre o bootstrap do grafo de modulos aqui: a
+      # migration morria com "Could not connect to the database", mensagem
+      # que aponta pra URL/SSL quando na verdade o banco respondia na hora
+      # (`pg` conectava instantaneamente do mesmo container).
+      MEDUSA_DB_MIGRATION_CONNECTION_TIMEOUT: '120000'
     ports:
       # Bind explicito em 127.0.0.1: sem o prefixo o Docker publica em 0.0.0.0
       # escrevendo direto no iptables, ANTES do ufw.
