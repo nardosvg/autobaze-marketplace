@@ -1,0 +1,20 @@
+# Mercur API (backend do AutoBaze Marketplace)
+# Build do monorepo template (packages/api + dashboards admin/vendor bundlados)
+FROM node:24-alpine AS build
+WORKDIR /app
+COPY backend/package.json backend/package-lock.json* ./
+COPY backend/packages ./packages
+COPY backend/apps ./apps
+COPY backend/turbo.json backend/tsconfig*.json ./
+RUN npm install --legacy-peer-deps && npm install ajv@^8.17.1 --legacy-peer-deps
+WORKDIR /app/packages/api
+RUN npm run build
+
+FROM node:24-alpine
+WORKDIR /app
+ENV NODE_ENV=production
+COPY --from=build /app /app
+WORKDIR /app/packages/api
+EXPOSE 9000
+# db:migrate roda no entrypoint pra migrations novas aplicarem no deploy
+CMD ["sh", "-c", "npx medusa db:migrate && npm run start"]

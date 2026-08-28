@@ -1,0 +1,42 @@
+# Storefront B2C do AutoBaze Marketplace (Next.js).
+#
+# As NEXT_PUBLIC_* entram como ARG porque o Next INLINA essas variaveis no
+# bundle do cliente durante o build. Passar so em runtime nao funciona: a
+# publishable key sumiria do browser e toda chamada /store/* voltaria 401.
+FROM node:24-bookworm-slim AS build
+WORKDIR /app
+
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ca-certificates \
+ && rm -rf /var/lib/apt/lists/*
+
+ARG NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+ARG NEXT_PUBLIC_BASE_URL
+ARG NEXT_PUBLIC_DEFAULT_REGION=br
+ARG NEXT_PUBLIC_SITE_NAME="AutoBaze Marketplace"
+ENV NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=$NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY \
+    NEXT_PUBLIC_BASE_URL=$NEXT_PUBLIC_BASE_URL \
+    NEXT_PUBLIC_DEFAULT_REGION=$NEXT_PUBLIC_DEFAULT_REGION \
+    NEXT_PUBLIC_SITE_NAME=$NEXT_PUBLIC_SITE_NAME \
+    NEXT_TELEMETRY_DISABLED=1
+
+COPY package.json yarn.lock* .yarnrc.yml* ./
+RUN corepack enable && corepack yarn install
+COPY . .
+# O build precisa alcancar a API pro middleware montar o mapa de regioes.
+ARG MEDUSA_BACKEND_URL=http://mercur-api:9000
+ENV MEDUSA_BACKEND_URL=$MEDUSA_BACKEND_URL
+RUN corepack yarn build
+
+FROM node:24-bookworm-slim AS runner
+WORKDIR /app
+RUN apt-get update \
+ && apt-get install -y --no-install-recommends ca-certificates curl \
+ && rm -rf /var/lib/apt/lists/*
+ENV NODE_ENV=production \
+    NEXT_TELEMETRY_DISABLED=1 \
+    PORT=3000 \
+    HOSTNAME=0.0.0.0
+COPY --from=build /app /app
+EXPOSE 3000
+CMD ["npx", "next", "start", "-p", "3000"]

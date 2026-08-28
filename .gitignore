@@ -1,0 +1,34 @@
+# Dependencias e build
+node_modules/
+.next/
+.medusa/
+dist/
+build/
+.turbo/
+*.tsbuildinfo
+
+# Segredos e ambiente
+.env
+.env.*
+!.env.example
+!deploy/.env.prod.example
+
+# Logs
+*.log
+backend-dev.log
+storefront-dev.log
+app-test-dev.log
+
+# Clone do upstream Mercur — referencia de leitura da API do core, nao faz
+# parte do nosso codigo. Clonar a parte quando precisar:
+#   git clone --depth 1 https://github.com/mercurjs/mercur.git
+mercur/
+
+# Dados reais de cliente (catalogo A. SILVA usado no seed do POC local).
+# Nao sobe nem em repo privado.
+seed/
+backend/packages/api/src/scripts/data/
+
+# Sistema
+.DS_Store
+Thumbs.db
