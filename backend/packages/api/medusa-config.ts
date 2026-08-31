@@ -16,6 +16,32 @@ const dashboardAppDir = (name: string) => {
   return fs.existsSync(bundled) ? bundled : path.join(__dirname, `../../apps/${name}`)
 }
 
+// E-mails transacionais (conta, senha) via Brevo, mesma conta do app.
+// Registrado so' quando ha BREVO_API_KEY: sem chave o provider recusaria as
+// options no boot e derrubaria a API inteira por causa de e-mail. Sem o
+// modulo, os subscribers falham no resolve e so' logam.
+const emailModule = process.env.BREVO_API_KEY
+  ? [
+      {
+        resolve: '@medusajs/medusa/notification',
+        options: {
+          providers: [
+            {
+              resolve: './src/modules/brevo',
+              id: 'brevo',
+              options: {
+                channels: ['email'],
+                api_key: process.env.BREVO_API_KEY,
+                from_email: process.env.EMAIL_FROM || 'noreply@operify.com.br',
+                from_name: process.env.EMAIL_FROM_NAME || 'AutoBaze Marketplace',
+              },
+            },
+          ],
+        },
+      },
+    ]
+  : []
+
 module.exports = withMercur({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -55,6 +81,7 @@ module.exports = withMercur({
         path: '/seller',
       }
     },
+    ...emailModule,
     {
       resolve: '@medusajs/medusa/file',
       options: {

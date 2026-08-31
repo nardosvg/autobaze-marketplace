@@ -1,3 +1,4 @@
+import { AvisoContaComprador } from "@/components/molecules/AvisoContaComprador/AvisoContaComprador"
 import { LoginForm } from "@/components/molecules"
 import { retrieveCustomer } from "@/lib/data/customer"
 import { redirect } from "next/navigation"
@@ -9,6 +10,11 @@ export default async function LoginPage() {
     redirect("/user")
   }
 
-  return <LoginForm />
+  return (
+    <>
+      <AvisoContaComprador contexto="login" />
+      <LoginForm />
+    </>
+  )
 }
 
