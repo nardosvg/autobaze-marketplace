@@ -43,7 +43,7 @@ export const Header = async ({ locale }: { locale: string }) => {
   const navCategorias = parentCategories.length ? parentCategories : categories
 
   return (
-    <header className="bg-[#0F52FF] text-white" data-testid="header">
+    <header className="relative z-50 bg-[#0F52FF] text-white" data-testid="header">
       {/* Faixa 1: logo, busca, acoes */}
       <div className="container mx-auto flex items-center gap-4 px-4 pt-3 pb-2 lg:px-8">
         <div className="flex items-center gap-2 [&_svg]:text-white">
@@ -100,7 +100,7 @@ export const Header = async ({ locale }: { locale: string }) => {
 
       {/* Faixa 2: categorias + navegacao */}
       <nav
-        className="container mx-auto hidden items-center gap-6 overflow-x-auto px-4 pb-2.5 text-sm lg:flex lg:px-8"
+        className="container mx-auto hidden items-center gap-6 px-4 pb-2.5 text-sm lg:flex lg:px-8"
         aria-label="Navegação principal"
       >
         <div className="group relative">
@@ -114,7 +114,7 @@ export const Header = async ({ locale }: { locale: string }) => {
             </svg>
           </LocalizedClientLink>
           {navCategorias.length > 0 && (
-            <div className="invisible absolute left-0 top-full z-50 min-w-[260px] rounded-md bg-white p-2 text-neutral-800 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100">
+            <div className="invisible absolute left-0 top-full z-[60] mt-2 min-w-[260px] rounded-md bg-white p-2 text-neutral-800 opacity-0 shadow-xl transition-all group-hover:visible group-hover:opacity-100">
               {navCategorias.map((c) => (
                 <LocalizedClientLink
                   key={c.id}
