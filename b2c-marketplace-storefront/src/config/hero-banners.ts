@@ -2,8 +2,10 @@
 // Banners do hero da home (carrossel estilo Mercado Livre).
 //
 // Pra trocar a campanha: coloque a arte em public/banners/ e ajuste aqui.
-// Tamanho recomendado: 1180x400 (desktop). O componente faz object-cover,
-// entao arte fora dessa proporcao e' cortada nas bordas, nunca distorcida.
+// O banner e' full-bleed (ocupa a largura toda da tela, 440px de altura no
+// desktop). Tamanho recomendado da arte: 1920x440. O componente faz
+// object-cover: arte fora dessa proporcao e' cortada nas bordas, nunca
+// distorcida — mantenha texto e CTA no centro da imagem.
 // Os dois arquivos atuais sao provisorios ate as artes oficiais chegarem.
 // ---------------------------------------------------------------------------
 
