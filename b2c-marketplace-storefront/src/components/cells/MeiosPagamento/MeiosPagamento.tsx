@@ -11,7 +11,7 @@ const Bandeira = ({ nome }: { nome: string }) => (
 )
 
 export const MeiosPagamento = () => (
-  <div className="rounded-md border bg-white p-4" data-testid="payment-methods-card">
+  <div id="pagamentos" className="rounded-md border bg-white p-4 scroll-mt-24" data-testid="payment-methods-card">
     <h3 className="text-base font-semibold text-neutral-900">Meios de pagamento</h3>
 
     <p className="mt-3 text-sm font-medium text-neutral-900">Cartões de crédito</p>

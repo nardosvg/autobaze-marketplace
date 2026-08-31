@@ -129,6 +129,7 @@ export const ProductDetailsPage = async ({
             product={prod}
             locale={locale}
             avaliacoes={{ media: extras.media, total: extras.total }}
+            sellerPrincipal={sellerPrincipal}
           />
         </div>
         {/* Coluna direita: compra sempre visivel + loja + pagamento */}

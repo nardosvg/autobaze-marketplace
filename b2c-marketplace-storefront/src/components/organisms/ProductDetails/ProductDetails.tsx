@@ -18,6 +18,7 @@ export const ProductDetails = async ({
   product,
   locale,
   avaliacoes,
+  sellerPrincipal,
 }: {
   product: HttpTypes.StoreProduct & {
     seller?: SellerProps
@@ -25,6 +26,7 @@ export const ProductDetails = async ({
   }
   locale: string
   avaliacoes?: { media: number; total: number }
+  sellerPrincipal?: SellerProps | null
 }) => {
   const user = await retrieveCustomer()
 
@@ -41,6 +43,7 @@ export const ProductDetails = async ({
         user={user}
         wishlist={wishlist}
         avaliacoes={avaliacoes}
+        sellerPrincipal={sellerPrincipal}
       />
       <ProductPageDetails details={product?.description || ""} />
       <ProductAdditionalAttributes
