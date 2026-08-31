@@ -69,3 +69,7 @@ export {
 // Pagina de produto estilo Mercado Livre
 export { AvaliacoesProduto, EstrelasNota } from './AvaliacoesProduto/AvaliacoesProduto';
 export { BreadcrumbCategorias } from './BreadcrumbCategorias/BreadcrumbCategorias';
+export { CapaVendedor } from './CapaVendedor/CapaVendedor';
+export { CardLoja } from './CardLoja/CardLoja';
+export { CompraBox } from './CompraBox/CompraBox';
+export { MeiosPagamento } from './MeiosPagamento/MeiosPagamento';
