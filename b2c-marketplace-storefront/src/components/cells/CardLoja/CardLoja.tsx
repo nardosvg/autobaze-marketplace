@@ -1,5 +1,6 @@
 import Image from "next/image"
 
+import { AvatarLoja } from "@/components/atoms/AvatarLoja/AvatarLoja"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import type { SellerProps } from "@/types/seller"
 
@@ -38,19 +39,12 @@ export const CardLoja = ({ seller }: { seller?: SellerProps | null }) => {
       )}
       <div className="p-4">
         <div className="flex items-center gap-3">
-          {logo ? (
-            <Image
-              src={decodeURIComponent(logo)}
-              alt=""
-              width={44}
-              height={44}
-              className={`h-11 w-11 rounded-full border-2 border-white object-cover ${banner ? "-mt-9 shadow" : ""}`}
-            />
-          ) : (
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#0F52FF] text-base font-bold text-white">
-              {seller.name?.charAt(0).toUpperCase()}
-            </span>
-          )}
+          <AvatarLoja
+            src={logo}
+            nome={seller.name}
+            tamanho={44}
+            className={banner ? "-mt-9 border-2 border-white shadow" : ""}
+          />
           <div className="min-w-0">
             <p className="truncate text-base font-semibold text-neutral-900">{seller.name}</p>
             <p className="text-sm text-secondary">Loja do marketplace AutoBaze</p>

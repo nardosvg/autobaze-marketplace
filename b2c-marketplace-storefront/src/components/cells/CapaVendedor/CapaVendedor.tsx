@@ -1,5 +1,6 @@
 import Image from "next/image"
 
+import { AvatarLoja } from "@/components/atoms/AvatarLoja/AvatarLoja"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 import type { SellerProps } from "@/types/seller"
 
@@ -41,19 +42,7 @@ export const CapaVendedor = ({ seller }: { seller?: SellerProps | null }) => {
       {/* Card sobreposto da loja */}
       <div className="absolute left-4 top-1/2 -translate-y-1/2 md:left-10 lg:left-16">
         <div className="flex items-center gap-3 rounded-md bg-white px-4 py-3 shadow-md">
-          {logo ? (
-            <Image
-              src={decodeURIComponent(logo)}
-              alt=""
-              width={40}
-              height={40}
-              className="h-10 w-10 rounded-full border object-cover"
-            />
-          ) : (
-            <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#0F52FF] text-sm font-bold text-white">
-              {seller.name?.charAt(0).toUpperCase()}
-            </span>
-          )}
+          <AvatarLoja src={logo} nome={seller.name} tamanho={40} />
           <div className="leading-tight">
             <p className="text-sm font-semibold text-neutral-900">{seller.name}</p>
             <LocalizedClientLink
