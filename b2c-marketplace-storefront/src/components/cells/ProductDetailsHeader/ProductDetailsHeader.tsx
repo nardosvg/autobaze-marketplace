@@ -72,7 +72,7 @@ export const ProductDetailsHeader = ({
   })
 
   return (
-    <div className="border rounded-sm p-5" data-testid="product-details-header">
+    <div data-testid="product-details-header">
       <div className="flex justify-between">
         <div>
           <h2 className="label-md text-secondary">
