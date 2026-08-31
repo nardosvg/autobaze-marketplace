@@ -156,10 +156,13 @@ export const CompraBox = ({
         countryCode: locale,
       })
       return true
-    } catch {
+    } catch (e) {
       toast.error({
         title: "Erro ao adicionar ao carrinho",
-        description: "A oferta selecionada não tem estoque suficiente",
+        description:
+          e instanceof Error && e.message
+            ? e.message
+            : "Não foi possível adicionar este produto",
       })
       return false
     }

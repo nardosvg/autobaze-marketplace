@@ -131,7 +131,22 @@ export async function addToCart({
 
   const currentItem = cart.items?.find(item => item.variant_id === variantId);
 
-  if (currentItem) {
+  if (offerId) {
+    // Core 2.3.x: line item nasce da OFERTA (buybox/oferta escolhida) e o
+    // re-POST da MESMA oferta faz merge nativo na linha existente. A rota de
+    // update de linha exige/rejeita offer_id ao mesmo tempo (bug do core),
+    // entao NUNCA usamos update aqui — sempre re-POST.
+    const res = await fetchQuery(`/store/carts/${cart.id}/line-items`, {
+      method: 'POST',
+      body: { offer_id: offerId, quantity },
+      headers
+    });
+    const cartCacheTag = await getCacheTag('carts');
+    revalidateTag(cartCacheTag);
+    if (!res.ok) {
+      throw new Error(res.error?.message || 'Não foi possível adicionar ao carrinho');
+    }
+  } else if (currentItem) {
     await sdk.store.cart
       .updateLineItem(
         cart.id,
@@ -140,23 +155,6 @@ export async function addToCart({
         {},
         headers
       )
-      .catch(medusaError)
-      .finally(async () => {
-        const cartCacheTag = await getCacheTag('carts');
-        revalidateTag(cartCacheTag);
-      });
-  } else if (offerId) {
-    // Core 2.3.x: line item e criado a partir da OFERTA (buybox/oferta
-    // escolhida), nao da variante.
-    await fetchQuery(`/store/carts/${cart.id}/line-items`, {
-      method: 'POST',
-      body: { offer_id: offerId, quantity },
-      headers
-    })
-      .then(async () => {
-        const cartCacheTag = await getCacheTag('carts');
-        revalidateTag(cartCacheTag);
-      })
       .catch(medusaError)
       .finally(async () => {
         const cartCacheTag = await getCacheTag('carts');
@@ -185,7 +183,18 @@ export async function addToCart({
   }
 }
 
-export async function updateLineItem({ lineId, quantity }: { lineId: string; quantity: number }) {
+export async function updateLineItem({
+  lineId,
+  quantity,
+  offerId,
+  currentQuantity
+}: {
+  lineId: string;
+  quantity: number;
+  /** Oferta do item (metadata.offer_id) — itens do marketplace exigem fluxo proprio. */
+  offerId?: string | null;
+  currentQuantity?: number;
+}) {
   if (!lineId) {
     throw new Error('Missing lineItem ID when updating line item');
   }
@@ -200,14 +209,49 @@ export async function updateLineItem({ lineId, quantity }: { lineId: string; qua
     ...(await getAuthHeaders())
   };
 
-  const res = await fetchQuery(`/store/carts/${cartId}/line-items/${lineId}`, {
-    body: { quantity },
-    method: 'POST',
-    headers
-  });
+  let res;
+  if (offerId) {
+    // A rota de update de linha do core 2.3.1 e' inutilizavel pra itens de
+    // oferta (exige e rejeita offer_id ao mesmo tempo). Aumentar = re-POST
+    // do delta (merge nativo); diminuir = DELETE da linha + re-POST da
+    // quantidade exata.
+    const atual = currentQuantity ?? 0;
+    if (quantity === atual) {
+      return { ok: true };
+    }
+    if (quantity > atual) {
+      res = await fetchQuery(`/store/carts/${cartId}/line-items`, {
+        method: 'POST',
+        body: { offer_id: offerId, quantity: quantity - atual },
+        headers
+      });
+    } else {
+      res = await fetchQuery(`/store/carts/${cartId}/line-items/${lineId}`, {
+        method: 'DELETE',
+        headers
+      });
+      if (res.ok && quantity > 0) {
+        res = await fetchQuery(`/store/carts/${cartId}/line-items`, {
+          method: 'POST',
+          body: { offer_id: offerId, quantity },
+          headers
+        });
+      }
+    }
+  } else {
+    res = await fetchQuery(`/store/carts/${cartId}/line-items/${lineId}`, {
+      body: { quantity },
+      method: 'POST',
+      headers
+    });
+  }
 
   const cartCacheTag = await getCacheTag('carts');
   await revalidateTag(cartCacheTag);
+
+  if (!res.ok) {
+    throw new Error(res.error?.message || 'Não foi possível atualizar a quantidade');
+  }
 
   return res;
 }

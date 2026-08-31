@@ -53,7 +53,7 @@ export const UpdateCartItemButton = ({
             ? error.message.replace('Error setting up the request: ', '')
             : 'Não foi possível atualizar a quantidade';
         toast.error({
-          title: 'Error updating cart',
+          title: 'Erro ao atualizar o carrinho',
           description: errorMessage
         });
       }

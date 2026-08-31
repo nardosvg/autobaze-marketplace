@@ -94,6 +94,8 @@ export function CartProvider({ cart, children }: CartProviderProps) {
     setIsUpdatingItem(true);
     setIsUpdating(true);
 
+    const itemAtual = cartState.items.find(item => item.id === lineId);
+
     const optimisticCart = {
       ...cartState,
       items: cartState.items.map(item => (item.id === lineId ? { ...item, quantity } : item))
@@ -102,11 +104,19 @@ export function CartProvider({ cart, children }: CartProviderProps) {
     setCartState(optimisticCart);
 
     try {
-      await apiUpdateLineItem({ lineId, quantity });
+      await apiUpdateLineItem({
+        lineId,
+        quantity,
+        // Item do marketplace: a oferta vive no metadata e o update usa o
+        // fluxo proprio (re-POST/merge) em vez da rota de update do core
+        offerId: (itemAtual?.metadata as { offer_id?: string } | undefined)?.offer_id ?? null,
+        currentQuantity: itemAtual?.quantity
+      });
       await refreshCart();
     } catch (error) {
       console.error('Error updating item quantity:', error);
       await refreshCart();
+      throw error;
     } finally {
       setIsUpdatingItem(false);
       setIsUpdating(false);
