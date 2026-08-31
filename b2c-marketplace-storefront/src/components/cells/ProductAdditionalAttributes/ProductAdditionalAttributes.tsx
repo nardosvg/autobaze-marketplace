@@ -1,4 +1,3 @@
-import { ProductPageAccordion } from "@/components/molecules"
 import { AdditionalAttributeProps } from "@/types/product"
 
 export const ProductAdditionalAttributes = ({
@@ -10,9 +9,11 @@ export const ProductAdditionalAttributes = ({
   if (!attributes?.length) return null
 
   const nonEmptyAttributes = attributes.filter((attribute) => !!attribute && attribute.id)
+  if (!nonEmptyAttributes.length) return null
 
   return (
-    <ProductPageAccordion heading="Especificações" defaultOpen={false} data-testid="product-additional-attributes-section">
+    <section className="mt-6 border-t pt-5" data-testid="product-additional-attributes-section">
+      <h4 className="label-lg mb-3 uppercase">Especificações</h4>
       {nonEmptyAttributes.map((attribute) => (
         <div
           key={attribute.id}
@@ -23,6 +24,6 @@ export const ProductAdditionalAttributes = ({
           <div className="py-3">{attribute.value}</div>
         </div>
       ))}
-    </ProductPageAccordion>
+    </section>
   )
 }

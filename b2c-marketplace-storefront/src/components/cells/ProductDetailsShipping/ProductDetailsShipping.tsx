@@ -1,11 +1,7 @@
-import { ProductPageAccordion } from '@/components/molecules';
-
 export const ProductDetailsShipping = () => {
   return (
-    <ProductPageAccordion
-      heading='Envio e devolução'
-      defaultOpen={false}
-    >
+    <section className='mt-6 border-t pt-5' data-testid='product-shipping-section'>
+      <h4 className='label-lg mb-3 uppercase'>Envio e devolução</h4>
       <div className='product-details'>
         <ul>
           <li>
@@ -24,6 +20,6 @@ export const ProductDetailsShipping = () => {
           </li>
         </ul>
       </div>
-    </ProductPageAccordion>
+    </section>
   );
 };

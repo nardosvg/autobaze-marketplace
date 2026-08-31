@@ -13,14 +13,12 @@ export const ProductDetailsFooter = ({
   posted: HttpTypes.StoreProduct['created_at'];
 }) => {
   return (
-    <>
-      <div className='p-4 border rounded-sm'>
-        <ProductTags tags={tags} />
-        <div className='flex justify-between items-center mt-4'>
-          <ProductPostedDate posted={posted} />
-          <ProductReportButton />
-        </div>
+    <div className='mt-6 border-t pt-4'>
+      <ProductTags tags={tags} />
+      <div className='mt-2 flex items-center justify-between'>
+        <ProductPostedDate posted={posted} />
+        <ProductReportButton />
       </div>
-    </>
+    </div>
   );
 };
