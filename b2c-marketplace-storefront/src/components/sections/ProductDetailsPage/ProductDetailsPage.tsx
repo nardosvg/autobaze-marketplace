@@ -117,6 +117,14 @@ export const ProductDetailsPage = async ({
       <CapaVendedor seller={sellerPrincipal} />
       <div className="container !pt-4">
       <BreadcrumbCategorias categorias={extras.categorias} titulo={prod.title ?? undefined} />
+
+      {/* Verificador de compatibilidade (FIPE), estilo ML — acima do anuncio */}
+      <div className="mb-6">
+        <CompatibilidadeVeiculo
+          masterId={((prod.metadata as any)?.catalogo_master_id as string) ?? null}
+        />
+      </div>
+
       <div
         className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12 lg:gap-8"
         data-testid="product-details-page"
@@ -138,13 +146,6 @@ export const ProductDetailsPage = async ({
           <CardLoja seller={sellerPrincipal} />
           <MeiosPagamento />
         </aside>
-      </div>
-
-      {/* Verificador de compatibilidade (FIPE), estilo ML */}
-      <div className="mt-8">
-        <CompatibilidadeVeiculo
-          masterId={((prod.metadata as any)?.catalogo_master_id as string) ?? null}
-        />
       </div>
 
       <div className="mt-12 space-y-12">
