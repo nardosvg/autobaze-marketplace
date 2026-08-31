@@ -81,7 +81,7 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
       >
         <div className="flex items-center gap-2">
           <DiscountIcon size={20} />
-          <h4 className="label-md">Have promo code?</h4>
+          <h4 className="label-md">Tem cupom de desconto?</h4>
         </div>
         <CollapseIcon
           size={20}
@@ -110,7 +110,7 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
                   setHasError(false);
                 }}
                 onKeyDown={handleKeyDown}
-                placeholder="Enter code"
+                placeholder="Digite o cupom"
                 error={hasError}
                 className="h-12 flex-grow"
               />

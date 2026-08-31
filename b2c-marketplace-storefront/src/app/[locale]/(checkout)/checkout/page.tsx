@@ -15,13 +15,13 @@ import { listCartPaymentMethods } from '@/lib/data/payment';
 
 export const metadata: Metadata = {
   title: 'Checkout',
-  description: 'My cart page - Checkout'
+  description: 'Finalizar compra'
 };
 
 export default async function CheckoutPage({}) {
   return (
     <Suspense
-      fallback={<div className="container flex items-center justify-center" data-testid="checkout-page-loading">Loading...</div>}
+      fallback={<div className="container flex items-center justify-center" data-testid="checkout-page-loading">Carregando...</div>}
     >
       <CheckoutPageContent />
     </Suspense>

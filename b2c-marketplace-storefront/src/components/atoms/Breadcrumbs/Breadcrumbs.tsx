@@ -15,7 +15,7 @@ export function Breadcrumbs({ items, className, "data-testid": dataTestId }: Bre
   const pathname = usePathname()
 
   return (
-    <nav className={cn("flex", className)} aria-label="Breadcrumb" data-testid="breadcrumbs">
+    <nav className={cn("flex", className)} aria-label="Caminho de navegação" data-testid="breadcrumbs">
       <ol className="inline-flex items-center gap-2">
         {items.map(({ path, label }, index) => {
           const isActive = pathname === path

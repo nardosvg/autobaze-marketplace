@@ -38,11 +38,11 @@ export const PriceFilter = () => {
   }
 
   return (
-    <Accordion heading="Price" data-testid="filter-price">
+    <Accordion heading="Preço" data-testid="filter-price">
       <div className="flex gap-2 mb-4" data-testid="filter-price-inputs">
         <form method="POST" onSubmit={updateMinPriceHandler}>
           <Input
-            placeholder="Min"
+            placeholder="Mín"
             icon={<DollarIcon size={16} />}
             onChange={(e) => setMin(e.target.value)}
             value={min}
@@ -54,7 +54,7 @@ export const PriceFilter = () => {
         </form>
         <form method="POST" onSubmit={updateMaxPriceHandler}>
           <Input
-            placeholder="Max"
+            placeholder="Máx"
             icon={<DollarIcon size={16} />}
             onChange={(e) => setMax(e.target.value)}
             type="number"

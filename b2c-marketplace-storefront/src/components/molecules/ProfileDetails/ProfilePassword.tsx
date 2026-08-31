@@ -40,7 +40,7 @@ export const ProfilePassword = ({
       </Card>
       <Card className="p-0">
         <div className="p-4">
-          <p className="label-md text-secondary">Current password</p>
+          <p className="label-md text-secondary">Senha atual</p>
           <p className="label-lg text-primary">****************</p>
         </div>
         <Divider />
@@ -52,7 +52,7 @@ export const ProfilePassword = ({
         </div>
       </Card>
       {showForm && (
-        <Modal heading="Change password" onClose={() => setShowForm(false)}>
+        <Modal heading="Alterar senha" onClose={() => setShowForm(false)}>
           <div className="flex p-4 justify-center">
             <Button
               className="uppercase py-3 px-6 !font-semibold"

@@ -59,7 +59,7 @@ const Form = () => {
       className="mx-auto mt-6 w-full max-w-xl space-y-4 rounded-sm border p-4"
       data-testid="forgot-password-form-container"
     >
-      <h1 className="heading-md my-0 mb-2 uppercase text-primary">Forgot your password?</h1>
+      <h1 className="heading-md my-0 mb-2 uppercase text-primary">Esqueceu a senha?</h1>
       <p className="text-md">
         Enter the email you used to sign up and we&#39;ll send you a password reset email. email.
       </p>
@@ -70,7 +70,7 @@ const Form = () => {
         <div className="space-y-4">
           <LabeledInput
             label="E-mail"
-            placeholder="Your e-mail address"
+            placeholder="Seu e-mail"
             error={errors.email as FieldError}
             data-testid="forgot-password-email-input"
             {...register('email')}

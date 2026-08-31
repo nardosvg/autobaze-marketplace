@@ -34,7 +34,7 @@ export const styles: Style[] = [
 export function ShopByStyleSection() {
   return (
     <section className="bg-primary container">
-      <h2 className="heading-lg text-primary mb-12">SHOP BY STYLE</h2>
+      <h2 className="heading-lg text-primary mb-12">CATEGORIAS</h2>
       <div className="grid grid-cols-1 lg:grid-cols-2 items-center">
         <div className="py-[52px] px-[58px] h-full border rounded-sm">
           {styles.map((style) => (

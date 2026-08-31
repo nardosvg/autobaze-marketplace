@@ -26,7 +26,7 @@ export const registerFormSchema = z.object({
   phone: z
     .string()
     .min(6, 'Please enter phone number')
-    .regex(/^\+?\d+$/, { message: 'Mobile phone must contain digits only' })
+    .regex(/^\+?\d+$/, { message: 'O celular deve conter só números' })
     .max(20, 'Phone number must contain up to 20 characters')
 });
 

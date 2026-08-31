@@ -26,7 +26,7 @@ export const ReviewsToWrite = ({ orders }: { orders: Array<Order> }) => {
   return (
     <>
       <div className="space-y-8 md:col-span-3" data-testid="reviews-to-write-container">
-        <h1 className="heading-md uppercase" data-testid="reviews-to-write-heading">Reviews</h1>
+        <h1 className="heading-md uppercase" data-testid="reviews-to-write-heading">Avaliações</h1>
         <div className="flex gap-4">
           {navigation.map(item => (
             <NavigationItem
@@ -43,8 +43,8 @@ export const ReviewsToWrite = ({ orders }: { orders: Array<Order> }) => {
         {isEmpty(orders) ? (
           <Card data-testid="reviews-to-write-empty-state">
             <div className="py-6 text-center">
-              <h3 className="heading-lg uppercase text-primary" data-testid="reviews-to-write-empty-heading">No reviews to write</h3>
-              <p className="mt-2 text-lg text-secondary" data-testid="reviews-to-write-empty-description">You currently have no one to review.</p>
+              <h3 className="heading-lg uppercase text-primary" data-testid="reviews-to-write-empty-heading">Nenhuma avaliação pendente</h3>
+              <p className="mt-2 text-lg text-secondary" data-testid="reviews-to-write-empty-description">Você não tem nenhuma compra pra avaliar no momento.</p>
             </div>
           </Card>
         ) : (
@@ -60,7 +60,7 @@ export const ReviewsToWrite = ({ orders }: { orders: Array<Order> }) => {
       </div>
       {showForm && (
         <Modal
-          heading="Write review"
+          heading="Avaliar"
           onClose={() => setShowForm(null)}
         >
           <ReviewForm

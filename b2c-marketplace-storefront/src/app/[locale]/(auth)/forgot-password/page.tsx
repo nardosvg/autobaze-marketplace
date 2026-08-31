@@ -3,7 +3,7 @@ import { Metadata } from "next"
 
 export const metadata: Metadata = {
   title: "Forgot password",
-  description: "Create a new password",
+  description: "Crie uma nova senha",
 }
 
 export default function ForgotPasswordPage() {

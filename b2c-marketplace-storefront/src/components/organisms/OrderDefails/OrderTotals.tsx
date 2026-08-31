@@ -27,20 +27,20 @@ const OrderTotals: React.FC<CartTotalsProps> = ({ totals }) => {
     <div className="border rounded-sm p-4 bg-white">
       <div className="flex flex-col gap-y-2 txt-medium text-ui-fg-subtle ">
         <div className="flex items-center justify-between">
-          <span className="flex gap-x-1 items-center">Items</span>
+          <span className="flex gap-x-1 items-center">Itens</span>
           <span data-testid="cart-subtotal" data-value={item_total || 0}>
             {convertToLocale({ amount: item_total ?? 0, currency_code })}
           </span>
         </div>
         <div className="flex items-center justify-between">
-          <span>Delivery</span>
+          <span>Entrega</span>
           <span data-testid="cart-shipping" data-value={shipping_subtotal || 0}>
             {convertToLocale({ amount: shipping_subtotal ?? 0, currency_code })}
           </span>
         </div>
         {!!gift_card_total && (
           <div className="flex items-center justify-between">
-            <span>Gift card</span>
+            <span>Vale-presente</span>
             <span
               className="text-ui-fg-interactive"
               data-testid="cart-gift-card-amount"

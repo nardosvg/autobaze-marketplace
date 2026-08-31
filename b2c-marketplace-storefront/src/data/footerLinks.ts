@@ -2,7 +2,7 @@ const links = {
   customerServices: [
     { label: 'FAQs', path: '#' },
     { label: 'Track Order', path: '#' },
-    { label: 'Returns', path: '#' },
+    { label: 'Devoluções', path: '#' },
     { label: 'Delivery', path: '#' },
     { label: 'Payment', path: '#' },
   ],

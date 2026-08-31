@@ -52,7 +52,7 @@ export const SellerInfo = ({
       )}
       {!header && (
         <div className="flex flex-col gap-5 p-4">
-          <h3 className="heading-sm uppercase">Seller reviews</h3>
+          <h3 className="heading-sm uppercase">Avaliações da loja</h3>
           {reviews
             ?.filter((rev) => rev !== null)
             .slice(-3)

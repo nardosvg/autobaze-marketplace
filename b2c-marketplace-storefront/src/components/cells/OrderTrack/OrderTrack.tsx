@@ -7,7 +7,7 @@ export const OrderTrack = ({ order }: { order: any }) => {
 
   return (
     <div>
-      <h2 className="text-primary label-lg uppercase">Order Tracking</h2>
+      <h2 className="text-primary label-lg uppercase">Rastreamento do pedido</h2>
       <ul className="mt-4">
         {labels.map((item: any) => (
           <li key={item.id}>

@@ -22,8 +22,8 @@ export const OrderConfirmedSection = ({
               level="h1"
               className="flex flex-col gap-y-3 text-ui-fg-base text-3xl mb-4"
             >
-              <span>Thank you!</span>
-              <span>Your order was placed successfully.</span>
+              <span>Obrigado!</span>
+              <span>Seu pedido foi realizado com sucesso.</span>
             </Heading>
 
             <Text>

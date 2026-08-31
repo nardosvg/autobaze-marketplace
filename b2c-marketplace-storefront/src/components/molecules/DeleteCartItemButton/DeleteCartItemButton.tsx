@@ -34,7 +34,7 @@ export const DeleteCartItemButton = ({
       onClick={() => handleDelete(id)}
       loading={isRemovingItem}
       disabled={isBtnDisabled}
-      aria-label="Remove item from cart"
+      aria-label="Remover item do carrinho"
     >
       <BinIcon size={20} />
     </Button>

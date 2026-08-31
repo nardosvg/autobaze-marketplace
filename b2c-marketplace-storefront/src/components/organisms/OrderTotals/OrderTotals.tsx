@@ -20,7 +20,7 @@ export const OrderTotals = ({ orderSet }: { orderSet: any }) => {
         </span>
       </p>
       <p className="text-secondary label-md flex justify-between">
-        Delivery:
+        Entrega:
         <span className="text-primary">
           {convertToLocale({
             amount: delivery,

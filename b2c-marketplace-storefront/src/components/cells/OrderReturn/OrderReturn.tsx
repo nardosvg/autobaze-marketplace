@@ -7,7 +7,7 @@ export const OrderReturn = ({ order }: { order: any }) => {
   return (
     <div className="md:flex justify-between items-center">
       <div className="mb-4 md:mb-0">
-        <h2 className="text-primary label-lg uppercase">Return Order</h2>
+        <h2 className="text-primary label-lg uppercase">Devolver pedido</h2>
         <p className="text-secondary label-md max-w-sm">
           Once you receive your order, you will have [14] days to return items.
           Find out more about{" "}

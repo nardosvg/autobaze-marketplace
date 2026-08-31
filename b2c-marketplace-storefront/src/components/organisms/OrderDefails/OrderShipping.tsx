@@ -59,7 +59,7 @@ const OrderShipping = ({ order }: ShippingDetailsProps) => {
       </div>
       <div className="mt-4">
         <Text className="txt-medium-plus text-ui-fg-base mb-1 font-bold">
-          Payment method
+          Forma de pagamento
         </Text>
         <div>
           {payment && (

@@ -122,7 +122,7 @@ async function AllCategories({
               {
                 "@type": "ListItem",
                 position: 1,
-                name: "All Products",
+                name: "Todas as peças",
                 item: `${baseUrl}/${locale}/categories`,
               },
             ],

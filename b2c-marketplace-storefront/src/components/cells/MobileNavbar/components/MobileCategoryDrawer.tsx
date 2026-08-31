@@ -63,7 +63,7 @@ export const MobileCategoryDrawer = ({
             <IconButton
               icon={<ArrowLeftIcon size={20} />}
               onClick={onClose}
-              aria-label="Close drawer"
+              aria-label="Fechar"
               variant="icon"
             />
             <h3 className="heading-md uppercase text-primary">
@@ -73,7 +73,7 @@ export const MobileCategoryDrawer = ({
               icon={<CloseIcon size={20} />}
               onClick={onClose}
               className="ml-auto"
-              aria-label="Close drawer"
+              aria-label="Fechar"
               variant="icon"
             />
           </div>

@@ -25,7 +25,7 @@ export const ReviewsWritten = ({
           <p className="text-negative">
             Something went wrong while fetching reviews
           </p>
-          <RefreshButton label="Refresh" />
+          <RefreshButton label="Atualizar" />
         </div>
       )
     }
@@ -57,7 +57,7 @@ export const ReviewsWritten = ({
 
   return (
     <div className="md:col-span-3 space-y-8">
-      <h1 className="heading-md uppercase">Reviews</h1>
+      <h1 className="heading-md uppercase">Avaliações</h1>
       <div className="flex gap-4">
         {navigation.map((item) => (
           <NavigationItem

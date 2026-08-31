@@ -62,7 +62,7 @@ const Form = ({
   const updatePassword = async (data: FieldValues) => {
     if (form.getValues("confirmPassword") !== form.getValues("newPassword")) {
       setConfirmPasswordError({
-        message: "Passwords don't match. Please enter correct password.",
+        message: "As senhas não conferem.",
         type: "custom",
       } as FieldError)
       return
@@ -101,7 +101,7 @@ const Form = ({
           className="uppercase py-3 px-6 !font-semibold w-full"
           size="large"
         >
-          Log in
+          Entrar
         </Button>
       </LocalizedClientLink>
     </div>
@@ -114,13 +114,13 @@ const Form = ({
         level="h1"
         className="uppercase heading-md text-primary"
       >
-        Set new password
+        Definir nova senha
       </Heading>
       <p className="text-secondary label-md">
         Almost done. Enter your new password, and you&apos;re good to go.
       </p>
       <LabeledInput
-        label="Password"
+        label="Senha"
         type="password"
         error={errors.newPassword as FieldError}
         {...register("newPassword")}
@@ -130,12 +130,12 @@ const Form = ({
         setError={setNewPasswordError}
       />
       <LabeledInput
-        label="Confirm password"
+        label="Confirmar senha"
         type="password"
         error={(confirmPasswordError || errors.confirmPassword) as FieldError}
         {...register("confirmPassword")}
       />
-      <Button className="w-full my-4 uppercase">Set new password</Button>
+      <Button className="w-full my-4 uppercase">Definir nova senha</Button>
     </form>
   )
 }

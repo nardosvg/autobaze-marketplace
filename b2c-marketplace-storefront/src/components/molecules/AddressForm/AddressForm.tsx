@@ -96,51 +96,51 @@ const Form: FC<Props> = ({ regions, handleClose }) => {
       <div className="space-y-4 px-4">
         <div className="items-top mb-4 grid max-w-full grid-cols-2 gap-4">
           <LabeledInput
-            label="Address name"
-            placeholder="Type address name"
+            label="Nome do endereço"
+            placeholder="Dê um nome pro endereço (ex: Casa)"
             className="col-span-2"
             error={errors.firstName as FieldError}
             data-testid="address-form-address-name-input"
             {...register('addressName')}
           />
           <LabeledInput
-            label="First name"
-            placeholder="Type first name"
+            label="Nome"
+            placeholder="Digite o nome"
             error={errors.firstName as FieldError}
             data-testid="address-form-first-name-input"
             {...register('firstName')}
           />
           <LabeledInput
-            label="Last name"
-            placeholder="Type last name"
+            label="Sobrenome"
+            placeholder="Digite o sobrenome"
             error={errors.firstName as FieldError}
             data-testid="address-form-last-name-input"
             {...register('lastName')}
           />
           <LabeledInput
             label="Company (optional)"
-            placeholder="Type company"
+            placeholder="Digite a empresa"
             error={errors.company as FieldError}
             data-testid="address-form-company-input"
             {...register('company')}
           />
           <LabeledInput
-            label="Address"
-            placeholder="Type address"
+            label="Endereço"
+            placeholder="Digite o endereço"
             error={errors.address as FieldError}
             data-testid="address-form-address-input"
             {...register('address')}
           />
           <LabeledInput
-            label="City"
-            placeholder="Type city"
+            label="Cidade"
+            placeholder="Digite a cidade"
             error={errors.city as FieldError}
             data-testid="address-form-city-input"
             {...register('city')}
           />
           <LabeledInput
-            label="Postal code"
-            placeholder="Type postal code"
+            label="CEP"
+            placeholder="Digite o CEP"
             error={errors.postalCode as FieldError}
             data-testid="address-form-postal-code-input"
             {...register('postalCode')}
@@ -171,8 +171,8 @@ const Form: FC<Props> = ({ regions, handleClose }) => {
           </div>
 
           <LabeledInput
-            label="Phone"
-            placeholder="Type phone number"
+            label="Telefone"
+            placeholder="Digite o telefone"
             error={errors.phone as FieldError}
             data-testid="address-form-phone-input"
             {...register('phone')}

@@ -9,37 +9,37 @@ import useFilters from '@/hooks/useFilters';
 
 const colorFilters = [
   {
-    label: 'Black',
+    label: 'Preto',
     amount: 40,
     color: 'bg-[rgba(9,9,9,1)]',
   },
   {
-    label: 'Grey',
+    label: 'Cinza',
     amount: 78,
     color: 'bg-[rgba(82,82,82,1)]',
   },
   {
-    label: 'White',
+    label: 'Branco',
     amount: 7,
     color: 'bg-[rgba(255,255,255,1)]',
   },
   {
-    label: 'Yellow',
+    label: 'Amarelo',
     amount: 7,
     color: 'bg-[rgba(255,191,58,1)]',
   },
   {
-    label: 'Red',
+    label: 'Vermelho',
     amount: 16,
     color: 'bg-[rgba(217,45,32,1)]',
   },
   {
-    label: 'Orange',
+    label: 'Laranja',
     amount: 0,
     color: 'bg-[rgba(247,144,9,1)]',
   },
   {
-    label: 'Blue',
+    label: 'Azul',
     amount: 46,
     color: 'bg-[rgba(77,160,255,1)]',
   },
@@ -49,12 +49,12 @@ const colorFilters = [
     color: 'bg-[rgba(0,67,143,1)]',
   },
   {
-    label: 'Green',
+    label: 'Verde',
     amount: 32,
     color: 'bg-[rgba(23,163,74,1)]',
   },
   {
-    label: 'Multi',
+    label: 'Multicolor',
     amount: 6,
     color: 'multi-gradient',
   },

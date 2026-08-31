@@ -46,7 +46,7 @@ export const Header = async ({ locale }: { locale: string }) => {
     <header className="relative z-50 bg-[#0F52FF] text-white" data-testid="header">
       {/* Faixa 1: logo, busca, acoes */}
       <div className="container mx-auto flex items-center gap-4 px-4 pt-3 pb-2 lg:px-8">
-        <div className="flex items-center gap-2 [&_svg]:text-white">
+        <div className="flex items-center gap-2 text-white">
           <MobileNavbar parentCategories={parentCategories} categories={categories} />
           <LocalizedClientLink
             href="/"
@@ -71,7 +71,7 @@ export const Header = async ({ locale }: { locale: string }) => {
         </div>
 
         <div
-          className="flex items-center gap-3 lg:gap-5 [&_svg]:text-white [&_button]:text-white [&_a]:text-white"
+          className="flex items-center gap-3 lg:gap-5 text-white"
           data-testid="header-actions"
         >
           {isLoggedIn && <MessageButton />}

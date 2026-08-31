@@ -90,7 +90,7 @@ export const CartAddressSection = ({
               data-testid="submit-address-button"
               variant="tonal"
             >
-              Save
+              Salvar
             </Button>
             <ErrorMessage
               error={message !== "success" && message}

@@ -46,7 +46,7 @@ export const SellerTabs = ({
         </Suspense>
       </TabsContent>
       <TabsContent value="reviews" activeTab={tab}>
-        <Suspense fallback={<div data-testid="seller-tabs-reviews-loading">Loading...</div>}>
+        <Suspense fallback={<div data-testid="seller-tabs-reviews-loading">Carregando...</div>}>
           <SellerReviewTab seller_handle={seller_handle} />
         </Suspense>
       </TabsContent>

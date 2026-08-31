@@ -11,7 +11,7 @@ export const ProductDetailsSellerReviews = ({
     <div className='p-4 border rounded-sm' data-testid="product-seller-reviews-section">
       <div className='flex justify-between items-center mb-5'>
         <h4 className='uppercase heading-sm'>
-          Seller reviews
+          Avaliações da loja
         </h4>
         <Button
           variant='tonal'

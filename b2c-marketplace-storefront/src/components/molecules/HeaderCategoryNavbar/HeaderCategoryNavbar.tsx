@@ -26,7 +26,7 @@ export const HeaderCategoryNavbar = ({
   return (
     <nav
       className="flex items-center p-4 gap-2 overflow-x-auto scrollbar-hide"
-      aria-label="Parent categories"
+      aria-label="Categorias principais"
     >
       {parentCategories?.map(({ id, handle, name }) => {
         const isActive = handle === activeParentHandle

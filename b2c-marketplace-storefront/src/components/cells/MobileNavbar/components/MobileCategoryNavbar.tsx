@@ -65,7 +65,7 @@ export const MobileCategoryNavbar = ({
     <>
       <nav
         className="flex flex-col gap-2"
-        aria-label="Mobile category navigation"
+        aria-label="Navegação de categorias (celular)"
       >
         <LocalizedClientLink
           href="/categories"

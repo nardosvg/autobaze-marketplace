@@ -62,7 +62,7 @@ export const ParcelAccordion = ({
             variant="tonal"
             data-testid="order-view-button"
           >
-            <span className="label-md text-primary">VIEW ORDER</span>
+            <span className="label-md text-primary">VER PEDIDO</span>
           </Button>
         </LocalizedClientLink>
       </div>

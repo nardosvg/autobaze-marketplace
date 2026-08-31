@@ -109,7 +109,7 @@ const Form: FC<Props> = ({ handleClose, seller }) => {
                 'relative h-32 w-full rounded-sm border bg-component-secondary px-4 py-3 focus:border-primary focus:outline-none focus:ring-0',
                 error && 'border-negative focus:border-negative'
               )}
-              placeholder="Write your opinion about this seller..."
+              placeholder="Escreva sua opinião sobre esta loja..."
               data-testid="review-form-opinion-input"
               {...register('opinion')}
             />

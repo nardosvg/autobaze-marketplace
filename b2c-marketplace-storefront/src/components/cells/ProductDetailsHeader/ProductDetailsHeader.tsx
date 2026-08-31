@@ -190,7 +190,7 @@ export const ProductDetailsHeader = ({
               </>
             ) : (
               <span className="label-md text-secondary pt-2 pb-4" data-testid="product-price-unavailable">
-                Not available in your region
+                Indisponível na sua região
               </span>
             )}
           </div>
@@ -262,10 +262,10 @@ export const ProductDetailsHeader = ({
         data-testid="product-add-to-cart-button"
       >
         {!hasAnyPrice
-          ? "NOT AVAILABLE IN YOUR REGION"
+          ? "INDISPONÍVEL NA SUA REGIÃO"
           : variantStock && variantHasPrice
-          ? "ADD TO CART"
-          : "OUT OF STOCK"}
+          ? "ADICIONAR AO CARRINHO"
+          : "SEM ESTOQUE"}
       </Button>
       {/* Seller message */}
 

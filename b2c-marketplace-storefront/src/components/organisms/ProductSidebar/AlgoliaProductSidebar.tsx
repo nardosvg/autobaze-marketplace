@@ -44,7 +44,7 @@ export const AlgoliaProductSidebar = ({ facets }: { facets: Record<string, Facet
         Filters
       </Button>
       {isOpen && (
-        <Modal heading="Filters" onClose={() => setIsOpen(false)}>
+        <Modal heading="Filtros" onClose={() => setIsOpen(false)}>
           <div className="px-4">
             <ProductListingActiveFilters />
             <PriceFilter
@@ -77,7 +77,7 @@ function ConditionFilter({ defaultOpen = true, items }: { defaultOpen?: boolean,
     updateFilters(option)
   }
   return (
-    <Accordion heading="Condition" defaultOpen={defaultOpen}>
+    <Accordion heading="Condição" defaultOpen={defaultOpen}>
       <ul className="px-4">
         {items && Object.entries(items).map(([ label, count ]) => (
           <li key={label} className="mb-4">
@@ -101,7 +101,7 @@ function ColorFilter({ defaultOpen = true, items }: { defaultOpen?: boolean, ite
     updateFilters(option)
   }
   return (
-    <Accordion heading="Color" defaultOpen={defaultOpen}>
+    <Accordion heading="Cor" defaultOpen={defaultOpen}>
       <ul className="px-4">
         {items && Object.entries(items).map(([ label, count ]) => (
           <li key={label} className="mb-4 flex items-center justify-between">
@@ -133,7 +133,7 @@ function SizeFilter({ defaultOpen = true, items }: { defaultOpen?: boolean, item
   }
 
   return (
-    <Accordion heading="Size" defaultOpen={defaultOpen}>
+    <Accordion heading="Tamanho" defaultOpen={defaultOpen}>
       <ul className="grid grid-cols-4 mt-2 gap-2">
         {items && Object.entries(items).map(([label]) => (
           <li key={label} className="mb-4">
@@ -176,11 +176,11 @@ function PriceFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
     updateSearchParams("max_price", max)
   }
   return (
-    <Accordion heading="Price" defaultOpen={defaultOpen}>
+    <Accordion heading="Preço" defaultOpen={defaultOpen}>
       <div className="flex gap-2 mb-4">
         <form method="POST" onSubmit={updateMinPriceHandler}>
           <Input
-            placeholder="Min"
+            placeholder="Mín"
             onChange={(e) => setMin(e.target.value)}
             value={min}
             onBlur={(e) => {
@@ -195,7 +195,7 @@ function PriceFilter({ defaultOpen = true }: { defaultOpen?: boolean }) {
         </form>
         <form method="POST" onSubmit={updateMaxPriceHandler}>
           <Input
-            placeholder="Max"
+            placeholder="Máx"
             onChange={(e) => setMax(e.target.value)}
             onBlur={(e) => {
               setTimeout(() => {
@@ -221,7 +221,7 @@ function RatingFilter() {
   }
 
   return (
-    <Accordion heading="Rating">
+    <Accordion heading="Avaliação">
       <ul className="px-4">
         {filters.map(({ label }) => (
           <li

@@ -32,18 +32,18 @@ export default async function Wishlist({ params }: { params: Promise<{ locale: s
         <div className="space-y-8 md:col-span-3" data-testid="wishlist-container">
           {isEmpty(wishlist?.products) ? (
             <div className="mx-auto flex w-96 flex-col items-center justify-center" data-testid="wishlist-empty-state">
-              <h2 className="heading-lg mb-2 uppercase text-primary" data-testid="wishlist-empty-heading">Wishlist</h2>
-              <p className="mb-6 text-lg text-secondary" data-testid="wishlist-empty-description">Your wishlist is currently empty.</p>
+              <h2 className="heading-lg mb-2 uppercase text-primary" data-testid="wishlist-empty-heading">Favoritos</h2>
+              <p className="mb-6 text-lg text-secondary" data-testid="wishlist-empty-description">Sua lista de favoritos está vazia.</p>
               <LocalizedClientLink
                 href="/categories"
                 className="w-full"
               >
-                <Button className="w-full" data-testid="wishlist-explore-button">Explore</Button>
+                <Button className="w-full" data-testid="wishlist-explore-button">Ver peças</Button>
               </LocalizedClientLink>
             </div>
           ) : (
             <div className="flex flex-col gap-6">
-              <h2 className="heading-lg uppercase text-primary" data-testid="wishlist-heading">Wishlist</h2>
+              <h2 className="heading-lg uppercase text-primary" data-testid="wishlist-heading">Favoritos</h2>
               <div className="flex items-center justify-between">
                 <p data-testid="wishlist-count">{count} listings</p>
               </div>

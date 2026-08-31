@@ -65,35 +65,35 @@ const Form: React.FC<Props> = ({ handleClose }) => {
       <div className="space-y-4 px-4">
         <div className="items-top mb-4 grid max-w-full grid-cols-2 gap-4">
           <LabeledInput
-            label="First name"
-            placeholder="Type first name"
+            label="Nome"
+            placeholder="Digite o nome"
             error={errors.firstName as FieldError}
             data-testid="profile-details-form-first-name-input"
             {...register('firstName')}
           />
           <LabeledInput
-            label="Last name"
-            placeholder="Type last name"
+            label="Sobrenome"
+            placeholder="Digite o sobrenome"
             error={errors.lastName as FieldError}
             data-testid="profile-details-form-last-name-input"
             {...register('lastName')}
           />
           <LabeledInput
-            label="Phone"
-            placeholder="Type phone number"
+            label="Telefone"
+            placeholder="Digite o telefone"
             error={errors.phone as FieldError}
             data-testid="profile-details-form-phone-input"
             {...register('phone')}
           />
           <LabeledInput
-            label="Email"
+            label="E-mail"
             disabled
             data-testid="profile-details-form-email-input"
             {...register('email')}
           />
         </div>
         {error && <p className="label-md text-negative" data-testid="profile-details-form-error">{error}</p>}
-        <Button className="w-full" data-testid="profile-details-form-submit-button">Save</Button>
+        <Button className="w-full" data-testid="profile-details-form-submit-button">Salvar</Button>
       </div>
     </form>
   );

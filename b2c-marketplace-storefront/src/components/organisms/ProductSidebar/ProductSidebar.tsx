@@ -30,7 +30,7 @@ export const ProductSidebar = () => {
               className="mb-4 flex items-center justify-between border-y p-4"
               data-testid="sidebar-filter-header"
             >
-              <h3 className="heading-md uppercase">Filters</h3>
+              <h3 className="heading-md uppercase">Filtros</h3>
               <div
                 onClick={() => setFilterModal(false)}
                 className="cursor-pointer"

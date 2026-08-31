@@ -5,9 +5,9 @@ import { ProductsPagination } from "../ProductsPagination/ProductsPagination"
 // import { listProducts } from "@/lib/data/products"
 
 export const wishlistTabs = [
-  { label: "All", link: "/wishlist" },
-  { label: "Products", link: "/wishlist/products" },
-  { label: "Collections", link: "/wishlist/collections" },
+  { label: "Todos", link: "/wishlist" },
+  { label: "Produtos", link: "/wishlist/products" },
+  { label: "Coleções", link: "/wishlist/collections" },
 ]
 
 export const WishlistTabs = async ({ tab }: { tab: string }) => {
@@ -22,7 +22,7 @@ export const WishlistTabs = async ({ tab }: { tab: string }) => {
     <div>
       <TabsList list={wishlistTabs} activeTab={tab} />
       <TabsContent value="all" activeTab={tab}>
-        <Suspense fallback={<>Loading...</>}>
+        <Suspense fallback={<>Carregando...</>}>
           <div className="grid sm:grid-cols-2 xl:grid-cols-4 mt-8">
             {/* <ProductsList products={products} /> */}
           </div>
@@ -30,7 +30,7 @@ export const WishlistTabs = async ({ tab }: { tab: string }) => {
         </Suspense>
       </TabsContent>
       <TabsContent value="products" activeTab={tab}>
-        <Suspense fallback={<>Loading...</>}>
+        <Suspense fallback={<>Carregando...</>}>
           <div className="grid sm:grid-cols-2 xl:grid-cols-4 mt-8">
             {/* <ProductsList products={products} /> */}
           </div>
@@ -38,7 +38,7 @@ export const WishlistTabs = async ({ tab }: { tab: string }) => {
         </Suspense>
       </TabsContent>
       <TabsContent value="collections" activeTab={tab}>
-        <Suspense fallback={<>Loading...</>}>
+        <Suspense fallback={<>Carregando...</>}>
           <div className="grid sm:grid-cols-2 xl:grid-cols-4 mt-8">
             {/* <ProductsList products={products} /> */}
           </div>

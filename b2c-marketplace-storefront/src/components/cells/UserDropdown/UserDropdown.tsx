@@ -32,7 +32,7 @@ export const UserDropdown = ({
       <LocalizedClientLink
         href={isLoggedIn ? "/user" : "/login"}
         className="relative"
-        aria-label="Go to user profile"
+        aria-label="Ir pro perfil"
       >
         <ProfileIcon size={20} />
       </LocalizedClientLink>
@@ -41,10 +41,10 @@ export const UserDropdown = ({
           <div className="p-1">
             <div className="lg:w-[200px]">
               <h3 className="uppercase heading-xs border-b p-4">
-                Your account
+                Sua conta
               </h3>
             </div>
-            <NavigationItem href="/user/orders">Orders</NavigationItem>
+            <NavigationItem href="/user/orders">Pedidos</NavigationItem>
             <NavigationItem href="/user/messages" className="relative">
               Messages
               {Boolean(unreads?.length) && (
@@ -53,18 +53,18 @@ export const UserDropdown = ({
                 </Badge>
               )}
             </NavigationItem>
-            <NavigationItem href="/user/returns">Returns</NavigationItem>
-            <NavigationItem href="/user/addresses">Addresses</NavigationItem>
-            <NavigationItem href="/user/reviews">Reviews</NavigationItem>
-            <NavigationItem href="/user/wishlist">Wishlist</NavigationItem>
+            <NavigationItem href="/user/returns">Devoluções</NavigationItem>
+            <NavigationItem href="/user/addresses">Endereços</NavigationItem>
+            <NavigationItem href="/user/reviews">Avaliações</NavigationItem>
+            <NavigationItem href="/user/wishlist">Favoritos</NavigationItem>
             <Divider />
-            <NavigationItem href="/user/settings">Settings</NavigationItem>
+            <NavigationItem href="/user/settings">Configurações</NavigationItem>
             <LogoutButton />
           </div>
         ) : (
           <div className="p-1">
-            <NavigationItem href="/login">Login</NavigationItem>
-            <NavigationItem href="/register">Register</NavigationItem>
+            <NavigationItem href="/login">Entrar</NavigationItem>
+            <NavigationItem href="/register">Criar conta</NavigationItem>
           </div>
         )}
       </Dropdown>

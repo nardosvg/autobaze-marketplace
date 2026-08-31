@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils';
 const reasonOptions = [
   { label: '', value: '', hidden: true },
   {
-    label: 'Trademark, Copyright or DMCA Violation',
+    label: 'Violação de marca ou direitos autorais',
     value: 'Trademark, Copyright or DMCA Violation',
   },
 ];
@@ -112,7 +112,7 @@ export const ReportSellerForm = ({
         <div className='text-center'>
           <div className='px-4 pb-5'>
             <h4 className='heading-lg uppercase'>
-              Thank you!
+              Obrigado!
             </h4>
             <p className='max-w-[466px] mx-auto mt-4 text-lg text-secondary'>
               We&apos;ll check the listing to see if it

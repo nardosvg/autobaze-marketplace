@@ -63,7 +63,7 @@ export default async function UserPage({
           className="space-y-8 md:col-span-3"
           data-testid="orders-container"
         >
-          <h1 className="heading-md uppercase">Orders</h1>
+          <h1 className="heading-md uppercase">Pedidos</h1>
           {isEmpty(orders) ? (
             <div
               className="text-center"

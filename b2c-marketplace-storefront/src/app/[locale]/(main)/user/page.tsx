@@ -15,7 +15,7 @@ export default async function UserPage() {
         <UserNavigation />
         <div className="md:col-span-3">
           <h1 className="heading-xl uppercase">Welcome {user.first_name}</h1>
-          <p className="label-md">Your account is ready to go!</p>
+          <p className="label-md">Sua conta está pronta!</p>
         </div>
       </div>
     </main>

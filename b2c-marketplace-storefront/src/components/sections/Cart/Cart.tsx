@@ -29,7 +29,7 @@ export const Cart = () => {
             discount_total={cart?.discount_subtotal || 0}
           />
           <LocalizedClientLink href="/checkout?step=address">
-            <Button className="flex w-full items-center justify-center py-3">Go to checkout</Button>
+            <Button className="flex w-full items-center justify-center py-3">Finalizar compra</Button>
           </LocalizedClientLink>
         </div>
       </div>

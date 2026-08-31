@@ -89,7 +89,7 @@ export const CategoryNavbar = ({
     <>
       <nav
         className="flex md:items-center flex-col md:flex-row md:overflow-x-auto md:scrollbar-hide md:max-w-full gap-2"
-        aria-label="Category navigation"
+        aria-label="Navegação de categorias"
         data-testid="category-navbar"
       >
         <LocalizedClientLink

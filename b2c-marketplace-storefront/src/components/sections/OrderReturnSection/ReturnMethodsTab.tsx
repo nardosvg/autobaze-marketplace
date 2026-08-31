@@ -17,7 +17,7 @@ export const ReturnMethodsTab = ({
     <>
       <div className="mb-8">
         <Card className="bg-secondary p-4">
-          <p className="label-lg uppercase">Return methods</p>
+          <p className="label-lg uppercase">Formas de devolução</p>
         </Card>
         <Card className="flex items-center justify-between p-4">
           {noShippingMethods ? (
@@ -42,7 +42,7 @@ export const ReturnMethodsTab = ({
       </div>
       <div>
         <Card className="bg-secondary p-4">
-          <p className="label-lg uppercase">Shipping address</p>
+          <p className="label-lg uppercase">Endereço de entrega</p>
         </Card>
         <Card className="p-4">
           <p className="label-lg">{seller.name}</p>

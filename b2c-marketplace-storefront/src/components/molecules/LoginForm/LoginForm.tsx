@@ -95,7 +95,7 @@ const Form = () => {
           className="rounded-sm border p-4"
           data-testid="login-form-container"
         >
-          <h1 className="heading-md mb-8 uppercase text-primary">Log in</h1>
+          <h1 className="heading-md mb-8 uppercase text-primary">Entrar</h1>
           <form
             onSubmit={handleSubmit(submit)}
             data-testid="login-form"
@@ -103,7 +103,7 @@ const Form = () => {
             <div className="space-y-4">
               <LabeledInput
                 label="E-mail"
-                placeholder="Your e-mail address"
+                placeholder="Seu e-mail"
                 error={
                   (errors.email as FieldError) ||
                   (isAuthError ? ({ message: '' } as FieldError) : undefined)
@@ -114,8 +114,8 @@ const Form = () => {
                 })}
               />
               <LabeledInput
-                label="Password"
-                placeholder="Your password"
+                label="Senha"
+                placeholder="Sua senha"
                 type="password"
                 error={
                   (errors.password as FieldError) ||
@@ -133,7 +133,7 @@ const Form = () => {
               className="label-md mt-4 block text-right uppercase text-action-on-secondary"
               data-testid="login-forgot-password-link"
             >
-              Forgot your password?
+              Esqueceu a senha?
             </Link>
 
             <Button
@@ -141,7 +141,7 @@ const Form = () => {
               disabled={isSubmitting}
               data-testid="login-submit-button"
             >
-              Log in
+              Entrar
             </Button>
           </form>
         </div>

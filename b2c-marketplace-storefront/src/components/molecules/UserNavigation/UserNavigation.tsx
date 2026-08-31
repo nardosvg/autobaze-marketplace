@@ -11,27 +11,27 @@ import { usePathname } from "next/navigation"
 
 const navigationItems = [
   {
-    label: "Orders",
+    label: "Pedidos",
     href: "/user/orders",
   },
   {
-    label: "Messages",
+    label: "Mensagens",
     href: "/user/messages",
   },
   {
-    label: "Returns",
+    label: "Devoluções",
     href: "/user/returns",
   },
   {
-    label: "Addresses",
+    label: "Endereços",
     href: "/user/addresses",
   },
   {
-    label: "Reviews",
+    label: "Avaliações",
     href: "/user/reviews",
   },
   {
-    label: "Wishlist",
+    label: "Favoritos",
     href: "/user/wishlist",
   },
 ]
@@ -62,7 +62,7 @@ export const UserNavigation = () => {
         href={"/user/settings"}
         active={path === "/user/settings"}
       >
-        Settings
+        Configurações
       </NavigationItem>
       <LogoutButton className="w-full text-left" />
     </Card>

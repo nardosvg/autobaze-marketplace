@@ -35,7 +35,7 @@ export const OrderCancel = ({ order }: { order: any }) => {
     <>
       <div className="md:flex justify-between items-center">
         <div className="mb-4 md:mb-0">
-          <h2 className="text-primary label-lg uppercase">Cancel Order</h2>
+          <h2 className="text-primary label-lg uppercase">Cancelar pedido</h2>
           <p className="text-secondary label-md max-w-sm">
             Once you place your order, you can cancel it until the seller begins
             preparation for shipment.
@@ -46,12 +46,12 @@ export const OrderCancel = ({ order }: { order: any }) => {
           className="uppercase"
           onClick={() => setOpen(true)}
         >
-          Cancel
+          Cancelar
         </Button>
       </div>
       {open && (
         <Modal
-          heading="Select items you want to cancel"
+          heading="Selecione os itens que quer cancelar"
           onClose={() => setOpen(false)}
         >
           <div>

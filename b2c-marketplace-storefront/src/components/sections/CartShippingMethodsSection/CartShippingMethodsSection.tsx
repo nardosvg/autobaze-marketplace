@@ -223,7 +223,7 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
                             >
                               {({ open }) => (
                                 <>
-                                  <span className="block truncate">Choose delivery option</span>
+                                  <span className="block truncate">Escolha a forma de entrega</span>
                                   <ChevronUpDown
                                     className={clx('transition-rotate duration-200', {
                                       'rotate-180 transform': open
@@ -313,7 +313,7 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
                     key={method.id}
                     className="mb-4 rounded-md border p-4"
                   >
-                    <Text className="txt-medium-plus text-ui-fg-base mb-1">Method</Text>
+                    <Text className="txt-medium-plus text-ui-fg-base mb-1">Método</Text>
                     <Text className="txt-medium text-ui-fg-subtle">
                       {method.name}{' '}
                       {convertToLocale({

@@ -43,7 +43,7 @@ export const SizeFilter = () => {
     updateFilters(size)
   }
   return (
-    <Accordion heading="Size" data-testid="filter-size">
+    <Accordion heading="Tamanho" data-testid="filter-size">
       {/* <SelectField
         options={sizeType}
         selected={size_region}

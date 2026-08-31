@@ -82,7 +82,7 @@ const CountrySelect = ({ regions }: CountrySelectProps) => {
 
   return (
     <div className="md:flex gap-2 items-center justify-end relative">
-      <Label className="label-md hidden md:block">Shipping to</Label>
+      <Label className="label-md hidden md:block">Enviar para</Label>
       <div>
         <Listbox
           onChange={handleChange}

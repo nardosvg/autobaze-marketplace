@@ -4,11 +4,11 @@ import { Accordion, FilterCheckboxOption } from "@/components/molecules"
 import useFilters from "@/hooks/useFilters"
 
 const filters = [
-  { label: "New", amount: 78 },
-  { label: "New - With tags", amount: 40 },
-  { label: "Used - Excellent", amount: 7 },
-  { label: "Used - Good", amount: 16 },
-  { label: "Used - Fair", amount: 0 },
+  { label: "Novo", amount: 78 },
+  { label: "Novo", amount: 40 },
+  { label: "Usado - Excelente", amount: 7 },
+  { label: "Usado - Bom", amount: 16 },
+  { label: "Usado - Razoável", amount: 0 },
 ]
 
 export const ConditionFilter = () => {
@@ -19,7 +19,7 @@ export const ConditionFilter = () => {
   }
 
   return (
-    <Accordion heading="Condition" data-testid="filter-condition">
+    <Accordion heading="Condição" data-testid="filter-condition">
       <ul className="px-4" data-testid="filter-condition-options">
         {filters.map(({ label, amount }) => (
           <li key={label} className="mb-4">

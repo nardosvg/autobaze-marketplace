@@ -8,10 +8,10 @@ export const singleProduct = {
   colorVariants: [
     {
       variant: '#FCC501',
-      label: 'Yellow',
+      label: 'Amarelo',
       disabled: false,
     },
-    { variant: '#090909', label: 'Black', disabled: false },
+    { variant: '#090909', label: 'Preto', disabled: false },
     { variant: '#F7F7F7', label: 'Gray', disabled: false },
   ],
   size: 'UK 3.5',

@@ -5,9 +5,9 @@ import { usePathname, useRouter } from 'next/navigation';
 import { SelectField } from '@/components/molecules';
 
 const selectOptions = [
-  { label: 'Newest', value: 'created_at' },
-  { label: 'Price: Low to High', value: 'price_asc' },
-  { label: 'Price: High to Low', value: 'price_desc' }
+  { label: 'Mais recentes', value: 'created_at' },
+  { label: 'Menor preço', value: 'price_asc' },
+  { label: 'Maior preço', value: 'price_desc' }
 ];
 
 export const ProductListingHeader = ({ total }: { total: number }) => {
@@ -23,9 +23,9 @@ export const ProductListingHeader = ({ total }: { total: number }) => {
       className="flex w-full items-center justify-between"
       data-testid="product-listing-header"
     >
-      <div data-testid="product-listing-total">{total} listings</div>
+      <div data-testid="product-listing-total">{total} {total === 1 ? 'anúncio' : 'anúncios'}</div>
       {/* <div className='hidden md:flex gap-2 items-center'>
-        Sort by:{' '}
+        Ordenar por:{' '}
         <SelectField
           className='min-w-[200px]'
           options={selectOptions}

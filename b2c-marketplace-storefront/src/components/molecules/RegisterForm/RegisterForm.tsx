@@ -84,16 +84,16 @@ const Form = () => {
           <div className="flex flex-col md:flex-row gap-4 mb-4">
             <LabeledInput
               className="md:w-1/2"
-              label="First name"
-              placeholder="Your first name"
+              label="Nome"
+              placeholder="Seu nome"
               error={errors.firstName as FieldError}
               data-testid="register-first-name-input"
               {...register("firstName")}
             />
             <LabeledInput
               className="md:w-1/2"
-              label="Last name"
-              placeholder="Your last name"
+              label="Sobrenome"
+              placeholder="Seu sobrenome"
               error={errors.lastName as FieldError}
               data-testid="register-last-name-input"
               {...register("lastName")}
@@ -103,15 +103,15 @@ const Form = () => {
             <LabeledInput
               className="md:w-1/2"
               label="E-mail"
-              placeholder="Your e-mail address"
+              placeholder="Seu e-mail"
               error={errors.email as FieldError}
               data-testid="register-email-input"
               {...register("email")}
             />
             <LabeledInput
               className="md:w-1/2"
-              label="Phone"
-              placeholder="Your phone number"
+              label="Telefone"
+              placeholder="Seu telefone"
               error={errors.phone as FieldError}
               data-testid="register-phone-input"
               {...register("phone")}
@@ -120,8 +120,8 @@ const Form = () => {
           <div>
             <LabeledInput
               className="mb-4"
-              label="Password"
-              placeholder="Your password"
+              label="Senha"
+              placeholder="Sua senha"
               type="password"
               error={errors.password as FieldError}
               data-testid="register-password-input"
@@ -152,7 +152,7 @@ const Form = () => {
             variant="tonal"
             className="w-full flex justify-center mt-8 uppercase"
           >
-            Log in
+            Entrar
           </Button>
         </Link>
       </Container>
