@@ -12,8 +12,8 @@ export default async function LoginPage() {
 
   return (
     <>
-      <AvisoContaComprador contexto="login" />
       <LoginForm />
+      <AvisoContaComprador contexto="login" />
     </>
   )
 }
