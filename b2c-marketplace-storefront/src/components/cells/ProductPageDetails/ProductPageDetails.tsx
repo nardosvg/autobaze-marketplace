@@ -1,41 +1,34 @@
-// Secao "Aplicacoes" sempre visivel (padrao ML): lista dos veiculos
-// compativeis vinda da tabela FIPE do catalogo universal
-// (product.metadata.aplicacoes, gravada pelo sync/seed). Sem a lista
-// estruturada, cai no texto de aplicacao do proprio produto.
+import {
+  AplicacoesVeiculos,
+  type AplicacaoVeiculo,
+} from "../AplicacoesVeiculos/AplicacoesVeiculos"
+
+// Secao "Aplicacoes" sempre visivel: veiculos compativeis da tabela FIPE do
+// catalogo universal (product.metadata.aplicacoes), no mesmo padrao visual
+// do app AutoBaze (busca + grupos por marca + tabela Modelo/Ano/Motor).
+// Sem a lista estruturada, cai no texto de aplicacao do proprio produto.
 export const ProductPageDetails = ({
   details,
   aplicacoes,
   aplicacoesTotal,
 }: {
   details: string
-  aplicacoes?: string[]
+  aplicacoes?: AplicacaoVeiculo[]
   aplicacoesTotal?: number
 }) => {
-  const temLista = Array.isArray(aplicacoes) && aplicacoes.length > 0
+  const temLista =
+    Array.isArray(aplicacoes) &&
+    aplicacoes.length > 0 &&
+    typeof aplicacoes[0] === "object" &&
+    aplicacoes[0] !== null &&
+    "ma" in aplicacoes[0]
   if (!temLista && !details) return null
-
-  const restante = temLista
-    ? Math.max(0, (aplicacoesTotal ?? aplicacoes!.length) - aplicacoes!.length)
-    : 0
 
   return (
     <section className="mt-6 border-t pt-5" data-testid="product-details-section">
       <h4 className="label-lg mb-3 uppercase">Aplicações</h4>
       {temLista ? (
-        <>
-          <ul className="grid grid-cols-1 gap-x-6 gap-y-1.5 sm:grid-cols-2">
-            {aplicacoes!.map((a) => (
-              <li key={a} className="text-md text-primary">
-                {a}
-              </li>
-            ))}
-          </ul>
-          {restante > 0 && (
-            <p className="mt-2 text-sm text-secondary">
-              e mais {restante} {restante === 1 ? "aplicação" : "aplicações"}.
-            </p>
-          )}
-        </>
+        <AplicacoesVeiculos aplicacoes={aplicacoes!} total={aplicacoesTotal} />
       ) : (
         <div
           className="product-details"

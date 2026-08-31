@@ -154,17 +154,23 @@ export default async function seedUniversal({ container }: ExecArgs) {
   ]);
   await app.end();
 
+  // Estruturado (chaves curtas: ma/mo/mt/ai/af) pro componente do storefront
+  // agrupar por marca igual ao app AutoBaze.
   const MAX_APLICACOES = 100;
-  const aplicacoesPorMaster = new Map<string, { lista: string[]; total: number }>();
+  type AplicacaoMeta = { ma: string; mo: string; mt?: string; ai?: number; af?: number };
+  const aplicacoesPorMaster = new Map<string, { lista: AplicacaoMeta[]; total: number }>();
   for (const r of aplicacoesRaw) {
-    const anos =
-      r.ano_inicial === r.ano_final
-        ? String(r.ano_inicial)
-        : `${r.ano_inicial}–${r.ano_final}`;
-    const texto = `${r.marca} ${r.modelo}${r.motor ? ` ${r.motor}` : ""} ${anos}`;
     const atual = aplicacoesPorMaster.get(r.master_id) ?? { lista: [], total: 0 };
     atual.total++;
-    if (atual.lista.length < MAX_APLICACOES) atual.lista.push(texto);
+    if (atual.lista.length < MAX_APLICACOES) {
+      atual.lista.push({
+        ma: r.marca,
+        mo: r.modelo,
+        ...(r.motor ? { mt: r.motor } : {}),
+        ...(r.ano_inicial ? { ai: r.ano_inicial } : {}),
+        ...(r.ano_final ? { af: r.ano_final } : {}),
+      });
+    }
     aplicacoesPorMaster.set(r.master_id, atual);
   }
   logger.info(
@@ -343,17 +349,9 @@ export default async function seedUniversal({ container }: ExecArgs) {
   }
 
   // -------------------------------------------------------------------------
-  // 5. Ofertas: A. Silva com preco real; Selmo em ~metade com variacao leve
+  // 5. Ofertas: modelo ML — 1 anuncio = 1 vendedor. So a A. Silva oferta
+  //    (anuncios proprios de outros sellers viram produtos separados).
   // -------------------------------------------------------------------------
-  let rngState = 0x9e3779b9;
-  const rand = () => {
-    rngState = (rngState + 0x6d2b79f5) | 0;
-    let t = rngState;
-    t = Math.imul(t ^ (t >>> 15), t | 1);
-    t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-
   const { data: produtosMercur } = await query.graph({
     entity: "product",
     fields: ["id", "handle", "variants.id", "variants.sku"],
@@ -402,31 +400,25 @@ export default async function seedUniversal({ container }: ExecArgs) {
     const precoBase = Math.max(1, Number(m.preco) || 50);
     const estoque = Math.min(500, Math.max(3, Number(m.estoque) || 3));
 
-    for (const [i, seller] of sellers.entries()) {
-      if (i > 0 && rand() > 0.5) continue; // Selmo so em ~metade (buybox demo)
-      if (temOferta.has(`${seller.id}|${variant.id}`)) continue;
-      const preco =
-        i === 0
-          ? precoBase
-          : Math.max(1, Math.round(precoBase * (0.92 + rand() * 0.2) * 100) / 100);
-      const sku = `OFFER-${seller.id.slice(-4)}-${variant.sku}`;
-      offers.push({
-        seller_id: seller.id,
-        created_by: seller.memberId,
-        sku,
-        variant_id: variant.id,
-        shipping_profile_id: seller.shippingProfileId,
-        inventory_items: [
-          {
-            sku,
-            stock_levels: [
-              { location_id: seller.stockLocationId, stocked_quantity: estoque },
-            ],
-          },
-        ],
-        prices: [{ amount: preco, currency_code: "brl" }],
-      });
-    }
+    const seller = sellers[0];
+    if (temOferta.has(`${seller.id}|${variant.id}`)) continue;
+    const sku = `OFFER-${seller.id.slice(-4)}-${variant.sku}`;
+    offers.push({
+      seller_id: seller.id,
+      created_by: seller.memberId,
+      sku,
+      variant_id: variant.id,
+      shipping_profile_id: seller.shippingProfileId,
+      inventory_items: [
+        {
+          sku,
+          stock_levels: [
+            { location_id: seller.stockLocationId, stocked_quantity: estoque },
+          ],
+        },
+      ],
+      prices: [{ amount: precoBase, currency_code: "brl" }],
+    });
   }
   if (offers.length) {
     await createOffersWorkflow(container).run({ input: { offers } });

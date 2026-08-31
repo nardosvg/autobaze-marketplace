@@ -20,8 +20,6 @@ import type { Wishlist } from "@/types/wishlist"
 // outras ofertas do buybox, devolucao e favoritos ("Adicionar a uma lista").
 // ---------------------------------------------------------------------------
 
-const BRL = new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" })
-
 function rankOffers(offers: ProductOffer[], variantId: string) {
   return offers
     .filter((o) => o.variant_id === variantId)
@@ -57,7 +55,6 @@ export const CompraBox = ({
   const { allSearchParams } = useGetAllSearchParams()
 
   const [offers, setOffers] = useState<ProductOffer[]>([])
-  const [ofertaEscolhida, setOfertaEscolhida] = useState<string | null>(null)
   const [comprandoAgora, setComprandoAgora] = useState(false)
   const [qtd, setQtd] = useState(1)
   const [favorito, setFavorito] = useState(
@@ -111,10 +108,8 @@ export const CompraBox = ({
     () => rankOffers(offers, variantId),
     [offers, variantId]
   )
-  const ofertaAtiva =
-    ofertasRanqueadas.find((o) => o.id === ofertaEscolhida) ??
-    ofertasRanqueadas[0] ??
-    null
+  // Anuncio proprio (modelo ML): a oferta do anuncio e' a vencedora do rank
+  const ofertaAtiva = ofertasRanqueadas[0] ?? null
 
   // Fonte da verdade do estoque: a OFERTA (modelo marketplace — a variante
   // master nao carrega estoque proprio). Sem oferta, cai no estoque da
@@ -252,38 +247,8 @@ export const CompraBox = ({
         </button>
       </div>
 
-      {ofertasRanqueadas.length > 1 && (
-        <div className="mt-4 rounded-sm border p-3">
-          <p className="mb-2 text-xs text-secondary">
-            {ofertasRanqueadas.length} vendedores oferecem este produto
-          </p>
-          <div className="space-y-1.5">
-            {ofertasRanqueadas.map((oferta) => (
-              <label
-                key={oferta.id}
-                className="flex cursor-pointer items-center justify-between gap-2 text-sm"
-              >
-                <span className="flex items-center gap-2">
-                  <input
-                    type="radio"
-                    name="oferta-compra"
-                    checked={ofertaAtiva?.id === oferta.id}
-                    onChange={() => setOfertaEscolhida(oferta.id)}
-                    disabled={oferta.estoque <= 0}
-                  />
-                  <span className={oferta.estoque <= 0 ? "text-secondary" : ""}>
-                    {oferta.seller?.name ?? "Vendedor"}
-                    {oferta.estoque <= 0 ? " (sem estoque)" : ""}
-                  </span>
-                </span>
-                <span className="font-medium">
-                  {oferta.amount != null ? BRL.format(oferta.amount) : "—"}
-                </span>
-              </label>
-            ))}
-          </div>
-        </div>
-      )}
+      {/* Modelo ML: cada vendedor tem o proprio anuncio — a pagina vende
+          sempre a oferta unica deste anuncio, sem seletor de vendedores. */}
 
       {/* Devolucao (CDC) com icone, estilo ML */}
       <div className="mt-5 flex gap-3 text-sm">
