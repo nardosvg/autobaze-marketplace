@@ -45,7 +45,11 @@ export const ProductDetails = async ({
         avaliacoes={avaliacoes}
         sellerPrincipal={sellerPrincipal}
       />
-      <ProductPageDetails details={product?.description || ""} />
+      <ProductPageDetails
+        details={product?.description || ""}
+        aplicacoes={(product.metadata as any)?.aplicacoes}
+        aplicacoesTotal={(product.metadata as any)?.aplicacoes_total}
+      />
       <ProductAdditionalAttributes
         attributes={product?.attribute_values || []}
       />

@@ -123,7 +123,6 @@ export default async function seedUniversal({ container }: ExecArgs) {
     ORDER BY count(p.id) DESC, m.id
     LIMIT 800
   `);
-  await app.end();
   logger.info(`[universal] ${candidatos.length} masters vendáveis candidatos.`);
 
   // Round-robin por departamento pra diversificar a home
@@ -140,6 +139,37 @@ export default async function seedUniversal({ container }: ExecArgs) {
     }
   }
   logger.info(`[universal] ${escolhidos.length} produtos escolhidos.`);
+
+  // Aplicacoes de veiculos (tabela FIPE) agregadas por master — viram
+  // metadata.aplicacoes no produto do marketplace (secao "Aplicacoes" na PDP)
+  const { rows: aplicacoesRaw } = await app.query<{
+    master_id: string;
+    marca: string;
+    modelo: string;
+    motor: string | null;
+    ano_inicial: number;
+    ano_final: number;
+  }>(`SELECT * FROM marketplace_aplicacoes_master($1::uuid[])`, [
+    escolhidos.map((m) => m.id),
+  ]);
+  await app.end();
+
+  const MAX_APLICACOES = 100;
+  const aplicacoesPorMaster = new Map<string, { lista: string[]; total: number }>();
+  for (const r of aplicacoesRaw) {
+    const anos =
+      r.ano_inicial === r.ano_final
+        ? String(r.ano_inicial)
+        : `${r.ano_inicial}–${r.ano_final}`;
+    const texto = `${r.marca} ${r.modelo}${r.motor ? ` ${r.motor}` : ""} ${anos}`;
+    const atual = aplicacoesPorMaster.get(r.master_id) ?? { lista: [], total: 0 };
+    atual.total++;
+    if (atual.lista.length < MAX_APLICACOES) atual.lista.push(texto);
+    aplicacoesPorMaster.set(r.master_id, atual);
+  }
+  logger.info(
+    `[universal] ${aplicacoesRaw.length} aplicações de veículos carregadas.`
+  );
 
   // -------------------------------------------------------------------------
   // 2. Categorias: departamentos na raiz + categoria fina como filha
@@ -288,6 +318,12 @@ export default async function seedUniversal({ container }: ExecArgs) {
       metadata: {
         catalogo_master_id: m.id,
         ...(m.marca_nome ? { marca: m.marca_nome } : {}),
+        ...(aplicacoesPorMaster.has(m.id)
+          ? {
+              aplicacoes: aplicacoesPorMaster.get(m.id)!.lista,
+              aplicacoes_total: aplicacoesPorMaster.get(m.id)!.total,
+            }
+          : {}),
       },
       weight: 500,
       thumbnail: fixUrl(m.foto_url),
@@ -326,6 +362,25 @@ export default async function seedUniversal({ container }: ExecArgs) {
   const masterPorHandle = new Map(
     escolhidos.map((m, i) => [handles[i], m])
   );
+
+  // Upsert do metadata (aplicacoes) tambem nos produtos que JA existiam
+  for (const p of produtosMercur) {
+    const m = masterPorHandle.get((p as any).handle);
+    if (!m) continue;
+    await productModule.updateProducts((p as any).id, {
+      metadata: {
+        catalogo_master_id: m.id,
+        ...(m.marca_nome ? { marca: m.marca_nome } : {}),
+        ...(aplicacoesPorMaster.has(m.id)
+          ? {
+              aplicacoes: aplicacoesPorMaster.get(m.id)!.lista,
+              aplicacoes_total: aplicacoesPorMaster.get(m.id)!.total,
+            }
+          : {}),
+      },
+    } as any);
+  }
+  logger.info(`[universal] metadata de aplicações atualizado em ${produtosMercur.length} produtos.`);
 
   // Ofertas ja existentes (idempotencia)
   const { data: ofertasExistentes } = await query.graph({
