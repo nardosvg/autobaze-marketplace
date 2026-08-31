@@ -13,6 +13,10 @@ import { listProducts } from "@/lib/data/products"
 import { getProdutoExtras } from "@/lib/data/product-extras"
 import { getProductOffers, rankOffers } from "@/lib/data/offers"
 import { getSellerFull } from "@/lib/data/sellers"
+import { getPerguntas } from "@/lib/data/perguntas"
+import { getFotosAvaliacoes } from "@/lib/data/avaliacoes-fotos"
+import { retrieveCustomer } from "@/lib/data/customer"
+import { PerguntasProduto } from "@/components/cells"
 import NotFound from "@/app/not-found"
 import { HttpTypes } from "@medusajs/types"
 
@@ -87,13 +91,23 @@ export const ProductDetailsPage = async ({
         .catch(() => [])
     : []
 
+  // Perguntas & respostas + fotos das avaliacoes + sessao do comprador
+  const [qa, fotosAvaliacoes, user] = await Promise.all([
+    getPerguntas(prod.id),
+    getFotosAvaliacoes(prod.id),
+    retrieveCustomer().catch(() => null),
+  ])
+  const logado = !!user
+
   const maisDaLoja = (prod.seller?.products ?? [])
     .filter((p: any) => p && p.id !== prod.id)
     .slice(0, 12) as HttpTypes.StoreProduct[]
 
   return (
     <>
+      {/* Capa full-bleed, colada no navbar */}
       <CapaVendedor seller={sellerPrincipal} />
+      <div className="container !pt-4">
       <BreadcrumbCategorias categorias={extras.categorias} titulo={prod.title ?? undefined} />
       <div
         className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-12 lg:gap-8"
@@ -118,16 +132,25 @@ export const ProductDetailsPage = async ({
       </div>
 
       <div className="mt-12 space-y-12">
+        <PerguntasProduto
+          productId={prod.id}
+          sellerId={sellerPrincipal?.id ?? null}
+          logado={logado}
+          perguntas={qa.perguntas}
+          minhasPendentes={qa.minhasPendentes}
+        />
         <AvaliacoesProduto
           avaliacoes={extras.avaliacoes}
           media={extras.media}
           total={extras.total}
+          fotos={fotosAvaliacoes}
         />
         <RailSection
           heading="Quem viu este produto também viu"
           products={relacionados}
         />
         <RailSection heading="Mais desta loja" products={maisDaLoja} />
+      </div>
       </div>
     </>
   )

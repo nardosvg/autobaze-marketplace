@@ -8,7 +8,20 @@ import { FieldError, FieldValues, FormProvider, useForm, useFormContext } from '
 import { Button } from '@/components/atoms';
 import { InteractiveStarRating } from '@/components/atoms/InteractiveStarRating/InteractiveStarRating';
 import { createReview, Order } from '@/lib/data/reviews';
+import { enviarFotosAvaliacao } from '@/lib/data/avaliacoes-fotos';
+import { toast } from '@/lib/helpers/toast';
 import { cn } from '@/lib/utils';
+
+const MAX_FOTOS = 4;
+
+// File -> base64 puro (sem prefixo data:)
+const paraBase64 = (file: File) =>
+  new Promise<string>((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result).replace(/^data:[^,]+,/, ''));
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 
 import { ReviewFormData, reviewSchema } from './schema';
 
@@ -36,6 +49,7 @@ export const ReviewForm: React.FC<Props> = ({ ...props }) => {
 
 const Form: FC<Props> = ({ handleClose, seller }) => {
   const [error, setError] = useState<string>();
+  const [fotos, setFotos] = useState<File[]>([]);
   const {
     watch,
     handleSubmit,
@@ -60,6 +74,26 @@ const Form: FC<Props> = ({ handleClose, seller }) => {
       return;
     }
 
+    // Fotos: anexa na avaliacao recem-criada (modulo extras)
+    const reviewId: string | undefined = response?.review?.id ?? response?.id;
+    if (reviewId && fotos.length) {
+      try {
+        const payload = await Promise.all(
+          fotos.slice(0, MAX_FOTOS).map(async file => ({
+            nome: file.name,
+            tipo: file.type,
+            conteudo: await paraBase64(file)
+          }))
+        );
+        const res = await enviarFotosAvaliacao(reviewId, payload);
+        if (res.error) {
+          toast.error({ title: 'Avaliação enviada, mas as fotos falharam', description: res.error });
+        }
+      } catch {
+        toast.error({ title: 'Avaliação enviada, mas as fotos falharam' });
+      }
+    }
+
     setError('');
     handleClose && handleClose();
   };
@@ -79,7 +113,7 @@ const Form: FC<Props> = ({ handleClose, seller }) => {
               className="label-sm mb-2 block"
               data-testid="review-form-rating-label"
             >
-              Rating
+              Nota
             </label>
             <InteractiveStarRating
               value={rating}
@@ -140,11 +174,38 @@ const Form: FC<Props> = ({ handleClose, seller }) => {
             {error}
           </p>
         )}
+        <div>
+          <p className="label-sm mb-1">Fotos (opcional, até {MAX_FOTOS})</p>
+          <input
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            multiple
+            className="label-sm block w-full"
+            data-testid="review-form-photos-input"
+            onChange={e => {
+              const arquivos = Array.from(e.target.files ?? []).slice(0, MAX_FOTOS);
+              setFotos(arquivos);
+            }}
+          />
+          {fotos.length > 0 && (
+            <div className="mt-2 flex gap-2">
+              {fotos.map(file => (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  key={file.name}
+                  src={URL.createObjectURL(file)}
+                  alt=""
+                  className="h-14 w-14 rounded-sm border object-cover"
+                />
+              ))}
+            </div>
+          )}
+        </div>
         <Button
           className="w-full"
           data-testid="review-form-submit-button"
         >
-          SUBMIT REVIEW
+          Enviar avaliação
         </Button>
       </div>
     </form>

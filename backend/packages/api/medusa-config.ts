@@ -83,6 +83,10 @@ module.exports = withMercur({
     },
     ...emailModule,
     {
+      // Perguntas & respostas de produto + fotos de avaliacoes (AutoBaze)
+      resolve: './src/modules/extras',
+    },
+    {
       resolve: '@medusajs/medusa/file',
       options: {
         providers: [

@@ -17,7 +17,7 @@ export const CapaVendedor = ({ seller }: { seller?: SellerProps | null }) => {
 
   return (
     <section
-      className="relative mb-6 h-[120px] w-full overflow-hidden rounded-md md:h-[170px]"
+      className="relative h-[140px] w-full overflow-hidden md:h-[200px]"
       data-testid="seller-cover"
     >
       {banner ? (
@@ -39,7 +39,7 @@ export const CapaVendedor = ({ seller }: { seller?: SellerProps | null }) => {
       )}
 
       {/* Card sobreposto da loja */}
-      <div className="absolute left-4 top-1/2 -translate-y-1/2 md:left-8">
+      <div className="absolute left-4 top-1/2 -translate-y-1/2 md:left-10 lg:left-16">
         <div className="flex items-center gap-3 rounded-md bg-white px-4 py-3 shadow-md">
           {logo ? (
             <Image

@@ -73,3 +73,4 @@ export { CapaVendedor } from './CapaVendedor/CapaVendedor';
 export { CardLoja } from './CardLoja/CardLoja';
 export { CompraBox } from './CompraBox/CompraBox';
 export { MeiosPagamento } from './MeiosPagamento/MeiosPagamento';
+export { PerguntasProduto } from './PerguntasProduto/PerguntasProduto';

@@ -510,6 +510,9 @@ export type Routes = {
             };
         };
         custom: typeof import("../src/api/admin/custom/route");
+        perguntas: typeof import("../src/api/admin/perguntas/route") & {
+            $id: typeof import("../src/api/admin/perguntas/[id]/route");
+        };
     };
     auth: {
         $actorType: {
@@ -638,7 +641,14 @@ export type Routes = {
                 calculate: typeof import("@medusajs/medusa/api/store/shipping-options/[id]/calculate/route");
             };
         };
+        avaliacoesFotos: typeof import("../src/api/store/avaliacoes-fotos/route");
+        avaliacoes: {
+            $id: {
+                fotos: typeof import("../src/api/store/avaliacoes/[id]/fotos/route");
+            };
+        };
         custom: typeof import("../src/api/store/custom/route");
+        perguntas: typeof import("../src/api/store/perguntas/route");
     };
     vendor: {
         campaigns: typeof import("@mercurjs/core/api/vendor/campaigns/route") & {

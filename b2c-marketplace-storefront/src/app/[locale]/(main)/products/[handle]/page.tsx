@@ -27,7 +27,9 @@ export default async function ProductPage({
   const { handle, locale } = await params
 
   return (
-    <main className="container">
+    // Sem .container aqui: a capa do vendedor e' full-bleed, colada no
+    // navbar; o miolo da pagina volta pro container dentro da section.
+    <main>
       <ProductDetailsPage handle={handle} locale={locale} />
     </main>
   )

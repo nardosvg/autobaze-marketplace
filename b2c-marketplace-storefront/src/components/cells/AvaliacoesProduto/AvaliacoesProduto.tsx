@@ -58,15 +58,23 @@ export const AvaliacoesProduto = ({
   avaliacoes,
   media,
   total,
+  fotos = {},
 }: {
   avaliacoes: AvaliacaoProduto[]
   media: number
   total: number
+  /** Fotos por review_id (modulo extras). */
+  fotos?: Record<string, string[]>
 }) => {
   const porNota = [5, 4, 3, 2, 1].map((n) => ({
     nota: n,
     qtd: avaliacoes.filter((a) => a.rating === n).length,
   }))
+
+  // Faixa "Opinioes com fotos": junta as fotos de todas as avaliacoes
+  const faixaFotos = avaliacoes
+    .flatMap((a) => (fotos[a.id] ?? []).map((url) => ({ url, rating: a.rating })))
+    .slice(0, 8)
 
   return (
     <section className="border-t pt-10" id="avaliacoes" data-testid="product-reviews-section">
@@ -110,7 +118,31 @@ export const AvaliacoesProduto = ({
           </div>
 
           {/* Lista de opinioes */}
-          <div className="min-w-0 flex-1 divide-y">
+          <div className="min-w-0 flex-1">
+            {faixaFotos.length > 0 && (
+              <div className="mb-6">
+                <h3 className="mb-3 text-base font-semibold text-neutral-900">
+                  Opiniões com fotos
+                </h3>
+                <div className="flex gap-2 overflow-x-auto pb-1">
+                  {faixaFotos.map((f, i) => (
+                    <span key={`${f.url}-${i}`} className="relative shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={f.url}
+                        alt="Foto enviada por um comprador"
+                        className="h-24 w-24 rounded-sm border object-cover"
+                        loading="lazy"
+                      />
+                      <span className="absolute bottom-1 left-1 rounded-sm bg-black/70 px-1 text-xs font-semibold text-white">
+                        {f.rating} ★
+                      </span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="divide-y">
             {avaliacoes.map((a) => (
               <article key={a.id} className="py-5 first:pt-0" data-testid={`product-review-${a.id}`}>
                 <div className="flex items-center justify-between gap-4">
@@ -119,12 +151,27 @@ export const AvaliacoesProduto = ({
                     {formatarData(a.created_at)}
                   </span>
                 </div>
+                {(fotos[a.id] ?? []).length > 0 && (
+                  <div className="mt-2 flex gap-2">
+                    {(fotos[a.id] ?? []).map((url) => (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        key={url}
+                        src={url}
+                        alt="Foto da avaliação"
+                        className="h-20 w-20 rounded-sm border object-cover"
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                )}
                 {a.customer_note && (
                   <p className="mt-2 text-md text-primary">{a.customer_note}</p>
                 )}
                 <p className="mt-2 text-sm text-secondary">{nomeCliente(a)}</p>
               </article>
             ))}
+            </div>
           </div>
         </div>
       )}
