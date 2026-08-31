@@ -14,7 +14,7 @@ export const ProfileDetails = ({ user }: { user: HttpTypes.StoreCustomer }) => {
     <>
       <Card className="bg-secondary p-4 flex justify-between items-center" data-testid="profile-details-header">
         <Heading level="h2" className="heading-sm uppercase" data-testid="profile-details-heading">
-          Profile details
+          Dados do perfil
         </Heading>
         <Button
           variant="tonal"
@@ -23,7 +23,7 @@ export const ProfileDetails = ({ user }: { user: HttpTypes.StoreCustomer }) => {
           data-testid="profile-edit-button"
         >
           <PencilSquare />
-          Edit details
+          Editar dados
         </Button>
       </Card>
       <Card className="p-0" data-testid="profile-details-info">

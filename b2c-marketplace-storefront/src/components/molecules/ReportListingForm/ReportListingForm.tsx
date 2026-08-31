@@ -128,7 +128,7 @@ export const ReportListingForm = ({
               className='w-full py-3 uppercase'
               onClick={onClose}
             >
-              Got it
+              Entendi
             </Button>
           </div>
         </div>

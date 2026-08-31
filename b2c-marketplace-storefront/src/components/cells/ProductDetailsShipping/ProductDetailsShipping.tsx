@@ -9,7 +9,7 @@ export const ProductDetailsShipping = () => {
       <div className='product-details'>
         <ul>
           <li>
-            Free standard shipping on all orders within the
+            Frete calculado no checkout pra todo o
             continental U.S. Expedited shipping options are
             available at an additional cost. Orders
             typically ship within 3-5 business days.

@@ -95,7 +95,7 @@ const Form = () => {
               variant="tonal"
               className="flex w-full justify-center uppercase"
             >
-              Back to log in
+              Voltar pro login
             </Button>
           </Link>
         </div>

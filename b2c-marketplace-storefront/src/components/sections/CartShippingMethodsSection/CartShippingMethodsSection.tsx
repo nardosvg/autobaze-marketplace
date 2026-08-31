@@ -299,7 +299,7 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
               disabled={!cart.shipping_methods?.[0] || isPendingDeleteRow}
               loading={isLoadingPrices}
             >
-              Continue to payment
+              Continuar pro pagamento
             </Button>
           </div>
         </>

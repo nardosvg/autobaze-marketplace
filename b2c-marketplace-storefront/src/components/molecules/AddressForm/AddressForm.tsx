@@ -190,7 +190,7 @@ const Form: FC<Props> = ({ regions, handleClose }) => {
           className="w-full"
           data-testid="address-form-submit-button"
         >
-          Save address
+          Salvar endereço
         </Button>
       </div>
     </form>

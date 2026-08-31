@@ -18,7 +18,7 @@ export const ProductDetailsSellerReviews = ({
           className='uppercase label-md font-400'
           data-testid="product-seller-reviews-see-more"
         >
-          See more
+          Ver mais
         </Button>
       </div>
       {reviews.map((review) => (

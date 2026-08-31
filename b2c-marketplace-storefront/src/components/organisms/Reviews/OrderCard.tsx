@@ -52,7 +52,7 @@ export const OrderCard = ({
         {showForm ? (
           <div className="flex justify-end w-full">
             <Button onClick={() => showForm(order)} className="w-fit uppercase" data-testid={testIdPrefix ? `${testIdPrefix}-write-review-button` : undefined}>
-              Write review
+              Avaliar
             </Button>
           </div>
         ) : (

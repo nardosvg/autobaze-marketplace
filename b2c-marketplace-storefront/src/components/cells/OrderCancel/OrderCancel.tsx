@@ -143,7 +143,7 @@ export const OrderCancel = ({ order }: { order: any }) => {
             <Divider className="my-4" />
             <div className="px-4">
               <Button className="uppercase w-full" onClick={handleCancel}>
-                Request cancelation
+                Solicitar cancelamento
               </Button>
             </div>
           </div>

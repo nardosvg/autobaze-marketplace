@@ -91,10 +91,10 @@ const Form = ({
         level="h1"
         className="uppercase heading-md text-primary text-center"
       >
-        Password changed
+        Senha alterada
       </Heading>
       <p className="text-center my-8">
-        Your are ready to log in with your new password
+        Você já pode entrar com a nova senha
       </p>
       <LocalizedClientLink href="/login">
         <Button

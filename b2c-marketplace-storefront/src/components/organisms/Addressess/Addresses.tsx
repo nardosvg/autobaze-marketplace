@@ -69,11 +69,11 @@ export const Addresses = ({
         {isEmpty(user.addresses) ? (
           <div className="text-center" data-testid="addresses-empty-state">
             <h3 className="heading-lg text-primary uppercase" data-testid="addresses-empty-heading">
-              No saved shipping addresses
+              Nenhum endereço salvo
             </h3>
             <p className="text-lg text-secondary mt-2" data-testid="addresses-empty-description">
               You currently have no saved shipping addresses. <br />
-              Add an address to make your checkout process quicker and easier.
+              Cadastre um endereço pra agilizar suas próximas compras.
             </p>
             <Button onClick={handleAdd} className="mt-4" data-testid="addresses-add-button">
               Adicionar endereço

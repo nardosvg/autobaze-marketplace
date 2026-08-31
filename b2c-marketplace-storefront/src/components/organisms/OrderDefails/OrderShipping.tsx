@@ -44,7 +44,7 @@ const OrderShipping = ({ order }: ShippingDetailsProps) => {
 
       <div className="mt-4" data-testid="shipping-method-summary">
         <Text className="txt-medium-plus text-ui-fg-base mb-1 font-bold">
-          Delivery method
+          Forma de entrega
         </Text>
         <Text className="txt-medium text-ui-fg-subtle">
           {(order as any).shipping_methods[0]?.name} (

@@ -14,7 +14,7 @@ export const ProductReportButton = () => {
         variant='tonal'
         onClick={() => setOpenModal(true)}
       >
-        Report listing
+        Denunciar anúncio
       </Button>
       {openModal && (
         <Modal

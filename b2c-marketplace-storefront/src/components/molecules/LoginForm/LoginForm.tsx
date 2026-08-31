@@ -158,7 +158,7 @@ const Form = () => {
               variant="tonal"
               className="mt-8 flex w-full justify-center uppercase"
             >
-              Create account
+              Criar conta
             </Button>
           </Link>
         </div>

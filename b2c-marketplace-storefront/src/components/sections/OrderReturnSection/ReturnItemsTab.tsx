@@ -129,7 +129,7 @@ export const ReturnItemsTab = ({
                       !selectedItems.find((i) => i.line_item_id === item.id)
                         ?.reason_id && (
                         <p className="absolute -bottom-6 text-red-700 label-md">
-                          Please select reason
+                          Selecione o motivo
                         </p>
                       )}
                   </div>

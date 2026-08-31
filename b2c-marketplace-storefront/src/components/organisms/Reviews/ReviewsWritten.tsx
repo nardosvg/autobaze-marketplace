@@ -23,7 +23,7 @@ export const ReviewsWritten = ({
       return (
         <div className="flex flex-col gap-2">
           <p className="text-negative">
-            Something went wrong while fetching reviews
+            Não foi possível carregar as avaliações
           </p>
           <RefreshButton label="Atualizar" />
         </div>
@@ -35,7 +35,7 @@ export const ReviewsWritten = ({
         <Card>
           <div className="text-center py-6">
             <h3 className="heading-lg text-primary uppercase">
-              No written reviews
+              Nenhuma avaliação escrita
             </h3>
             <p className="text-lg text-secondary mt-2">
               You haven&apos;t written any reviews yet. Once you write a review,

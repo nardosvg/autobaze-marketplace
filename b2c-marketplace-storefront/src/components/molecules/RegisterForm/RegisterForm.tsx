@@ -78,7 +78,7 @@ const Form = () => {
     <main className="container" data-testid="register-page">
       <Container className="border max-w-xl mx-auto mt-8 p-4" data-testid="register-form-container">
         <h1 className="heading-md text-primary uppercase mb-8">
-          Create account
+          Criar conta
         </h1>
         <form onSubmit={handleSubmit(submit)} data-testid="register-form">
           <div className="flex flex-col md:flex-row gap-4 mb-4">
@@ -139,13 +139,13 @@ const Form = () => {
             loading={isSubmitting}
             data-testid="register-submit-button"
           >
-            Create account
+            Criar conta
           </Button>
         </form>
       </Container>
       <Container className="border max-w-xl mx-auto mt-8 p-4">
         <h2 className="heading-md text-primary uppercase mb-8">
-          Already have an account?
+          Já tem uma conta?
         </h2>
         <Link href="/login" data-testid="register-login-link">
           <Button

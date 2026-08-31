@@ -102,7 +102,7 @@ const Form: FC<Props> = ({ handleClose, seller }) => {
               className={cn(error && 'text-negative')}
               data-testid="review-form-opinion-label"
             >
-              Your opinion
+              Sua opinião
             </p>
             <textarea
               className={cn(

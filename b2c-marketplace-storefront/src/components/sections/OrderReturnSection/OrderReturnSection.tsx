@@ -89,7 +89,7 @@ export const OrderReturnSection = ({
               className="label-md text-action-on-secondary uppercase flex items-center gap-2"
             >
               <ArrowLeftIcon className="size-4" />
-              Order details
+              Detalhes do pedido
             </Button>
           </LocalizedClientLink>
         ) : (
@@ -99,7 +99,7 @@ export const OrderReturnSection = ({
             onClick={() => setTab(0)}
           >
             <ArrowLeftIcon className="size-4" />
-            Select items
+            Selecione os itens
           </Button>
         )}
         <div className="grid grid-cols-1 md:grid-cols-8 gap-4 mt-8">

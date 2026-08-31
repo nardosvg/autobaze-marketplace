@@ -64,7 +64,7 @@ export const ProductSidebar = () => {
             onClick={() => clearAllFilters()}
             data-testid="sidebar-clear-all-button"
           >
-            Clear all
+            Limpar tudo
           </Button>
           <Button
             className="label-sm w-1/2 uppercase"

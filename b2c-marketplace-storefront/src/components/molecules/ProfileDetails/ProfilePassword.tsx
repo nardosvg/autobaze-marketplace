@@ -35,7 +35,7 @@ export const ProfilePassword = ({
           className="uppercase flex items-center gap-2 font-semibold"
           onClick={() => setShowForm(true)}
         >
-          Change password
+          Alterar senha
         </Button>
       </Card>
       <Card className="p-0">
@@ -47,7 +47,7 @@ export const ProfilePassword = ({
         <div className="p-4">
           <p className="label-md text-secondary flex items-center gap-4">
             <InfoIcon size={18} className="text-secondary" />
-            Always remember to choose a unique password to protect your account.
+            Escolha sempre uma senha única pra proteger sua conta.
           </p>
         </div>
       </Card>
@@ -58,7 +58,7 @@ export const ProfilePassword = ({
               className="uppercase py-3 px-6 !font-semibold"
               onClick={handleSendResetPasswordEmail}
             >
-              Send reset password email
+              Enviar e-mail de redefinição de senha
             </Button>
           </div>
           {/* <ProfilePasswordForm user={user} /> */}
