@@ -152,6 +152,7 @@ export const CompraBox = ({
       await addToCart({
         variantId,
         offerId: ofertaAtiva?.id,
+        productId: product.id,
         quantity: qtdFinal,
         countryCode: locale,
       })

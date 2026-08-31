@@ -126,11 +126,17 @@ export function CartProvider({ cart, children }: CartProviderProps) {
   const addToCart = async ({
     variantId,
     quantity,
-    countryCode
+    countryCode,
+    offerId,
+    productId
   }: {
     variantId: string;
     quantity: number;
     countryCode: string;
+    /** Oferta do buybox — o core cria o line item a partir dela. */
+    offerId?: string;
+    /** Fallback: com o productId a gente resolve a melhor oferta no server. */
+    productId?: string;
   }) => {
     setIsAddingItem(true);
     setIsUpdating(true);
@@ -139,7 +145,9 @@ export function CartProvider({ cart, children }: CartProviderProps) {
       await apiAddToCart({
         variantId,
         quantity,
-        countryCode
+        countryCode,
+        offerId,
+        productId
       });
       await refreshCart();
     } catch (error) {

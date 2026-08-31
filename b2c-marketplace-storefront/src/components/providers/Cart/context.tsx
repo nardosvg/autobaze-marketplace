@@ -11,6 +11,8 @@ interface CartContextInterface {
     variantId: string;
     /** Oferta escolhida no buybox (core exige offer_id no line item). */
     offerId?: string;
+    /** Com o productId o server resolve a melhor oferta quando offerId falta. */
+    productId?: string;
     quantity: number;
     countryCode: string;
   }) => Promise<void>;

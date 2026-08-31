@@ -23,10 +23,12 @@ export const WishlistItem = ({
   testIdPrefix?: string;
 }) => {
   const { cheapestPrice } = getProductPrice({ product });
-  const price = convertToLocale({
-    amount: cheapestPrice?.calculated_price_number,
-    currency_code: cheapestPrice?.currency_code
-  });
+  const price = cheapestPrice
+    ? convertToLocale({
+        amount: cheapestPrice.calculated_price_number,
+        currency_code: cheapestPrice.currency_code
+      })
+    : "";
 
   return (
     <div

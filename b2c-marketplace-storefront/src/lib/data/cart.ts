@@ -17,6 +17,7 @@ import {
   setCartId
 } from './cookies';
 import { getRegion } from './regions';
+import { getProductOffers, rankOffers } from './offers';
 
 /**
  * Retrieves a cart by its ID. If no ID is provided, it will use the cart ID from the cookies.
@@ -106,17 +107,28 @@ export async function updateCart(data: HttpTypes.StoreUpdateCart) {
 export async function addToCart({
   variantId,
   offerId,
+  productId,
   quantity,
   countryCode
 }: {
   variantId: string;
   /** Oferta escolhida (buybox). O core Mercur exige offer_id no line item. */
   offerId?: string;
+  /** Fallback: resolve a melhor oferta do produto quando offerId nao veio. */
+  productId?: string;
   quantity: number;
   countryCode: string;
 }) {
   if (!variantId && !offerId) {
     throw new Error('Variante não informada ao adicionar ao carrinho');
+  }
+
+  // O core exige offer_id no line item; se o caller nao mandou (ex.: clique
+  // antes das ofertas carregarem no cliente), resolve o buybox aqui.
+  if (!offerId && productId) {
+    const ofertas = await getProductOffers(productId);
+    const ranqueadas = await rankOffers(ofertas, variantId);
+    offerId = ranqueadas.find(o => o.estoque > 0)?.id ?? ranqueadas[0]?.id;
   }
 
   const cart = await getOrSetCart(countryCode);
