@@ -121,7 +121,7 @@ export const CartDropdown = () => {
             ) : (
               <div className="px-8">
                 <h4 className="heading-md uppercase text-center">
-                  Your shopping cart is empty
+                  Seu carrinho está vazio
                 </h4>
                 <p className="text-lg text-center py-4">
                   Que tal dar uma olhada nas ofertas?
