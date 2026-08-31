@@ -5,6 +5,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Titulos em Cabinet Grotesk ficam black (900) por padrao, igual ao app
+   AutoBaze. So temos o peso 900 self-hosted; quem usar font-display com
+   outro peso cai no fallback sintetizado. */
+@layer base {
+  .font-display {
+    font-weight: 900;
+  }
+}
+
 /* Typography */
 .text-xl {
   @apply font-light tracking-normal;
@@ -39,20 +48,20 @@
   @apply text-[16px] leading-[24px] font-medium tracking-normal;
 }
 .heading-md {
-  @apply text-[24px] leading-[32px] font-medium tracking-normal max-md:text-[20px] max-md:leading-[28px];
+  @apply font-display text-[24px] leading-[32px] tracking-normal max-md:text-[20px] max-md:leading-[28px];
 }
 .heading-lg {
-  @apply text-[32px] leading-[40px] font-medium tracking-normal max-md:text-[24px] max-md:leading-[32px];
+  @apply font-display text-[32px] leading-[40px] tracking-normal max-md:text-[24px] max-md:leading-[32px];
 }
 .heading-xl {
-  @apply text-[40px] leading-[48px] font-medium tracking-normal max-md:text-[32px] max-md:leading-[40px];
+  @apply font-display text-[40px] leading-[48px] tracking-normal max-md:text-[32px] max-md:leading-[40px];
 }
 
 .display-sm {
-  @apply text-[56px] leading-[64px] font-medium tracking-normal max-md:text-[32px] max-md:leading-[40px];
+  @apply font-display text-[56px] leading-[64px] tracking-normal max-md:text-[32px] max-md:leading-[40px];
 }
 .display-md {
-  @apply text-[64px] leading-[72px] font-medium tracking-normal max-md:text-[40px] max-md:leading-[48px];
+  @apply font-display text-[64px] leading-[72px] tracking-normal max-md:text-[40px] max-md:leading-[48px];
 }
 .container {
   @apply px-4 md:px-5 max-w-full w-full lg:py-8 py-4 lg:px-8;

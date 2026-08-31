@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Funnel_Display } from 'next/font/google';
+import localFont from 'next/font/local';
 
 import './globals.css';
 
@@ -11,10 +11,26 @@ import { retrieveCart } from '@/lib/data/cart';
 
 import { Providers } from './providers';
 
-const funnelDisplay = Funnel_Display({
-  variable: '--font-funnel-sans',
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600']
+// Tipografia da marca AutoBaze, igual ao app: Satoshi (body) + Cabinet
+// Grotesk 900 (titulos), self-hosted em WOFF2 via next/font/local.
+const satoshi = localFont({
+  src: [
+    { path: './fonts/Satoshi-400.woff2', weight: '400', style: 'normal' },
+    { path: './fonts/Satoshi-500.woff2', weight: '500', style: 'normal' },
+    { path: './fonts/Satoshi-700.woff2', weight: '700', style: 'normal' }
+  ],
+  variable: '--font-satoshi',
+  display: 'swap',
+  fallback: ['system-ui', 'Arial', 'sans-serif'],
+  adjustFontFallback: 'Arial'
+});
+
+const cabinetGrotesk = localFont({
+  src: [{ path: './fonts/CabinetGrotesk-900.woff2', weight: '900', style: 'normal' }],
+  variable: '--font-cabinet',
+  display: 'swap',
+  fallback: ['system-ui', 'Arial', 'sans-serif'],
+  adjustFontFallback: 'Arial'
 });
 
 const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'AutoBaze Marketplace';
@@ -146,7 +162,7 @@ export default async function RootLayout({
           href="https://api.mercurjs.com"
         />
       </Head>
-      <body className={`${funnelDisplay.className} relative bg-primary text-secondary antialiased`}>
+      <body className={`${satoshi.variable} ${cabinetGrotesk.variable} font-sans relative bg-primary text-secondary antialiased`}>
         <HtmlLangSetter />
         <Providers cart={cart}>{children}</Providers>
         <Toaster position="top-right" />

@@ -10,6 +10,15 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ["var(--font-satoshi)", "system-ui", "sans-serif"],
+        display: [
+          "var(--font-cabinet)",
+          "var(--font-satoshi)",
+          "system-ui",
+          "sans-serif",
+        ],
+      },
       backgroundColor: {
         primary: "rgba(var(--bg-primary))",
         secondary: "rgba(var(--bg-secondary))",
