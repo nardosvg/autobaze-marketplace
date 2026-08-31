@@ -188,22 +188,13 @@ export const CompatibilidadeVeiculo = ({
       await verificar(r.versaoId, r.label, placa)
       return
     }
-    // Sem confianca na versao: pre-preenche e o comprador so confirma
-    toast.success({
-      title: `Veículo da placa: ${r.descricao}`,
-      description: "Confirme a versão pra verificar.",
+    // Sem confianca na versao: descarta o resultado da placa e deixa o
+    // comprador selecionar manualmente (nada de preenchimento pela metade)
+    setPlaca("")
+    toast.error({
+      title: "Não deu pra identificar a versão exata pela placa",
+      description: "Selecione marca, modelo, ano e versão manualmente.",
     })
-    if (r.marca) {
-      escolherMarca(r.marca.id)
-      const modelosDaMarca = await getModelosVeiculo(r.marca.id)
-      setModelos(modelosDaMarca)
-      if (r.modelo) {
-        setModeloId(r.modelo.id)
-        const vs = await getVersoesModelo(r.modelo.id)
-        setVersoes(vs)
-        if (r.ano) setAno(String(r.ano))
-      }
-    }
   }
 
   const alterarVeiculo = () => {
