@@ -62,9 +62,6 @@ export const MLProductCard = ({
             </span>
           )}
         </p>
-        <p className="mt-auto text-xs font-medium text-green-600">
-          Nota fiscal inclusa
-        </p>
       </div>
     </LocalizedClientLink>
   )

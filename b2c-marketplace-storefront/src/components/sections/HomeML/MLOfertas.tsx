@@ -4,6 +4,7 @@ import { listProducts } from "@/lib/data/products"
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
 
 import { MLProductCard } from "./MLProductCard"
+import { MLRail } from "./MLRail"
 
 // "AS MELHORES OFERTAS" — trilho horizontal de cards estilo ML com os
 // produtos mais recentes do marketplace.
@@ -42,11 +43,11 @@ export const MLOfertas = async ({ locale }: { locale: string }) => {
           Ver mais
         </LocalizedClientLink>
       </div>
-      <div className="flex gap-4 overflow-x-auto pb-2 [scrollbar-width:thin]">
+      <MLRail>
         {products.map((p) => (
           <MLProductCard key={p.id} product={p} />
         ))}
-      </div>
+      </MLRail>
     </section>
   )
 }
