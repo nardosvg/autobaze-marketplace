@@ -3,7 +3,7 @@
 import { useState } from 'react';
 
 import { Button } from '@/components/atoms';
-import { ColorFilter, ConditionFilter, PriceFilter, SizeFilter } from '@/components/cells';
+import { ConditionFilter, PriceFilter } from '@/components/cells';
 import { ProductListingActiveFilters } from '@/components/organisms';
 import useFilters from '@/hooks/useFilters';
 import { CloseIcon } from '@/icons';
@@ -50,8 +50,6 @@ export const ProductSidebar = () => {
           data-testid="sidebar-filters"
         >
           <PriceFilter />
-          <SizeFilter />
-          <ColorFilter />
           <ConditionFilter />
         </div>
         <div
@@ -71,13 +69,11 @@ export const ProductSidebar = () => {
             onClick={() => setFilterModal(false)}
             data-testid="sidebar-view-listings-button"
           >
-            View 222 listings
+            Ver anúncios
           </Button>
         </div>
       </div>
-      <div className="heading-md absolute top-4 z-10 w-full rounded-lg bg-primary p-8 text-center shadow-md">
-        Set your Algolia ID and configure filters to enable product filtering
-      </div>
+
     </aside>
   );
 };

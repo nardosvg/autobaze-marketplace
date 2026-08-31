@@ -7,7 +7,7 @@ const links = {
     { label: 'Payment', path: '#' },
   ],
   about: [
-    { label: 'About us', path: '#' },
+    { label: 'Sobre nós', path: '#' },
     { label: 'Blog', path: '#' },
     { label: 'Privacy Policy', path: '#' },
     { label: 'Terms & Conditions', path: '#' },

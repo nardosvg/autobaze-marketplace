@@ -73,7 +73,7 @@ export const addWishlistItem = async ({
   revalidatePath('/wishlist');
 
   if (!response.ok) {
-    throw new Error(response.error?.message || 'An error occured');
+    throw new Error(response.error?.message || 'Ocorreu um erro');
   }
 
   return response;
@@ -96,7 +96,7 @@ export const removeWishlistItem = async ({
   revalidatePath('/wishlist');
 
   if (!response.ok) {
-    throw new Error(response.error?.message || 'An error occured');
+    throw new Error(response.error?.message || 'Ocorreu um erro');
   }
 
   return response;

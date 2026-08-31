@@ -191,7 +191,7 @@ const CartPaymentSection = ({
           >
             {!activeSession && isStripeFunc(selectedPaymentMethod)
               ? ' Enter card details'
-              : 'Continue to review'}
+              : 'Continuar pra revisão'}
           </Button>
         </div>
 
@@ -219,7 +219,7 @@ const CartPaymentSection = ({
                   <Text>
                     {isStripeFunc(selectedPaymentMethod) && cardBrand
                       ? cardBrand
-                      : 'Another step will appear'}
+                      : 'O próximo passo vai aparecer aqui'}
                   </Text>
                 </div>
               </div>

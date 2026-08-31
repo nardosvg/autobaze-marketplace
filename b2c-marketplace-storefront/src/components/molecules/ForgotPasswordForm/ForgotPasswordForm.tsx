@@ -43,7 +43,7 @@ const Form = () => {
     const result = await sendResetPasswordEmail(data.email);
 
     if (!result.success) {
-      toast.error({ title: result.error || 'An error occurred. Please try again.' });
+      toast.error({ title: result.error || 'Ocorreu um erro. Tente novamente.' });
       return;
     }
 

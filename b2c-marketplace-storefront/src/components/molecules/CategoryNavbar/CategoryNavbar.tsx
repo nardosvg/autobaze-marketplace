@@ -100,7 +100,7 @@ export const CategoryNavbar = ({
           )}
           data-testid="category-link-all-products"
         >
-          All Products
+          Todas as peças
         </LocalizedClientLink>
 
         {filteredCategories.map(({ id, handle, name, category_children }) => {

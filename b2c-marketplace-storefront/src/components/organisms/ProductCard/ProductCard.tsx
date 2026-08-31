@@ -68,18 +68,18 @@ export const ProductCard = ({
         </LocalizedClientLink>
         <LocalizedClientLink
           href={`/products/${product.handle}`}
-          aria-label={`See more about ${productName}`}
-          title={`See more about ${productName}`}
+          aria-label={`Ver mais sobre ${productName}`}
+          title={`Ver mais sobre ${productName}`}
         >
           <Button className="absolute rounded-sm bg-action text-action-on-primary h-auto lg:h-[48px] lg:group-hover:block hidden w-full uppercase bottom-1 z-10" data-testid="product-card-see-more-button">
-            See More
+            Ver mais
           </Button>
         </LocalizedClientLink>
       </div>
       <LocalizedClientLink
         href={`/products/${product.handle}`}
-        aria-label={`Go to ${productName} page`}
-        title={`Go to ${productName} page`}
+        aria-label={`Ir pra página de ${productName}`}
+        title={`Ir pra página de ${productName}`}
       >
         <div className="flex justify-between p-4" data-testid="product-card-info">
           <div className="w-full">

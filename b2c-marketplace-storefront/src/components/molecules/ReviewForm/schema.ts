@@ -2,10 +2,10 @@ import { z } from "zod"
 
 export const reviewSchema = z.object({
   sellerId: z.string(),
-  rating: z.number().min(1, "Please rate this seller").max(5),
+  rating: z.number().min(1, "Dê uma nota pra esta loja").max(5),
   opinion: z
     .string()
-    .max(300, "Opinion must be less than 300 characters")
+    .max(300, "A avaliação deve ter menos de 300 caracteres")
     .optional(),
 })
 

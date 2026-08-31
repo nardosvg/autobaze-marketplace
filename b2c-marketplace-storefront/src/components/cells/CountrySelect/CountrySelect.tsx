@@ -64,7 +64,7 @@ const CountrySelect = forwardRef<
                 <span className="block truncate">
                   {countryOptions?.find(
                     (country) => country.value === props.value
-                  )?.label || "Choose a country"}
+                  )?.label || "Escolha o país"}
                 </span>
                 <ChevronUpDown
                   className={clx("transition-rotate duration-200", {

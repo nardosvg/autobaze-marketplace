@@ -132,7 +132,7 @@ export const CartAddressSection = ({
         {isAddress && !searchParams.get("step") && (
           <LocalizedClientLink href="/checkout?step=delivery">
             <Button className="mt-6" variant="tonal">
-              Continue to Delivery
+              Continuar pra entrega
             </Button>
           </LocalizedClientLink>
         )}

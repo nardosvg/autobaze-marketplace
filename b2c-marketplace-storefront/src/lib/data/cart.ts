@@ -54,7 +54,7 @@ export async function getOrSetCart(countryCode: string) {
   const region = await getRegion(countryCode);
 
   if (!region) {
-    throw new Error(`Region not found for country code: ${countryCode}`);
+    throw new Error(`Região não encontrada pro país: ${countryCode}`);
   }
 
   let cart = await retrieveCart();
@@ -86,7 +86,7 @@ export async function updateCart(data: HttpTypes.StoreUpdateCart) {
   const cartId = await getCartId();
 
   if (!cartId) {
-    throw new Error('No existing cart found, please create one before updating');
+    throw new Error('Carrinho não encontrado, crie um antes de atualizar');
   }
 
   const headers = {
@@ -116,13 +116,13 @@ export async function addToCart({
   countryCode: string;
 }) {
   if (!variantId && !offerId) {
-    throw new Error('Missing variant ID when adding to cart');
+    throw new Error('Variante não informada ao adicionar ao carrinho');
   }
 
   const cart = await getOrSetCart(countryCode);
 
   if (!cart) {
-    throw new Error('Error retrieving or creating cart');
+    throw new Error('Erro ao carregar ou criar o carrinho');
   }
 
   const headers = {
@@ -284,7 +284,7 @@ export async function applyPromotions(codes: string[]) {
   const cartId = await getCartId();
 
   if (!cartId) {
-    return { success: false, error: "No existing cart found" }
+    return { success: false, error: "Carrinho não encontrado" }
   }
 
   const headers = {
@@ -309,7 +309,7 @@ export async function applyPromotions(codes: string[]) {
     const errorMessage =
       error?.response?.data?.message ||
       error?.message ||
-      "Failed to apply promotion code"
+      "Não foi possível aplicar o cupom"
     return { success: false, error: errorMessage }
   }
 }
@@ -318,7 +318,7 @@ export async function removeShippingMethod(shippingMethodId: string) {
   const cartId = await getCartId();
 
   if (!cartId) {
-    throw new Error('No existing cart found');
+    throw new Error('Carrinho não encontrado');
   }
 
   const headers = {
@@ -343,7 +343,7 @@ export async function deletePromotionCode(promoId: string) {
   const cartId = await getCartId();
 
   if (!cartId) {
-    throw new Error('No existing cart found');
+    throw new Error('Carrinho não encontrado');
   }
   const headers = {
     ...(await getAuthHeaders()),
@@ -367,11 +367,11 @@ export async function deletePromotionCode(promoId: string) {
 export async function setAddresses(currentState: unknown, formData: FormData) {
   try {
     if (!formData) {
-      throw new Error('No form data found when setting addresses');
+      throw new Error('Dados do formulário não encontrados ao salvar endereços');
     }
     const cartId = getCartId();
     if (!cartId) {
-      throw new Error('No existing cart found when setting addresses');
+      throw new Error('Carrinho não encontrado ao salvar endereços');
     }
 
     const data = {
@@ -424,7 +424,7 @@ export async function placeOrder(cartId?: string) {
   const id = cartId || (await getCartId());
 
   if (!id) {
-    throw new Error('No existing cart found when placing an order');
+    throw new Error('Carrinho não encontrado ao finalizar o pedido');
   }
 
   const headers = {
@@ -459,7 +459,7 @@ export async function updateRegion(countryCode: string, currentPath: string) {
   const region = await getRegion(countryCode);
 
   if (!region) {
-    throw new Error(`Region not found for country code: ${countryCode}`);
+    throw new Error(`Região não encontrada pro país: ${countryCode}`);
   }
 
   if (cartId) {
@@ -493,7 +493,7 @@ export async function updateRegionWithValidation(
   const region = await getRegion(countryCode);
 
   if (!region) {
-    throw new Error(`Region not found for country code: ${countryCode}`);
+    throw new Error(`Região não encontrada pro país: ${countryCode}`);
   }
 
   let removedItems: string[] = [];
@@ -552,7 +552,7 @@ export async function updateRegionWithValidation(
           await updateCart({ region_id: region.id });
         }
       } catch (fetchError) {
-        throw new Error('Failed to handle incompatible cart items');
+        throw new Error('Não foi possível ajustar itens incompatíveis do carrinho');
       }
     }
 

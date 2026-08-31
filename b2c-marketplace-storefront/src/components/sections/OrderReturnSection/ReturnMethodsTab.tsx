@@ -22,7 +22,7 @@ export const ReturnMethodsTab = ({
         <Card className="flex items-center justify-between p-4">
           {noShippingMethods ? (
             <div className="py-4 text-center font-bold heading-md w-full">
-              No shipping methods available
+              Nenhuma forma de envio disponível
             </div>
           ) : (
             <ul>

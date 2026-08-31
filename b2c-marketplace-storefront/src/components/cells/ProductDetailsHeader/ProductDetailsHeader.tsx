@@ -172,7 +172,7 @@ export const ProductDetailsHeader = ({
       <div className="flex justify-between">
         <div>
           <h2 className="label-md text-secondary">
-            {/* {product?.brand || "No brand"} */}
+            {/* {product?.brand || "Sem marca"} */}
           </h2>
           <h1 className="heading-lg text-primary" data-testid="product-title">{product.title}</h1>
           <div className="mt-2 flex gap-2 items-center" data-testid="product-price-container">

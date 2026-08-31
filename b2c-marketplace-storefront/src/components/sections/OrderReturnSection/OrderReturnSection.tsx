@@ -106,7 +106,7 @@ export const OrderReturnSection = ({
           <div className="col-span-4">
             <div className="mb-4">
               <StepProgressBar
-                steps={["SELECT ITEMS TO RETURN", "SELECT RETURN METHOD"]}
+                steps={["SELECIONE OS ITENS PRA DEVOLVER", "SELECT RETURN METHOD"]}
                 currentStep={tab}
               />
             </div>

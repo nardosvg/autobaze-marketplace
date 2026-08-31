@@ -31,7 +31,7 @@ export default async function UserPage({
               className="label-md text-action-on-secondary uppercase flex items-center gap-2"
             >
               <ArrowLeftIcon className="size-4" />
-              All orders
+              Todos os pedidos
             </Button>
           </LocalizedClientLink>
           <div className="sm:flex items-center justify-between">

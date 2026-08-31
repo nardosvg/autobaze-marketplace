@@ -41,8 +41,8 @@ export const WishlistButton = ({
       });
     } catch (error) {
       toast.error({
-        title: 'Failed to add item to wishlist',
-        description: error instanceof Error ? error?.message : 'An error occurred'
+        title: 'Não foi possível adicionar aos favoritos',
+        description: error instanceof Error ? error?.message : 'Ocorreu um erro'
       });
     } finally {
       setIsWishlistAdding(false);
@@ -58,8 +58,8 @@ export const WishlistButton = ({
       });
     } catch (error) {
       toast.error({
-        title: 'Failed to add item to wishlist',
-        description: error instanceof Error ? error?.message : 'An error occurred'
+        title: 'Não foi possível adicionar aos favoritos',
+        description: error instanceof Error ? error?.message : 'Ocorreu um erro'
       });
     } finally {
       setIsWishlistAdding(false);

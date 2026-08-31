@@ -124,7 +124,7 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
       }
     } catch (error: any) {
       setError(
-        error?.message?.replace('Error setting up the request: ', '') || 'An error occurred'
+        error?.message?.replace('Error setting up the request: ', '') || 'Ocorreu um erro'
       );
     } finally {
       setIsLoadingPrices(false);
@@ -197,7 +197,7 @@ const CartShippingMethodsSection: FC<ShippingProps> = ({ cart, availableShipping
             <div data-testid="delivery-options-container">
               <div className="pb-8 pt-2 md:pt-0">
                 {filteredGroupedBySellerId.length === 0
-                  ? 'No shipping options available'
+                  ? 'Nenhuma opção de frete disponível pra este endereço'
                   : filteredGroupedBySellerId.map(key => (
                       <div
                         key={key}

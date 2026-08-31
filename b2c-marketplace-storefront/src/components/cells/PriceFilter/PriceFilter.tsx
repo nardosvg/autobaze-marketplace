@@ -69,7 +69,7 @@ export const PriceFilter = () => {
         <FilterCheckboxOption
           checked={Boolean(selected)}
           onCheck={selectHandler}
-          label={'On Sale'}
+          label={'Em oferta'}
         />
       </div> */}
     </Accordion>

@@ -73,7 +73,7 @@ export default async function UserPage({
                 className="heading-lg uppercase text-primary"
                 data-testid="no-orders-heading"
               >
-                No orders
+                Nenhum pedido
               </h3>
               <p
                 className="mt-2 text-lg text-secondary"

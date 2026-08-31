@@ -231,7 +231,7 @@ export const searchProducts = async (params: {
   if (!region_id && params.countryCode) {
     const region = await getRegion(params.countryCode);
     if (!region) {
-      throw new Error(`Region not found for country code: ${params.countryCode}`);
+      throw new Error(`Região não encontrada pro país: ${params.countryCode}`);
     }
     region_id = region.id;
   }

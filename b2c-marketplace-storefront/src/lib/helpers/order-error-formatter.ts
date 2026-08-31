@@ -3,8 +3,8 @@ export const orderErrorFormatter = (error: any) => {
     return null
   }
 
-  if (error.message.includes("Not enough stock available")) {
-    return "Not enough stock available"
+  if (error.message.includes("Estoque insuficiente")) {
+    return "Estoque insuficiente"
   }
 
   return error.message

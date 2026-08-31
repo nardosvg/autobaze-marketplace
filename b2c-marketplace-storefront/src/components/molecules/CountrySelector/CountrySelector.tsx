@@ -75,7 +75,7 @@ const CountrySelect = ({ regions }: CountrySelectProps) => {
     } catch (error: any) {
       toast.error({
         title: "Error switching region",
-        description: error?.message || "Failed to update region. Please try again.",
+        description: error?.message || "Não foi possível trocar a região. Tente novamente.",
       })
     }
   }

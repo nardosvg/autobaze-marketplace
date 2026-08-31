@@ -72,7 +72,7 @@ export const MobileCategoryNavbar = ({
           onClick={handleClose}
           className="label-md uppercase px-4 py-3 text-primary hover:bg-secondary/10 transition-colors"
         >
-          All Products
+          Todas as peças
         </LocalizedClientLink>
 
         {filteredCategories.map(({ id, handle, name, category_children }) => {

@@ -42,7 +42,7 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
       }
 
       if (!result.applied) {
-        toast.info({ title: 'Promotion code not found' });
+        toast.info({ title: 'Cupom não encontrado' });
         setHasError(true);
         return;
       }
@@ -61,7 +61,7 @@ export const PromoCode = ({ cart, defaultOpen = false }: { cart: any; defaultOpe
         await deletePromotionCode(code);
         toast.success({ title: 'Promotion code removed' });
       } catch {
-        toast.info({ title: 'Failed to remove promotion code' });
+        toast.info({ title: 'Não foi possível remover o cupom' });
       }
     });
   };

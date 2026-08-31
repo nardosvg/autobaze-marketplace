@@ -28,11 +28,11 @@ export const OrderReturnRequests = ({
     return (
       <div className="mt-8" data-testid="order-return-requests-empty-state">
         <Heading level="h2" className="uppercase text-center heading-lg" data-testid="no-returns-heading">
-          No returns
+          Nenhuma devolução
         </Heading>
         <p className="text-center text-secondary w-96 mt-8 mx-auto" data-testid="no-returns-description">
           {
-            "You haven't requested any returns yet. Once you request a return, it will appear here."
+            "Você ainda não solicitou nenhuma devolução. Quando solicitar, ela aparece aqui."
           }
         </p>
       </div>

@@ -54,7 +54,7 @@ export const SingleOrderReturn = ({
         ...orderItem,
         reason_id:
           returnReason.find((r) => r.id === correspondingLineItem?.reason_id)
-            ?.label || "No reason provided",
+            ?.label || "Sem motivo informado",
       }
     })
 
@@ -158,7 +158,7 @@ export const SingleOrderReturn = ({
                   <div className="flex justify-between w-1/2">
                     <p className="label-md !font-semibold text-primary" data-testid={testIdPrefix ? `${testIdPrefix}-item-${filteredItem.id}-reason` : undefined}>
                       <Badge className="bg-primary text-primary border rounded-sm">
-                        {filteredItem.reason_id || "No reason provided"}
+                        {filteredItem.reason_id || "Sem motivo informado"}
                       </Badge>
                     </p>
                     <p className="label-md !font-semibold text-primary" data-testid={testIdPrefix ? `${testIdPrefix}-item-${filteredItem.id}-price` : undefined}>

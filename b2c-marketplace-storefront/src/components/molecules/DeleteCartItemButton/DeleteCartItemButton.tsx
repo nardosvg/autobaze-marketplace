@@ -20,7 +20,7 @@ export const DeleteCartItemButton = ({
     } catch (error) {
       console.error("Error deleting cart item:", error)
       toast.error({
-        title: "Failed to remove item from cart",
+        title: "Não foi possível remover o item do carrinho",
       })
     }
   }

@@ -3,31 +3,31 @@ import { z } from 'zod';
 export const registerFormSchema = z.object({
   firstName: z
     .string()
-    .nonempty('Please enter first name')
-    .max(50, 'First name must contain up to 50 characters'),
+    .nonempty('Digite o nome')
+    .max(50, 'Nome deve ter até 50 caracteres'),
   lastName: z
     .string()
-    .nonempty('Please enter last name')
-    .max(50, 'Last name must contain up to 50 characters'),
+    .nonempty('Digite o sobrenome')
+    .max(50, 'Sobrenome deve ter até 50 caracteres'),
   email: z
     .string()
-    .nonempty('Please enter email')
+    .nonempty('Digite o e-mail')
     .email('Invalid email')
-    .max(60, 'Email must contain up to 60 characters'),
+    .max(60, 'E-mail deve ter até 60 caracteres'),
   password: z
     .string()
-    .nonempty('Please enter password')
-    .min(8, 'Password must be at least 8 characters long')
+    .nonempty('Digite a senha')
+    .min(8, 'A senha deve ter pelo menos 8 caracteres')
     .regex(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/, {
       message:
-        'Password must contain at least one uppercase letter, one number and one special character'
+        'A senha deve ter pelo menos uma letra maiúscula, um número e um caractere especial'
     })
-    .max(64, 'Password must contain up to 64 characters'),
+    .max(64, 'A senha deve ter até 64 caracteres'),
   phone: z
     .string()
-    .min(6, 'Please enter phone number')
+    .min(6, 'Digite o telefone')
     .regex(/^\+?\d+$/, { message: 'O celular deve conter só números' })
-    .max(20, 'Phone number must contain up to 20 characters')
+    .max(20, 'Telefone deve ter até 20 caracteres')
 });
 
 export type RegisterFormData = z.infer<typeof registerFormSchema>;

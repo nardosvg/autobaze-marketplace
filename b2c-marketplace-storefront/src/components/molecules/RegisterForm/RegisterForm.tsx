@@ -69,7 +69,7 @@ const Form = () => {
     if (res && !res?.id) {
 
       // Temporary solution. Check also for status code when it's fixed by backend
-      const errorMessage = res.toLowerCase().includes('error: identity with email already exists') ? 'It seems the email you entered is already associated with another account. Please log in instead.' : res
+      const errorMessage = res.toLowerCase().includes('error: identity with email already exists') ? 'Esse e-mail já está cadastrado em outra conta. Faça login pra continuar.' : res
       toast.error({ title: errorMessage})
     }
   }

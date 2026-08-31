@@ -41,7 +41,7 @@ export async function generateMetadata({
     languages = { [toHreflang(locale)]: `${baseUrl}/${locale}/categories` }
   }
 
-  const title = "All Products"
+  const title = "Todas as peças"
   const description = `Browse all products on ${
     process.env.NEXT_PUBLIC_SITE_NAME || "our store"
   }`

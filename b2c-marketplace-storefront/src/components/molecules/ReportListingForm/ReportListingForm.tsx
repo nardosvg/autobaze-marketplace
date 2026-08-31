@@ -10,13 +10,13 @@ const reasonOptions = [
   { label: '', value: '', hidden: true },
   {
     label: 'Violação de marca ou direitos autorais',
-    value: 'Trademark, Copyright or DMCA Violation',
+    value: 'Violação de marca ou direitos autorais',
   },
 ];
 
 const formSchema = z.object({
-  reason: z.string().nonempty('Please select reason'),
-  comment: z.string().nonempty('Please add comment'),
+  reason: z.string().nonempty('Selecione o motivo'),
+  comment: z.string().nonempty('Escreva um comentário'),
 });
 
 type FormData = z.infer<typeof formSchema>;

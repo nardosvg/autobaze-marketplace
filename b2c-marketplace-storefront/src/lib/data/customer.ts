@@ -118,7 +118,7 @@ export async function login(formData: FormData) {
   } catch (error: unknown) {
     return {
       success: false,
-      message: (error as Error)?.message || 'Unable to log in. Please try again.'
+      message: (error as Error)?.message || 'Não foi possível entrar. Tente novamente.'
     };
   }
 }
@@ -206,7 +206,7 @@ export const updateCustomerAddress = async (formData: FormData): Promise<any> =>
   const addressId = formData.get('addressId') as string;
 
   if (!addressId) {
-    return { success: false, error: 'Address ID is required' };
+    return { success: false, error: 'ID do endereço é obrigatório' };
   }
 
   const address = {

@@ -54,7 +54,7 @@ const Form = () => {
       router.push('/user');
       await transferCart();
     } else {
-      toast.error({ title: res.message || 'An error occurred. Please try again.' });
+      toast.error({ title: res.message || 'Ocorreu um erro. Tente novamente.' });
     }
 
     setIsAuthError(false);
@@ -67,10 +67,10 @@ const Form = () => {
 
   const getAuthMessage = () => {
     if (isSessionExpired) {
-      return 'Your session has expired. Please log in to continue.';
+      return 'Sua sessão expirou. Faça login pra continuar.';
     }
     if (isSessionRequired) {
-      return 'Please log in to continue.';
+      return 'Faça login pra continuar.';
     }
     return null;
   };

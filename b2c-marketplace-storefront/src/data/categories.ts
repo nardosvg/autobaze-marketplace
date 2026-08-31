@@ -9,6 +9,6 @@ export const categories = {
   bags: 'Bags',
   accessories: 'Accessories',
   brands: 'Brands',
-  'new-in': 'New in',
+  'new-in': 'Novidades',
   sale: 'Sale',
 };

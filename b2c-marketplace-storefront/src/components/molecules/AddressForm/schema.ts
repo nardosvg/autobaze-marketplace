@@ -2,18 +2,18 @@ import { z } from "zod"
 
 export const addressSchema = z.object({
   addressId: z.string().optional(),
-  addressName: z.string().nonempty("Address name is required"),
-  firstName: z.string().nonempty("First name is required"),
-  lastName: z.string().nonempty("Last name is required"),
-  address: z.string().nonempty("Address is required"),
-  city: z.string().nonempty("City is required"),
-  countryCode: z.string().nonempty("Country is required"),
-  postalCode: z.string().nonempty("Postal code is required"),
+  addressName: z.string().nonempty("Nome do endereço é obrigatório"),
+  firstName: z.string().nonempty("Nome é obrigatório"),
+  lastName: z.string().nonempty("Sobrenome é obrigatório"),
+  address: z.string().nonempty("Endereço é obrigatório"),
+  city: z.string().nonempty("Cidade é obrigatória"),
+  countryCode: z.string().nonempty("País é obrigatório"),
+  postalCode: z.string().nonempty("CEP é obrigatório"),
   company: z.string().optional(),
   province: z.string().optional(),
   phone: z
     .string()
-    .nonempty("Phone number is required")
+    .nonempty("Telefone é obrigatório")
     .regex(/^\+?[0-9\s\-()]+$/, "Invalid phone number format"),
   metadata: z.record(z.any()).optional(),
 })

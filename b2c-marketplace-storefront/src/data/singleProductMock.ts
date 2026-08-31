@@ -21,7 +21,7 @@ export const singleProduct = {
     { label: 'UK 4', disabled: false },
     { label: 'UK 4.5', disabled: true },
   ],
-  condition: 'New with box',
+  condition: 'Novo na caixa',
   images: [
     {
       id: '1',
