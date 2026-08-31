@@ -14,13 +14,25 @@ export const MeiosPagamento = () => (
   <div id="pagamentos" className="rounded-md border bg-white p-4 scroll-mt-24" data-testid="payment-methods-card">
     <h3 className="text-base font-semibold text-neutral-900">Meios de pagamento</h3>
 
-    <p className="mt-3 text-sm font-medium text-neutral-900">Cartões de crédito</p>
+    <p className="mt-3 text-sm font-medium text-neutral-900">Pix</p>
+    <p className="text-sm text-secondary">Aprovação na hora</p>
+    <div className="mt-2">
+      <Bandeira nome="Pix" />
+    </div>
+
+    <p className="mt-4 text-sm font-medium text-neutral-900">Cartões de crédito</p>
     <p className="text-sm text-secondary">Pague em até 12x</p>
     <div className="mt-2 flex flex-wrap gap-2">
       <Bandeira nome="Visa" />
       <Bandeira nome="Master" />
       <Bandeira nome="Elo" />
       <Bandeira nome="Amex" />
+      <Bandeira nome="Hipercard" />
+    </div>
+
+    <p className="mt-4 text-sm font-medium text-neutral-900">Boleto bancário</p>
+    <div className="mt-2">
+      <Bandeira nome="Boleto" />
     </div>
 
     <p className="mt-4 text-xs text-secondary">
