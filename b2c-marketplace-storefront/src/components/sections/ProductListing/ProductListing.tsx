@@ -12,12 +12,15 @@ export const ProductListing = async ({
   category_id,
   collection_id,
   seller_id,
+  query,
   showSidebar = false,
   locale = process.env.NEXT_PUBLIC_DEFAULT_REGION || "pl",
 }: {
   category_id?: string
   collection_id?: string
   seller_id?: string
+  /** Texto da busca do header — vai como `q` pro /store/products. */
+  query?: string
   showSidebar?: boolean
   locale?: string
 }) => {
@@ -29,6 +32,7 @@ export const ProductListing = async ({
     sortBy: "created_at",
     queryParams: {
       limit: PRODUCT_LIMIT,
+      ...(query ? { q: query } : {}),
     },
   })
 

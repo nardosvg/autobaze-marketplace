@@ -1,0 +1,6 @@
+export { MLHero } from "./MLHero"
+export { MLOfertas } from "./MLOfertas"
+export { MLCategoriasBanners } from "./MLCategoriasBanners"
+export { MLCategoriasCirculos } from "./MLCategoriasCirculos"
+export { MLLojas } from "./MLLojas"
+export { MLBeneficios } from "./MLBeneficios"

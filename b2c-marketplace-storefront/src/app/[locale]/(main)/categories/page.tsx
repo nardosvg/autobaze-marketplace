@@ -70,10 +70,13 @@ const ALGOLIA_SEARCH_KEY = process.env.NEXT_PUBLIC_ALGOLIA_SEARCH_KEY
 
 async function AllCategories({
   params,
+  searchParams,
 }: {
   params: Promise<{ locale: string }>
+  searchParams?: Promise<{ query?: string }>
 }) {
   const { locale } = await params
+  const query = (await searchParams)?.query?.trim() || undefined
 
   const ua = (await headers()).get("user-agent") || ""
   const bot = isBot(ua)
@@ -81,7 +84,7 @@ async function AllCategories({
   const breadcrumbsItems = [
     {
       path: "/",
-      label: "All Products",
+      label: "Todas as peças",
     },
   ]
 
@@ -141,11 +144,13 @@ async function AllCategories({
         <Breadcrumbs items={breadcrumbsItems} />
       </div>
 
-      <h1 className="heading-xl uppercase">All Products</h1>
+      <h1 className="heading-xl uppercase">
+        {query ? `Resultados para "${query}"` : "Todas as peças"}
+      </h1>
 
       <Suspense fallback={<div data-testid="all-categories-page-loading"><ProductListingSkeleton /></div>}>
         {bot || !ALGOLIA_ID || !ALGOLIA_SEARCH_KEY ? (
-          <ProductListing showSidebar locale={locale} />
+          <ProductListing showSidebar locale={locale} query={query} />
         ) : (
           <AlgoliaProductsListing
             locale={locale}

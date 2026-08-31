@@ -9,6 +9,8 @@ interface CartContextInterface {
   onAddToCart: (item: StoreCartLineItemOptimisticUpdate, currency_code: string) => void;
   addToCart: (params: {
     variantId: string;
+    /** Oferta escolhida no buybox (core exige offer_id no line item). */
+    offerId?: string;
     quantity: number;
     countryCode: string;
   }) => Promise<void>;

@@ -74,7 +74,9 @@ export const listProducts = async ({
     }>(`/store/products`, {
       method: 'GET',
       query: {
-        country_code: countryCode,
+        // country_code NAO vai: o core 2.3.1 responde 400 "Unrecognized
+        // fields" e a listagem inteira cai no catch com lista vazia (home,
+        // categorias e busca sem nenhum card). region_id ja resolve preco.
         category_id,
         collection_id,
         limit,
@@ -94,20 +96,19 @@ export const listProducts = async ({
 
       const nextPage = count > offset + limit ? pageParam + 1 : null;
 
-      const response = products.filter(prod => {
+      // Produto master do modelo de ofertas nao tem `seller` proprio (quem
+      // tem e' cada oferta), entao nao filtramos por seller: so normalizamos
+      // reviews quando o seller existir.
+      const response = products.map(prod => {
         // @ts-ignore Property 'seller' exists but TypeScript doesn't recognize it
-        const reviews = prod.seller?.reviews.filter(item => !!item) ?? [];
-        return (
-          // @ts-ignore Property 'seller' exists but TypeScript doesn't recognize it
-          prod?.seller && {
-            ...prod,
-            seller: {
-              // @ts-ignore Property 'seller' exists but TypeScript doesn't recognize it
-              ...prod.seller,
-              reviews
-            }
-          }
-        );
+        if (!prod?.seller) return prod;
+        // @ts-ignore
+        const reviews = prod.seller?.reviews?.filter((item: unknown) => !!item) ?? [];
+        return {
+          ...prod,
+          // @ts-ignore
+          seller: { ...prod.seller, reviews }
+        };
       });
 
       return {

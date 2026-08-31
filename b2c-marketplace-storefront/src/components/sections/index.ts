@@ -27,3 +27,4 @@ export {
   AlgoliaProductsListing,
   OrdersPagination,
 }
+export * from "./HomeHero/HomeHero"

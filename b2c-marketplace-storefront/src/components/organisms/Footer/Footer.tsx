@@ -1,70 +1,65 @@
+import Link from "next/link"
+
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
-import footerLinks from "@/data/footerLinks"
+import { listCategories } from "@/lib/data/categories"
 
-export function Footer() {
+// ---------------------------------------------------------------------------
+// Footer estilo Mercado Livre: mega-lista de categorias em colunas + barra
+// institucional. Categorias vem da API; links institucionais apontam pro
+// AutoBaze (termos/privacidade em operify.com.br/legal, suporte no WhatsApp).
+// ---------------------------------------------------------------------------
+
+const INSTITUCIONAL = [
+  { label: "Vender no marketplace", href: "https://app.autobaze.com.br/canais-online/marketplace" },
+  { label: "Termos e condições", href: "https://operify.com.br/legal/termos" },
+  { label: "Privacidade", href: "https://operify.com.br/legal/privacidade" },
+  { label: "Contato", href: "https://wa.me/5541987444662" },
+]
+
+export const Footer = async () => {
+  let categorias: { id: string; name: string; handle: string }[] = []
+  try {
+    const res = await listCategories()
+    const parents = res?.parentCategories ?? []
+    categorias = parents.length ? parents : res?.categories ?? []
+  } catch {
+    // footer sem categorias ainda e footer
+  }
+
   return (
-    <footer className="bg-primary container" data-testid="footer">
-      <div className="grid grid-cols-1 lg:grid-cols-3">
-        {/* Customer Services Column */}
-        <div className="p-6 border rounded-sm" data-testid="footer-customer-services">
-          <h2 className="heading-sm text-primary mb-3 uppercase">
-            Customer services
-          </h2>
-          <nav className="space-y-3" aria-label="Customer services navigation">
-            {footerLinks.customerServices.map(({ label, path }) => (
+    <footer className="mt-12 border-t bg-white text-neutral-700" data-testid="footer">
+      {categorias.length > 0 && (
+        <div className="container mx-auto px-4 py-10 lg:px-8">
+          <h2 className="mb-6 text-2xl font-medium text-neutral-900">Peças e acessórios</h2>
+          <div className="grid grid-cols-2 gap-x-8 gap-y-3 rounded-md border p-6 sm:grid-cols-3 lg:grid-cols-5">
+            {categorias.map((c) => (
               <LocalizedClientLink
-                key={label}
-                href={path}
-                className="block label-md"
-                data-testid={`footer-link-${label.toLowerCase().replace(/\s+/g, '-')}`}
+                key={c.id}
+                href={`/categories/${c.handle}`}
+                className="text-sm text-neutral-600 hover:text-[#0F52FF]"
               >
-                {label}
+                {c.name}
               </LocalizedClientLink>
             ))}
-          </nav>
+          </div>
         </div>
+      )}
 
-        {/* About Column */}
-        <div className="p-6 border rounded-sm" data-testid="footer-about">
-          <h2 className="heading-sm text-primary mb-3 uppercase">About</h2>
-          <nav className="space-y-3" aria-label="About navigation">
-            {footerLinks.about.map(({ label, path }) => (
-              <LocalizedClientLink
-                key={label}
-                href={path}
-                className="block label-md"
-                data-testid={`footer-link-${label.toLowerCase().replace(/\s+/g, '-')}`}
-              >
-                {label}
-              </LocalizedClientLink>
+      <div className="border-t">
+        <div className="container mx-auto flex flex-col gap-3 px-4 py-6 text-xs text-neutral-600 lg:px-8">
+          <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Institucional">
+            {INSTITUCIONAL.map((l) => (
+              <Link key={l.href} href={l.href} className="hover:text-[#0F52FF]">
+                {l.label}
+              </Link>
             ))}
           </nav>
+          <p>© {new Date().getFullYear()} AutoBaze Marketplace. Todos os direitos reservados.</p>
+          <p className="text-neutral-400">
+            Lojas independentes vendem e entregam os produtos. Toda compra acompanha nota fiscal
+            emitida pela loja vendedora.
+          </p>
         </div>
-
-        {/* Connect Column */}
-        <div className="p-6 border rounded-sm" data-testid="footer-connect">
-          <h2 className="heading-sm text-primary mb-3 uppercase">connect</h2>
-          <nav className="space-y-3" aria-label="Social media navigation">
-            {footerLinks.connect.map(({ label, path }) => (
-              <a
-                aria-label={`Go to ${label} page`}
-                title={`Go to ${label} page`}
-                key={label}
-                href={path}
-                className="block label-md"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid={`footer-link-${label.toLowerCase().replace(/\s+/g, '-')}`}
-              >
-                {label}
-              </a>
-            ))}
-          </nav>
-        </div>
-      </div>
-
-      <div className="py-6 border rounded-sm " data-testid="footer-copyright">
-        <p className="text-md text-secondary text-center ">© 2026 AutoBaze Marketplace</p>
       </div>
     </footer>
   )
