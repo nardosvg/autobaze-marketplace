@@ -75,3 +75,4 @@ export { CompraBox } from './CompraBox/CompraBox';
 export { MeiosPagamento } from './MeiosPagamento/MeiosPagamento';
 export { PerguntasProduto } from './PerguntasProduto/PerguntasProduto';
 export { AplicacoesVeiculos } from './AplicacoesVeiculos/AplicacoesVeiculos';
+export { CompatibilidadeVeiculo } from './CompatibilidadeVeiculo/CompatibilidadeVeiculo';

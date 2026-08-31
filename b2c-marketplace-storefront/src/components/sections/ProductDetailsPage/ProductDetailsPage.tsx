@@ -18,7 +18,7 @@ import { getFotosAvaliacoes } from "@/lib/data/avaliacoes-fotos"
 import { retrieveCustomer } from "@/lib/data/customer"
 import { getUserWishlists } from "@/lib/data/wishlist"
 import type { Wishlist } from "@/types/wishlist"
-import { PerguntasProduto } from "@/components/cells"
+import { CompatibilidadeVeiculo, PerguntasProduto } from "@/components/cells"
 import NotFound from "@/app/not-found"
 import { HttpTypes } from "@medusajs/types"
 
@@ -138,6 +138,13 @@ export const ProductDetailsPage = async ({
           <CardLoja seller={sellerPrincipal} />
           <MeiosPagamento />
         </aside>
+      </div>
+
+      {/* Verificador de compatibilidade (FIPE), estilo ML */}
+      <div className="mt-8">
+        <CompatibilidadeVeiculo
+          masterId={((prod.metadata as any)?.catalogo_master_id as string) ?? null}
+        />
       </div>
 
       <div className="mt-12 space-y-12">
