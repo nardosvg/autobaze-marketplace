@@ -17,12 +17,14 @@ import { HttpTypes } from "@medusajs/types"
 export const ProductDetails = async ({
   product,
   locale,
+  avaliacoes,
 }: {
   product: HttpTypes.StoreProduct & {
     seller?: SellerProps
     attribute_values?: AdditionalAttributeProps[]
   }
   locale: string
+  avaliacoes?: { media: number; total: number }
 }) => {
   const user = await retrieveCustomer()
 
@@ -38,6 +40,7 @@ export const ProductDetails = async ({
         locale={locale}
         user={user}
         wishlist={wishlist}
+        avaliacoes={avaliacoes}
       />
       <ProductPageDetails details={product?.description || ""} />
       <ProductAdditionalAttributes

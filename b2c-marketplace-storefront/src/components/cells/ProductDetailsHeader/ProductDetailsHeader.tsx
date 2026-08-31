@@ -50,11 +50,13 @@ export const ProductDetailsHeader = ({
   locale,
   user,
   wishlist,
+  avaliacoes,
 }: {
   product: HttpTypes.StoreProduct & { seller?: SellerProps }
   locale: string
   user: HttpTypes.StoreCustomer | null
   wishlist?: Wishlist
+  avaliacoes?: { media: number; total: number }
 }) => {
   const { addToCart, onAddToCart, cart, isAddingItem } = useCartContext()
   const { allSearchParams } = useGetAllSearchParams()
@@ -175,6 +177,27 @@ export const ProductDetailsHeader = ({
             {/* {product?.brand || "Sem marca"} */}
           </h2>
           <h1 className="heading-lg text-primary" data-testid="product-title">{product.title}</h1>
+          {avaliacoes && avaliacoes.total > 0 && (
+            <a
+              href="#avaliacoes"
+              className="mt-1 flex items-center gap-2 text-sm text-secondary hover:underline"
+              data-testid="product-rating-summary"
+            >
+              <span className="font-medium text-primary">
+                {avaliacoes.media.toFixed(1).replace(".", ",")}
+              </span>
+              <span className="relative inline-block leading-none" aria-hidden>
+                <span className="text-[15px] tracking-tight text-neutral-300">★★★★★</span>
+                <span
+                  className="absolute inset-y-0 left-0 overflow-hidden whitespace-nowrap"
+                  style={{ width: `${Math.max(0, Math.min(5, avaliacoes.media)) * 20}%` }}
+                >
+                  <span className="text-[15px] tracking-tight text-[#0F52FF]">★★★★★</span>
+                </span>
+              </span>
+              <span>({avaliacoes.total})</span>
+            </a>
+          )}
           <div className="mt-2 flex gap-2 items-center" data-testid="product-price-container">
             {hasAnyPrice && variantPrice ? (
               <>

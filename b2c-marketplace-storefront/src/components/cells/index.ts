@@ -65,3 +65,7 @@ export {
   WishlistItem,
   ProductAdditionalAttributes
 };
+
+// Pagina de produto estilo Mercado Livre
+export { AvaliacoesProduto, EstrelasNota } from './AvaliacoesProduto/AvaliacoesProduto';
+export { BreadcrumbCategorias } from './BreadcrumbCategorias/BreadcrumbCategorias';
