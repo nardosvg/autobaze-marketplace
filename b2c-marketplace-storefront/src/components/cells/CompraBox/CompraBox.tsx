@@ -100,9 +100,13 @@ export const CompraBox = ({
     ofertasRanqueadas[0] ??
     null
 
+  // Fonte da verdade do estoque: a OFERTA (modelo marketplace — a variante
+  // master nao carrega estoque proprio). Sem oferta, cai no estoque da
+  // variante (produto fora do modelo de ofertas).
   const estoqueOferta = ofertaAtiva ? ofertaAtiva.estoque : variantStock
-  const desabilitado =
-    !variantStock || !variantHasPrice || !hasAnyPrice || maxLimitReached
+  const desabilitado = ofertaAtiva
+    ? estoqueOferta <= 0 || !hasAnyPrice
+    : !variantStock || !variantHasPrice || !hasAnyPrice || maxLimitReached
 
   const adicionar = async () => {
     if (desabilitado || !variantId) return false

@@ -20,17 +20,21 @@ export interface ProductOffer {
   estoque: number;
 }
 
+interface RawInventoryLink {
+  inventory_item?: {
+    location_levels?: { stocked_quantity?: number; reserved_quantity?: number }[];
+  } | null;
+}
+
 interface RawOffer {
   id: string;
   variant_id: string;
   sku: string | null;
   seller?: { id: string; name: string; handle: string } | null;
   prices?: { amount: number; currency_code: string; min_quantity?: number | null }[];
-  inventory_item_link?: {
-    inventory_item?: {
-      location_levels?: { stocked_quantity?: number; reserved_quantity?: number }[];
-    } | null;
-  } | null;
+  // A API devolve um ARRAY de links (1 por inventory item); versoes antigas
+  // devolviam objeto unico — tratamos os dois.
+  inventory_item_link?: RawInventoryLink[] | RawInventoryLink | null;
 }
 
 export async function getProductOffers(productId: string): Promise<ProductOffer[]> {
@@ -48,9 +52,18 @@ export async function getProductOffers(productId: string): Promise<ProductOffer[
         offer.prices?.find(p => p.currency_code === 'brl' && !p.min_quantity) ??
         offer.prices?.[0] ??
         null;
-      const levels = offer.inventory_item_link?.inventory_item?.location_levels ?? [];
-      const estoque = levels.reduce(
-        (acc, l) => acc + Math.max(0, (l.stocked_quantity ?? 0) - (l.reserved_quantity ?? 0)),
+      const links: RawInventoryLink[] = Array.isArray(offer.inventory_item_link)
+        ? offer.inventory_item_link
+        : offer.inventory_item_link
+        ? [offer.inventory_item_link]
+        : [];
+      const estoque = links.reduce(
+        (acc, link) =>
+          acc +
+          (link?.inventory_item?.location_levels ?? []).reduce(
+            (a, l) => a + Math.max(0, (l.stocked_quantity ?? 0) - (l.reserved_quantity ?? 0)),
+            0
+          ),
         0
       );
       return {
