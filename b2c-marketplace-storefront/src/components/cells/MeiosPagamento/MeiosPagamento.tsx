@@ -1,12 +1,17 @@
+/* eslint-disable @next/next/no-img-element */
+
 // ---------------------------------------------------------------------------
-// Card "Meios de pagamento" da coluna direita (estilo Mercado Livre).
-// Mostra so' o que o checkout aceita de verdade hoje (cartao de credito);
-// quando Pix/boleto entrarem no checkout, adiciona aqui.
+// Card "Meios de pagamento" da coluna direita (estilo Mercado Livre), com os
+// meios aceitos pelo nosso gateway: Pix, cartoes de credito e boleto.
+// Logos em /public/pagamentos (SVGs locais, sem CDN).
 // ---------------------------------------------------------------------------
 
-const Bandeira = ({ nome }: { nome: string }) => (
-  <span className="inline-flex h-8 items-center rounded-sm border bg-white px-2.5 text-xs font-bold uppercase tracking-wide text-neutral-700">
-    {nome}
+const LogoCartao = ({ nome, arquivo }: { nome: string; arquivo: string }) => (
+  <span
+    className="inline-flex h-9 w-14 items-center justify-center rounded-sm border bg-white p-1"
+    title={nome}
+  >
+    <img src={`/pagamentos/${arquivo}.svg`} alt={nome} className="max-h-full max-w-full" />
   </span>
 )
 
@@ -16,23 +21,25 @@ export const MeiosPagamento = () => (
 
     <p className="mt-3 text-sm font-medium text-neutral-900">Pix</p>
     <p className="text-sm text-secondary">Aprovação na hora</p>
-    <div className="mt-2">
-      <Bandeira nome="Pix" />
+    <div className="mt-2 flex items-center gap-1.5">
+      <img src="/pagamentos/pix.svg" alt="" className="h-5 w-5" />
+      <span className="text-lg font-semibold lowercase tracking-tight text-[#32BCAD]">pix</span>
     </div>
 
     <p className="mt-4 text-sm font-medium text-neutral-900">Cartões de crédito</p>
     <p className="text-sm text-secondary">Pague em até 12x</p>
     <div className="mt-2 flex flex-wrap gap-2">
-      <Bandeira nome="Visa" />
-      <Bandeira nome="Master" />
-      <Bandeira nome="Elo" />
-      <Bandeira nome="Amex" />
-      <Bandeira nome="Hipercard" />
+      <LogoCartao nome="Visa" arquivo="visa" />
+      <LogoCartao nome="Mastercard" arquivo="mastercard" />
+      <LogoCartao nome="Elo" arquivo="elo" />
+      <LogoCartao nome="American Express" arquivo="amex" />
+      <LogoCartao nome="Hipercard" arquivo="hipercard" />
     </div>
 
     <p className="mt-4 text-sm font-medium text-neutral-900">Boleto bancário</p>
     <div className="mt-2">
-      <Bandeira nome="Boleto" />
+      <img src="/pagamentos/boleto.svg" alt="Boleto bancário" className="h-7 w-auto" />
+      <p className="mt-0.5 text-xs text-secondary">Boleto</p>
     </div>
 
     <p className="mt-4 text-xs text-secondary">
