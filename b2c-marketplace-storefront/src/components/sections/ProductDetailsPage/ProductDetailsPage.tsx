@@ -16,6 +16,8 @@ import { getSellerFull } from "@/lib/data/sellers"
 import { getPerguntas } from "@/lib/data/perguntas"
 import { getFotosAvaliacoes } from "@/lib/data/avaliacoes-fotos"
 import { retrieveCustomer } from "@/lib/data/customer"
+import { getUserWishlists } from "@/lib/data/wishlist"
+import type { Wishlist } from "@/types/wishlist"
 import { PerguntasProduto } from "@/components/cells"
 import NotFound from "@/app/not-found"
 import { HttpTypes } from "@medusajs/types"
@@ -98,6 +100,12 @@ export const ProductDetailsPage = async ({
     retrieveCustomer().catch(() => null),
   ])
   const logado = !!user
+  let wishlist: Wishlist = { products: [] }
+  if (logado) {
+    wishlist = await getUserWishlists({ countryCode: locale }).catch(() => ({
+      products: [],
+    }))
+  }
 
   const maisDaLoja = (prod.seller?.products ?? [])
     .filter((p: any) => p && p.id !== prod.id)
@@ -125,7 +133,7 @@ export const ProductDetailsPage = async ({
         </div>
         {/* Coluna direita: compra sempre visivel + loja + pagamento */}
         <aside className="space-y-4 md:col-span-2 lg:col-span-3">
-          <CompraBox product={prod} locale={locale} />
+          <CompraBox product={prod} locale={locale} logado={logado} wishlist={wishlist} />
           <CardLoja seller={sellerPrincipal} />
           <MeiosPagamento />
         </aside>
