@@ -122,6 +122,7 @@ export const ProductDetailsPage = async ({
       <div className="mb-6">
         <CompatibilidadeVeiculo
           masterId={((prod.metadata as any)?.catalogo_master_id as string) ?? null}
+          logado={logado}
         />
       </div>
 

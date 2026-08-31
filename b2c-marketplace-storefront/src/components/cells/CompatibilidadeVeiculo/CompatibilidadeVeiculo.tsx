@@ -12,6 +12,12 @@ import {
   type OpcaoVeiculo,
   type VersaoVeiculo,
 } from "@/lib/data/veiculos"
+import {
+  getVeiculosSalvos,
+  removerVeiculoConta,
+  salvarVeiculoConta,
+  type VeiculoSalvoConta,
+} from "@/lib/data/veiculos-conta"
 import { toast } from "@/lib/helpers/toast"
 
 // ---------------------------------------------------------------------------
@@ -40,7 +46,13 @@ const IconeCarro = ({ className = "" }: { className?: string }) => (
 const selectCls =
   "h-11 w-full rounded-sm border bg-white px-3 text-sm text-neutral-800 focus:border-[#0F52FF] focus:outline-none disabled:border-dashed disabled:text-neutral-400"
 
-export const CompatibilidadeVeiculo = ({ masterId }: { masterId?: string | null }) => {
+export const CompatibilidadeVeiculo = ({
+  masterId,
+  logado = false,
+}: {
+  masterId?: string | null
+  logado?: boolean
+}) => {
   const [marcas, setMarcas] = useState<OpcaoVeiculo[]>([])
   const [modelos, setModelos] = useState<OpcaoVeiculo[]>([])
   const [versoes, setVersoes] = useState<VersaoVeiculo[]>([])
@@ -53,27 +65,41 @@ export const CompatibilidadeVeiculo = ({ masterId }: { masterId?: string | null 
   const [placa, setPlaca] = useState("")
   const [buscandoPlaca, setBuscandoPlaca] = useState(false)
   const [verificando, setVerificando] = useState(false)
+  const [garagem, setGaragem] = useState<VeiculoSalvoConta[]>([])
   const [resultado, setResultado] = useState<{
     compativel: boolean
     label: string
   } | null>(null)
 
-  // Marcas na primeira renderizacao + veiculo salvo -> veredito automatico
+  // Marcas na primeira renderizacao + veiculo salvo (conta > navegador) ->
+  // veredito automatico
   useEffect(() => {
     getMarcasVeiculo().then(setMarcas).catch(() => {})
     if (!masterId) return
+
+    const veredito = (vid: string, label: string) =>
+      verificarCompatibilidade(masterId, vid).then((r) => {
+        if ("compativel" in r) setResultado({ compativel: r.compativel, label })
+      })
+
+    if (logado) {
+      getVeiculosSalvos()
+        .then((vs) => {
+          setGaragem(vs)
+          if (vs[0]) void veredito(vs[0].ano_modelo_id, vs[0].label)
+        })
+        .catch(() => {})
+      return
+    }
     try {
       const salvo = localStorage.getItem(STORAGE_KEY)
       if (!salvo) return
       const v = JSON.parse(salvo) as VeiculoSalvo
-      if (!v?.vid) return
-      verificarCompatibilidade(masterId, v.vid).then((r) => {
-        if ("compativel" in r) setResultado({ compativel: r.compativel, label: v.label })
-      })
+      if (v?.vid) void veredito(v.vid, v.label)
     } catch {
       // storage indisponivel — segue com o form
     }
-  }, [masterId])
+  }, [masterId, logado])
 
   const escolherMarca = useCallback((id: string) => {
     setMarcaId(id)
@@ -126,7 +152,7 @@ export const CompatibilidadeVeiculo = ({ masterId }: { masterId?: string | null 
     return [marca, modelo, ano, v?.motor, v?.versao].filter(Boolean).join(" ")
   }, [marcas, modelos, versoes, marcaId, modeloId, ano, versaoId])
 
-  const verificar = async (vid: string, label: string) => {
+  const verificar = async (vid: string, label: string, placaDoVeiculo?: string) => {
     if (!masterId || !vid) return
     setVerificando(true)
     const r = await verificarCompatibilidade(masterId, vid)
@@ -141,6 +167,12 @@ export const CompatibilidadeVeiculo = ({ masterId }: { masterId?: string | null 
     } catch {
       // sem storage, sem persistencia — ok
     }
+    // Logado: veiculo vai pra garagem da conta (nao precisa digitar de novo)
+    if (logado) {
+      void salvarVeiculoConta({ ano_modelo_id: vid, label, placa: placaDoVeiculo ?? null }).then(
+        () => getVeiculosSalvos().then(setGaragem).catch(() => {})
+      )
+    }
   }
 
   const buscarPlaca = async () => {
@@ -151,7 +183,16 @@ export const CompatibilidadeVeiculo = ({ masterId }: { masterId?: string | null 
       toast.error({ title: r.error })
       return
     }
-    toast.success({ title: `Veículo da placa: ${r.descricao}` })
+    // Versao cravada -> verifica direto, sem passos extras
+    if (r.versaoId && r.label) {
+      await verificar(r.versaoId, r.label, placa)
+      return
+    }
+    // Sem confianca na versao: pre-preenche e o comprador so confirma
+    toast.success({
+      title: `Veículo da placa: ${r.descricao}`,
+      description: "Confirme a versão pra verificar.",
+    })
     if (r.marca) {
       escolherMarca(r.marca.id)
       const modelosDaMarca = await getModelosVeiculo(r.marca.id)
@@ -232,6 +273,38 @@ export const CompatibilidadeVeiculo = ({ masterId }: { masterId?: string | null 
           </p>
         </div>
       </div>
+
+      {/* Garagem: veiculos salvos na conta */}
+      {logado && garagem.length > 0 && (
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          <span className="text-xs font-medium text-neutral-600">Seus veículos:</span>
+          {garagem.map((v) => (
+            <span
+              key={v.id}
+              className="inline-flex items-center gap-1.5 rounded-full border bg-neutral-50 py-1 pl-3 pr-1.5 text-sm"
+            >
+              <button
+                type="button"
+                onClick={() => verificar(v.ano_modelo_id, v.label, v.placa ?? undefined)}
+                className="text-neutral-800 hover:text-[#0F52FF]"
+              >
+                {v.label}
+              </button>
+              <button
+                type="button"
+                aria-label={`Remover ${v.label}`}
+                onClick={() => {
+                  void removerVeiculoConta(v.id)
+                  setGaragem((g) => g.filter((x) => x.id !== v.id))
+                }}
+                className="flex h-5 w-5 items-center justify-center rounded-full text-neutral-400 hover:bg-neutral-200 hover:text-neutral-700"
+              >
+                ×
+              </button>
+            </span>
+          ))}
+        </div>
+      )}
 
       <div className="mt-4 flex flex-col gap-3 lg:flex-row lg:items-end">
         {/* Placa */}

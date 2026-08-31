@@ -97,9 +97,56 @@ export type ResultadoPlaca =
       marca: OpcaoVeiculo | null;
       modelo: OpcaoVeiculo | null;
       ano: number | null;
+      /** Versao (anos_modelo) resolvida com confianca -> da pra verificar direto */
+      versaoId: string | null;
+      /** Label completo do veiculo quando a versao foi resolvida */
+      label: string | null;
       descricao: string;
     }
   | { error: string };
+
+// Escolhe a versao (linha de anos_modelo) que melhor casa com o texto que a
+// API de placas devolve (ex.: "GOL 1.0 Mi Plus 16v") + combustivel.
+function resolverVersao(
+  versoes: VersaoVeiculo[],
+  ano: number | null,
+  textoModelo: string,
+  combustivel: string | null
+): VersaoVeiculo | null {
+  const doAno = ano
+    ? versoes.filter((v) => {
+        const ai = v.ano_inicial ?? v.ano_final;
+        const af = v.ano_final ?? v.ano_inicial;
+        return ai != null && af != null && ano >= ai && ano <= af;
+      })
+    : versoes;
+  if (!doAno.length) return null;
+  if (doAno.length === 1) return doAno[0];
+
+  const texto = normalizar(textoModelo);
+  const comb = normalizar(combustivel ?? '');
+  const motorAlvo = texto.match(/\d[. ]\d/)?.[0]?.replace(' ', '.') ?? null;
+  const valvulasAlvo = texto.match(/(\d{1,2})v\b/)?.[0] ?? null;
+
+  let melhor: VersaoVeiculo | null = null;
+  let melhorScore = -1;
+  for (const v of doAno) {
+    const alvo = normalizar([v.motor, v.versao].filter(Boolean).join(' '));
+    let score = 0;
+    if (motorAlvo && alvo.includes(motorAlvo)) score += 3;
+    if (valvulasAlvo && alvo.includes(valvulasAlvo)) score += 2;
+    if (comb && normalizar(v.combustivel ?? '').startsWith(comb.split(' ')[0] ?? '')) score += 1;
+    // tokens da versao presentes no texto da placa (plus, comfortline...)
+    for (const t of alvo.split(' ')) {
+      if (t.length >= 4 && texto.includes(t)) score += 1;
+    }
+    if (score > melhorScore) {
+      melhorScore = score;
+      melhor = v;
+    }
+  }
+  return melhorScore > 0 ? melhor : null;
+}
 
 const normalizar = (s: string) =>
   s
@@ -115,27 +162,78 @@ export async function consultarPlacaVeiculo(placaRaw: string): Promise<Resultado
   if (!/^[A-Z]{3}[0-9][A-Z0-9][0-9]{2}$/.test(placa)) {
     return { error: 'Placa inválida (formato ABC1234 ou ABC1D23)' };
   }
-  const token = process.env.APIPLACAS_TOKEN;
-  if (!token) return { error: 'Consulta por placa não está configurada' };
 
-  let data: any;
+  // 1. Cache global de placas do AutoBaze (placas_cache) — toda consulta ja
+  //    feita por qualquer produto da plataforma evita bater na API paga.
+  let marcaNome = '';
+  let modeloNome = '';
+  let ano: number | null = null;
+  let combustivel: string | null = null;
+  let veioDoCache = false;
+
   try {
-    const res = await fetch(
-      `https://wdapi2.com.br/consulta/${encodeURIComponent(placa)}/${encodeURIComponent(token)}`,
-      { cache: 'no-store' }
+    const { rows } = await db().query(
+      `SELECT marca, modelo, ano, combustivel FROM placas_cache WHERE placa = $1`,
+      [placa]
     );
-    if (res.status === 406 || res.status === 404) {
-      return { error: 'Nenhum veículo encontrado pra essa placa' };
+    if (rows[0]?.marca) {
+      marcaNome = rows[0].marca ?? '';
+      modeloNome = rows[0].modelo ?? '';
+      ano = Number(rows[0].ano) || null;
+      combustivel = rows[0].combustivel ?? null;
+      veioDoCache = true;
     }
-    if (!res.ok) return { error: 'Consulta de placa indisponível agora' };
-    data = await res.json();
   } catch {
-    return { error: 'Consulta de placa indisponível agora' };
+    // cache indisponivel — segue pra API
   }
 
-  const marcaNome: string = data.MARCA ?? data.marca ?? '';
-  const modeloNome: string = data.MODELO ?? data.modelo ?? '';
-  const ano = Number(data.extra?.ano_modelo || data.anoModelo || data.ano) || null;
+  if (!veioDoCache) {
+    const token = process.env.APIPLACAS_TOKEN;
+    if (!token) return { error: 'Consulta por placa não está configurada' };
+
+    let data: any;
+    try {
+      const res = await fetch(
+        `https://wdapi2.com.br/consulta/${encodeURIComponent(placa)}/${encodeURIComponent(token)}`,
+        { cache: 'no-store' }
+      );
+      if (res.status === 406 || res.status === 404) {
+        return { error: 'Nenhum veículo encontrado pra essa placa' };
+      }
+      if (!res.ok) return { error: 'Consulta de placa indisponível agora' };
+      data = await res.json();
+    } catch {
+      return { error: 'Consulta de placa indisponível agora' };
+    }
+
+    marcaNome = data.MARCA ?? data.marca ?? '';
+    modeloNome = data.MODELO ?? data.modelo ?? '';
+    ano = Number(data.extra?.ano_modelo || data.anoModelo || data.ano) || null;
+    combustivel = data.extra?.combustivel ?? null;
+
+    // Grava no cache global (mesma tabela que o app usa)
+    try {
+      await db().query(
+        `INSERT INTO placas_cache (placa, marca, modelo, ano, cor, combustivel, tipo_veiculo, fonte, atualizado_em)
+         VALUES ($1,$2,$3,$4,$5,$6,$7,'marketplace', now())
+         ON CONFLICT (placa) DO UPDATE SET
+           marca = EXCLUDED.marca, modelo = EXCLUDED.modelo, ano = EXCLUDED.ano,
+           combustivel = EXCLUDED.combustivel, atualizado_em = now()`,
+        [
+          placa,
+          marcaNome || null,
+          modeloNome || null,
+          ano,
+          data.cor ?? null,
+          combustivel,
+          data.extra?.tipo_veiculo ?? null,
+        ]
+      );
+    } catch {
+      // cache e' conveniencia — falha nao bloqueia
+    }
+  }
+
   const descricao = [marcaNome, modeloNome, ano].filter(Boolean).join(' ');
 
   try {
@@ -171,8 +269,34 @@ export async function consultarPlacaVeiculo(placaRaw: string): Promise<Resultado
       modelo = candidatos[0] ?? null;
     }
 
-    return { marca, modelo, ano, descricao: descricao || placa };
+    // Versao: com modelo + ano, tenta cravar a linha exata de anos_modelo
+    // pra verificar compatibilidade direto, sem o comprador escolher nada.
+    let versaoId: string | null = null;
+    let label: string | null = null;
+    if (modelo) {
+      const { rows: versoes } = await db().query(
+        `SELECT id, ano_inicial, ano_final, motor, versao, combustivel
+         FROM anos_modelo WHERE modelo_id = $1`,
+        [modelo.id]
+      );
+      const v = resolverVersao(versoes, ano, modeloNome, combustivel);
+      if (v) {
+        versaoId = v.id;
+        label = [marca?.nome, modelo.nome, ano, v.motor, v.versao]
+          .filter(Boolean)
+          .join(' ');
+      }
+    }
+
+    return { marca, modelo, ano, versaoId, label, descricao: descricao || placa };
   } catch {
-    return { marca: null, modelo: null, ano, descricao: descricao || placa };
+    return {
+      marca: null,
+      modelo: null,
+      ano,
+      versaoId: null,
+      label: null,
+      descricao: descricao || placa,
+    };
   }
 }

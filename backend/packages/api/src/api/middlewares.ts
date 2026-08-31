@@ -8,6 +8,17 @@ export default defineMiddlewares({
       method: ["POST"],
       middlewares: [authenticate("customer", ["bearer", "session"])],
     },
+    // Garagem: sempre do proprio comprador logado
+    {
+      matcher: "/store/veiculos",
+      method: ["GET", "POST"],
+      middlewares: [authenticate("customer", ["bearer", "session"])],
+    },
+    {
+      matcher: "/store/veiculos/:id",
+      method: ["DELETE"],
+      middlewares: [authenticate("customer", ["bearer", "session"])],
+    },
     // Favoritos: sempre do proprio comprador logado
     {
       matcher: "/store/wishlist",
