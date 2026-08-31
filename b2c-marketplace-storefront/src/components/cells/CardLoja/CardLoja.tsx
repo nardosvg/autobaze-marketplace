@@ -45,8 +45,8 @@ export const CardLoja = ({ seller }: { seller?: SellerProps | null }) => {
           <AvatarLoja
             src={logo}
             nome={seller.name}
-            tamanho={banner ? 56 : 44}
-            className={banner ? "-mt-7 border-2 border-white shadow" : ""}
+            tamanho={44}
+            className={banner ? "-mt-[22px] border-2 border-white shadow" : ""}
           />
           <div className="min-w-0">
             <p className="truncate text-base font-semibold text-neutral-900">{seller.name}</p>
