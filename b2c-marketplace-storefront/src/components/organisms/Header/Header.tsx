@@ -74,8 +74,31 @@ export const Header = async ({ locale }: { locale: string }) => {
           className="flex items-center gap-3 lg:gap-5 text-white"
           data-testid="header-actions"
         >
-          {isLoggedIn && <MessageButton />}
-          <UserDropdown isLoggedIn={isLoggedIn} />
+          {isLoggedIn ? (
+            <>
+              <MessageButton />
+              <UserDropdown isLoggedIn={isLoggedIn} />
+            </>
+          ) : (
+            // Deslogado: botoes ghost em vez do icone de perfil (decisao do
+            // Leonardo). Brancos sobre a faixa azul, hover translucido.
+            <div className="flex items-center gap-1">
+              <LocalizedClientLink
+                href="/register"
+                className="rounded-md px-3 py-1.5 text-sm font-medium text-white/90 transition-colors hover:bg-white/15 hover:text-white"
+                data-testid="header-register-link"
+              >
+                Criar conta
+              </LocalizedClientLink>
+              <LocalizedClientLink
+                href="/login"
+                className="rounded-md px-3 py-1.5 text-sm font-medium text-white/90 transition-colors hover:bg-white/15 hover:text-white"
+                data-testid="header-login-link"
+              >
+                Entrar
+              </LocalizedClientLink>
+            </div>
+          )}
           {isLoggedIn && (
             <LocalizedClientLink
               href="/user/wishlist"
