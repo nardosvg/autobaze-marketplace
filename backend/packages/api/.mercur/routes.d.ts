@@ -649,6 +649,11 @@ export type Routes = {
         };
         custom: typeof import("../src/api/store/custom/route");
         perguntas: typeof import("../src/api/store/perguntas/route");
+        wishlist: typeof import("../src/api/store/wishlist/route") & {
+            product: {
+                $id: typeof import("../src/api/store/wishlist/product/[id]/route");
+            };
+        };
     };
     vendor: {
         campaigns: typeof import("@mercurjs/core/api/vendor/campaigns/route") & {

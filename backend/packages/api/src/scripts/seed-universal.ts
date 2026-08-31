@@ -60,6 +60,9 @@ function departamentoDaCategoria(categoria: string): string {
   return "Diversos";
 }
 
+// api.operify.com.br e' direto-VPS (fragil); autobaze passa pelo Cloudflare
+const fixUrl = (url: string) => url.replace("api.operify.com.br", "api.autobaze.com.br");
+
 const slugify = (value: string) =>
   value
     .toLowerCase()
@@ -287,8 +290,8 @@ export default async function seedUniversal({ container }: ExecArgs) {
         ...(m.marca_nome ? { marca: m.marca_nome } : {}),
       },
       weight: 500,
-      thumbnail: m.foto_url,
-      images: [{ url: m.foto_url }],
+      thumbnail: fixUrl(m.foto_url),
+      images: [{ url: fixUrl(m.foto_url) }],
       attributes: novoValueId
         ? [{ id: condicaoAttr.id, value_ids: [novoValueId] }]
         : [],
