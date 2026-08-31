@@ -38,12 +38,15 @@ export const CardLoja = ({ seller }: { seller?: SellerProps | null }) => {
         </div>
       )}
       <div className="p-4">
-        <div className="flex items-center gap-3">
+        {/* Com banner, o avatar sobrepoe METADE do banner (estilo ML) e o
+            texto alinha pelo rodape do avatar (items-end): o nome fica ao
+            lado da metade visivel, nunca "descolado" abaixo dele. */}
+        <div className={`flex gap-3 ${banner ? "items-end" : "items-center"}`}>
           <AvatarLoja
             src={logo}
             nome={seller.name}
-            tamanho={44}
-            className={banner ? "-mt-9 border-2 border-white shadow" : ""}
+            tamanho={banner ? 56 : 44}
+            className={banner ? "-mt-7 border-2 border-white shadow" : ""}
           />
           <div className="min-w-0">
             <p className="truncate text-base font-semibold text-neutral-900">{seller.name}</p>
