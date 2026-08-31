@@ -16,6 +16,7 @@ import { Container } from "@medusajs/ui"
 import Link from "next/link"
 import { PasswordValidator } from "@/components/cells/PasswordValidator/PasswordValidator"
 import { toast } from "@/lib/helpers/toast"
+import { formatarTelefone, somenteDigitosTelefone } from "@/lib/helpers/telefone"
 
 export const RegisterForm = () => {
   const methods = useForm<RegisterFormData>({
@@ -52,6 +53,8 @@ const Form = () => {
     formState: { errors, isSubmitting },
   } = useFormContext<RegisterFormData>()
 
+  const phoneField = register("phone")
+
   const submit = async (data: RegisterFormData) => {
     if (!passwordError.isValid) {
       return
@@ -62,7 +65,7 @@ const Form = () => {
     formData.append("password", data.password)
     formData.append("first_name", data.firstName)
     formData.append("last_name", data.lastName)
-    formData.append("phone", data.phone)
+    formData.append("phone", somenteDigitosTelefone(data.phone))
 
     const res = await signup(formData)
 
@@ -111,10 +114,16 @@ const Form = () => {
             <LabeledInput
               className="md:w-1/2"
               label="Telefone"
-              placeholder="Seu telefone"
+              placeholder="(41) 99151-7662"
+              inputMode="tel"
+              maxLength={15}
               error={errors.phone as FieldError}
               data-testid="register-phone-input"
-              {...register("phone")}
+              {...phoneField}
+              onChange={(e) => {
+                e.target.value = formatarTelefone(e.target.value)
+                phoneField.onChange(e)
+              }}
             />
           </div>
           <div>

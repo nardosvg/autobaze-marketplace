@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { telefoneValido } from '@/lib/helpers/telefone';
 
 export const registerFormSchema = z.object({
   firstName: z
@@ -25,9 +26,10 @@ export const registerFormSchema = z.object({
     .max(64, 'A senha deve ter até 64 caracteres'),
   phone: z
     .string()
-    .min(6, 'Digite o telefone')
-    .regex(/^\+?\d+$/, { message: 'O celular deve conter só números' })
-    .max(20, 'Telefone deve ter até 20 caracteres')
+    .nonempty('Digite o telefone')
+    .refine(telefoneValido, {
+      message: 'Digite um telefone válido com DDD, ex.: (41) 99151-7662'
+    })
 });
 
 export type RegisterFormData = z.infer<typeof registerFormSchema>;
