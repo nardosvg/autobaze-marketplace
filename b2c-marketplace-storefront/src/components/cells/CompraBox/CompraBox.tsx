@@ -187,18 +187,6 @@ export const CompraBox = ({
         </Button>
       </div>
 
-      {ofertaAtiva?.seller && (
-        <p className="mt-4 text-sm text-secondary">
-          Vendido por{" "}
-          <a
-            href={`/${locale}/sellers/${ofertaAtiva.seller.handle}`}
-            className="font-medium text-[#0F52FF] hover:underline"
-          >
-            {ofertaAtiva.seller.name}
-          </a>
-        </p>
-      )}
-
       {ofertasRanqueadas.length > 1 && (
         <div className="mt-3 rounded-sm border p-3">
           <p className="mb-2 text-xs text-secondary">
@@ -233,10 +221,6 @@ export const CompraBox = ({
       )}
 
       <ul className="mt-4 space-y-2 border-t pt-3 text-sm text-secondary">
-        <li>
-          <span className="font-medium text-neutral-900">Nota fiscal</span> emitida
-          pela loja em todo pedido.
-        </li>
         <li>
           <span className="font-medium text-neutral-900">Devolução em até 7 dias</span>{" "}
           após o recebimento (CDC, art. 49).
