@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1180" height="400" viewBox="0 0 1180 400">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0b0f1d"/>
+      <stop offset="1" stop-color="#132a6b"/>
+    </linearGradient>
+  </defs>
+  <rect width="1180" height="400" rx="16" fill="url(#g)"/>
+  <polygon points="760,0 1180,0 1180,400 620,400" fill="#0F52FF" opacity="0.35"/>
+  <polygon points="880,0 1180,0 1180,400 740,400" fill="#0F52FF" opacity="0.5"/>
+  <text x="70" y="150" font-family="Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#ffffff" opacity="0.8" letter-spacing="4">BANNER PROVISÓRIO</text>
+  <text x="70" y="215" font-family="Arial, Helvetica, sans-serif" font-size="52" font-weight="900" fill="#ffffff">A PEÇA CERTA PRO SEU CARRO</text>
+  <text x="70" y="262" font-family="Arial, Helvetica, sans-serif" font-size="22" fill="#ffffff" opacity="0.85">Lojas reais, estoque de verdade e nota fiscal em todo pedido</text>
+  <rect x="70" y="295" width="190" height="46" rx="23" fill="#ffffff"/>
+  <text x="165" y="325" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" fill="#0F52FF" text-anchor="middle">VER OFERTAS</text>
+</svg>

@@ -51,7 +51,7 @@ export async function generateMetadata({
   const title = "Peças de carro com preço de concorrência"
   const description =
     "Marketplace de autopeças do AutoBaze: compre de lojas e oficinas reais, com estoque de verdade, nota fiscal e garantia em todo pedido."
-  const ogImage = "/B2C_Storefront_Open_Graph.png"
+  const ogImage = "/og-autobaze.png"
   const canonical = `${baseUrl}/${locale}`
 
   return {
@@ -78,13 +78,13 @@ export async function generateMetadata({
     openGraph: {
       title: `${title} | ${
         process.env.NEXT_PUBLIC_SITE_NAME ||
-        "Mercur B2C Demo - Marketplace Storefront"
+        "AutoBaze Marketplace"
       }`,
       description,
       url: canonical,
       siteName:
         process.env.NEXT_PUBLIC_SITE_NAME ||
-        "Mercur B2C Demo - Marketplace Storefront",
+        "AutoBaze Marketplace",
       type: "website",
       images: [
         {
@@ -93,7 +93,7 @@ export async function generateMetadata({
           height: 630,
           alt:
             process.env.NEXT_PUBLIC_SITE_NAME ||
-            "Mercur B2C Demo - Marketplace Storefront",
+            "AutoBaze Marketplace",
         },
       ],
     },
@@ -120,7 +120,7 @@ export default async function Home({
 
   const siteName =
     process.env.NEXT_PUBLIC_SITE_NAME ||
-    "Mercur B2C Demo - Marketplace Storefront"
+    "AutoBaze Marketplace"
 
   return (
     <main className="flex w-full flex-col bg-neutral-100 text-primary">

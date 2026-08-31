@@ -1,116 +1,120 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import Image from "next/image"
 import Link from "next/link"
 
 import LocalizedClientLink from "@/components/molecules/LocalizedLink/LocalizedLink"
+import { HERO_BANNERS } from "@/config/hero-banners"
 
 // ---------------------------------------------------------------------------
-// Hero estilo Mercado Livre: faixa na cor da marca (azul AutoBaze no lugar do
-// amarelo ML) com carrossel de banners e dots. Banners em CSS puro — quando
-// existirem campanhas reais com arte, e' so trocar o conteudo dos slides.
+// Hero estilo Mercado Livre: faixa na cor da marca com carrossel de banners
+// de IMAGEM (setas + dots + autoplay). As artes vem de src/config/hero-banners.
 // ---------------------------------------------------------------------------
-
-const SLIDES = [
-  {
-    id: "pecas",
-    titulo: "A PEÇA CERTA PRO SEU CARRO",
-    subtitulo: "Lojas de autopeças de todo o Brasil competindo pela sua compra",
-    selo: "NOTA FISCAL EM TODO PEDIDO",
-    cta: { label: "Ver ofertas", href: "/categories", externo: false },
-  },
-  {
-    id: "lojas",
-    titulo: "COMPRE DE QUEM ENTENDE DE PEÇA",
-    subtitulo: "Autopeças e oficinas reais, com estoque de verdade",
-    selo: "LOJAS VERIFICADAS",
-    cta: { label: "Conhecer as lojas", href: "/categories", externo: false },
-  },
-  {
-    id: "vender",
-    titulo: "SUA AUTOPEÇA VENDENDO ONLINE",
-    subtitulo: "Publique seu estoque no marketplace direto do AutoBaze",
-    selo: "PRA LOJISTAS",
-    cta: {
-      label: "Vender no marketplace",
-      href: "https://app.autobaze.com.br/canais-online/marketplace",
-      externo: true,
-    },
-  },
-]
 
 const INTERVALO_MS = 6000
 
 export const MLHero = () => {
+  const total = HERO_BANNERS.length
   const [indice, setIndice] = useState(0)
 
-  const avancar = useCallback(
-    () => setIndice((i) => (i + 1) % SLIDES.length),
-    []
+  const ir = useCallback(
+    (delta: number) => setIndice((i) => (i + delta + total) % total),
+    [total]
   )
 
   useEffect(() => {
-    const id = setInterval(avancar, INTERVALO_MS)
+    if (total < 2) return
+    const id = setInterval(() => ir(1), INTERVALO_MS)
     return () => clearInterval(id)
-  }, [avancar])
+  }, [ir, total])
 
-  const slide = SLIDES[indice]
+  if (!total) return null
 
   return (
     <section className="w-full bg-[#0F52FF]">
-      <div className="container relative mx-auto flex min-h-[320px] flex-col justify-center overflow-hidden px-4 pb-10 pt-6 lg:px-8">
-        {/* grafismo da faixa (seta diagonal, eco do ML) */}
-        <div
-          aria-hidden
-          className="pointer-events-none absolute right-[-10%] top-1/2 h-[420px] w-[55%] -translate-y-1/2 skew-x-[-18deg] bg-white/10"
-        />
-        <div
-          aria-hidden
-          className="pointer-events-none absolute right-[-18%] top-1/2 h-[420px] w-[35%] -translate-y-1/2 skew-x-[-18deg] bg-white/5"
-        />
-
-        <div key={slide.id} className="relative max-w-[640px] rounded-2xl bg-[#0b0f1d] px-8 py-10 text-white shadow-lg lg:px-12">
-          <p className="mb-3 inline-flex rounded-full bg-white px-3 py-1 text-[11px] font-bold uppercase tracking-widest text-[#0b0f1d]">
-            {slide.selo}
-          </p>
-          <h1 className="text-3xl font-extrabold uppercase leading-tight lg:text-4xl">
-            {slide.titulo}
-          </h1>
-          <p className="mt-3 text-white/75 lg:text-lg">{slide.subtitulo}</p>
-          <div className="mt-6">
-            {slide.cta.externo ? (
-              <Link
-                href={slide.cta.href}
-                className="inline-flex rounded-full bg-[#0F52FF] px-7 py-2.5 font-bold text-white transition-colors hover:bg-[#0a40d6]"
-              >
-                {slide.cta.label}
-              </Link>
-            ) : (
-              <LocalizedClientLink
-                href={slide.cta.href}
-                className="inline-flex rounded-full bg-[#0F52FF] px-7 py-2.5 font-bold text-white transition-colors hover:bg-[#0a40d6]"
-              >
-                {slide.cta.label}
-              </LocalizedClientLink>
-            )}
+      <div className="container mx-auto px-4 pb-8 pt-4 lg:px-8">
+        <div className="relative overflow-hidden rounded-xl bg-white/10 shadow-lg">
+          {/* Trilho: todos os slides lado a lado, translate no eixo X */}
+          <div
+            className="flex transition-transform duration-500 ease-out"
+            style={{ transform: `translateX(-${indice * 100}%)` }}
+          >
+            {HERO_BANNERS.map((b) => {
+              const conteudo = (
+                <div className="relative aspect-[1180/400] w-full">
+                  <Image
+                    src={b.src}
+                    alt={b.alt}
+                    fill
+                    priority
+                    sizes="(min-width: 1280px) 1180px, 100vw"
+                    className="object-cover"
+                    // SVG nao passa pelo otimizador (dangerouslyAllowSVG desligado);
+                    // arte final em jpg/png segue otimizada normalmente.
+                    unoptimized={b.src.endsWith(".svg")}
+                  />
+                </div>
+              )
+              return (
+                <div key={b.src} className="w-full shrink-0">
+                  {b.externo ? (
+                    <Link href={b.href} aria-label={b.alt}>
+                      {conteudo}
+                    </Link>
+                  ) : (
+                    <LocalizedClientLink href={b.href} aria-label={b.alt}>
+                      {conteudo}
+                    </LocalizedClientLink>
+                  )}
+                </div>
+              )
+            })}
           </div>
+
+          {total > 1 && (
+            <>
+              <button
+                type="button"
+                aria-label="Banner anterior"
+                onClick={() => ir(-1)}
+                className="absolute left-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-neutral-700 shadow hover:bg-white"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="m15 6-6 6 6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                aria-label="Próximo banner"
+                onClick={() => ir(1)}
+                className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white/90 text-neutral-700 shadow hover:bg-white"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+                  <path d="m9 6 6 6-6 6" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </button>
+            </>
+          )}
         </div>
 
-        {/* dots */}
-        <div className="relative mt-6 flex gap-2">
-          {SLIDES.map((s, i) => (
-            <button
-              key={s.id}
-              aria-label={`Banner ${i + 1}`}
-              onClick={() => setIndice(i)}
-              className={
-                i === indice
-                  ? "h-2 w-6 rounded-full bg-white"
-                  : "h-2 w-2 rounded-full bg-white/40 hover:bg-white/70"
-              }
-            />
-          ))}
-        </div>
+        {total > 1 && (
+          <div className="mt-4 flex justify-center gap-2">
+            {HERO_BANNERS.map((b, i) => (
+              <button
+                key={b.src}
+                type="button"
+                aria-label={`Ir pro banner ${i + 1}`}
+                onClick={() => setIndice(i)}
+                className={
+                  i === indice
+                    ? "h-2 w-6 rounded-full bg-white"
+                    : "h-2 w-2 rounded-full bg-white/40 hover:bg-white/70"
+                }
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   )

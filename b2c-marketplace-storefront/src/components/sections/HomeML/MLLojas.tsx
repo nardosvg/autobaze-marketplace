@@ -29,6 +29,9 @@ export const MLLojas = async () => {
                   width={96}
                   height={96}
                   className="h-full w-full object-contain p-3"
+                  // logo do seller vem de dominio externo (e pode ser SVG):
+                  // fora do otimizador pra nao quebrar em runtime
+                  unoptimized
                 />
               ) : (
                 <span className="text-2xl font-black text-[#0F52FF]">

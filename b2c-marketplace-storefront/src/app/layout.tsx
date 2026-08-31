@@ -17,21 +17,29 @@ const funnelDisplay = Funnel_Display({
   weight: ['300', '400', '500', '600']
 });
 
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || 'AutoBaze Marketplace';
+
 export const metadata: Metadata = {
   title: {
-    template: `%s | ${
-      process.env.NEXT_PUBLIC_SITE_NAME || 'Mercur B2C Demo - Marketplace Storefront'
-    }`,
-    default: process.env.NEXT_PUBLIC_SITE_NAME || 'Mercur B2C Demo - Marketplace Storefront'
+    template: `%s | ${SITE_NAME}`,
+    default: SITE_NAME
   },
   description:
-    process.env.NEXT_PUBLIC_SITE_DESCRIPTION || 'Mercur B2C Demo - Marketplace Storefront',
+    process.env.NEXT_PUBLIC_SITE_DESCRIPTION ||
+    'Marketplace de autopeças do AutoBaze: lojas e oficinas reais, estoque de verdade e nota fiscal em todo pedido.',
+  applicationName: SITE_NAME,
+  // Favicon/apple-icon vem de src/app/icon.png e apple-icon.png (App Icon da marca)
+  manifest: '/manifest.webmanifest',
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'),
   alternates: {
     languages: {
       'x-default': process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000'
     }
   }
+};
+
+export const viewport = {
+  themeColor: '#0F52FF'
 };
 
 export default async function RootLayout({
@@ -43,7 +51,7 @@ export default async function RootLayout({
 
   const ALGOLIA_APP = process.env.NEXT_PUBLIC_ALGOLIA_ID;
   // default lang updated by HtmlLangSetter
-  const htmlLang = 'en';
+  const htmlLang = 'pt-BR';
 
   return (
     <html

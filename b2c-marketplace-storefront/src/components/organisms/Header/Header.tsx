@@ -54,15 +54,14 @@ export const Header = async ({ locale }: { locale: string }) => {
             data-testid="header-logo-link"
             aria-label="AutoBaze Marketplace"
           >
-            {/* Logo "Vertical 2" (escolha do Leonardo). O arquivo e' escuro
-                (#0C0C0C); brightness-0 + invert deixa ele branco sobre o azul. */}
+            {/* Logo "Vertical 2" (escolha do Leonardo), nas cores originais. */}
             <Image
               src="/Logo-navbar.svg"
               width={128}
               height={44}
               alt="AutoBaze"
               priority
-              className="h-11 w-auto brightness-0 invert"
+              className="h-11 w-auto"
             />
           </LocalizedClientLink>
         </div>
