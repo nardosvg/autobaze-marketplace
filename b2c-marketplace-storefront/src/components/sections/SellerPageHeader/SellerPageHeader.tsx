@@ -60,7 +60,7 @@ export const SellerPageHeader = ({
               src={logo}
               nome={seller.name}
               tamanho={88}
-              className="-mt-12 border-4 border-white shadow-md md:-mt-14"
+              className="relative z-10 -mt-12 border-4 border-white shadow-md md:-mt-14"
             />
             <div className="min-w-0">
               <h1 className="heading-md text-primary" data-testid="seller-name">
