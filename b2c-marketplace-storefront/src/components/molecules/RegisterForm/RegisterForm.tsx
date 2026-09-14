@@ -17,6 +17,7 @@ import Link from "next/link"
 import { PasswordValidator } from "@/components/cells/PasswordValidator/PasswordValidator"
 import { toast } from "@/lib/helpers/toast"
 import { formatarTelefone, somenteDigitosTelefone } from "@/lib/helpers/telefone"
+import { BotaoGoogleLogin } from "@/components/cells/BotaoGoogleLogin/BotaoGoogleLogin"
 
 export const RegisterForm = () => {
   const methods = useForm<RegisterFormData>({
@@ -151,6 +152,7 @@ const Form = () => {
             Criar conta
           </Button>
         </form>
+        <BotaoGoogleLogin rotulo="Criar conta com o Google" />
       </Container>
       <Container className="border max-w-xl mx-auto mt-8 p-4">
         <h2 className="heading-md text-primary uppercase mb-8">

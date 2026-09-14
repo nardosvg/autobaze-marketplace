@@ -10,6 +10,7 @@ import { FieldError, FieldValues, FormProvider, useForm, useFormContext } from '
 import { Button } from '@/components/atoms';
 import { Alert } from '@/components/atoms/Alert/Alert';
 import { LabeledInput } from '@/components/cells';
+import { BotaoGoogleLogin } from '@/components/cells/BotaoGoogleLogin/BotaoGoogleLogin';
 import { login, transferCart } from '@/lib/data/customer';
 import { toast } from '@/lib/helpers/toast';
 
@@ -144,11 +145,12 @@ const Form = () => {
               Entrar
             </Button>
           </form>
+          <BotaoGoogleLogin rotulo="Entrar com o Google" />
         </div>
 
         <div className="rounded-sm border p-4">
           <h2 className="heading-md mb-4 uppercase text-primary">
-            Don&apos;t have an account yet?
+            Ainda não tem conta?
           </h2>
           <Link
             href="/register"

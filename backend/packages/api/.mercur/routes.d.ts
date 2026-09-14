@@ -513,6 +513,7 @@ export type Routes = {
         perguntas: typeof import("../src/api/admin/perguntas/route") & {
             $id: typeof import("../src/api/admin/perguntas/[id]/route");
         };
+        produtosSellerLink: typeof import("../src/api/admin/produtos-seller-link/route");
     };
     auth: {
         $actorType: {
@@ -641,6 +642,7 @@ export type Routes = {
                 calculate: typeof import("@medusajs/medusa/api/store/shipping-options/[id]/calculate/route");
             };
         };
+        authPerfil: typeof import("../src/api/store/auth-perfil/route");
         avaliacoesFotos: typeof import("../src/api/store/avaliacoes-fotos/route");
         avaliacoes: {
             $id: {

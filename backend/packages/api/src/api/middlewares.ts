@@ -8,6 +8,15 @@ export default defineMiddlewares({
       method: ["POST"],
       middlewares: [authenticate("customer", ["bearer", "session"])],
     },
+    // Perfil do provedor social pos-callback: o token ainda nao tem actor
+    // (o customer e' criado na sequencia), por isso allowUnregistered
+    {
+      matcher: "/store/auth-perfil",
+      method: ["GET"],
+      middlewares: [
+        authenticate("customer", ["bearer"], { allowUnregistered: true }),
+      ],
+    },
     // Garagem: sempre do proprio comprador logado
     {
       matcher: "/store/veiculos",

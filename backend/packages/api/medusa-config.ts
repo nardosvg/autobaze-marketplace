@@ -42,6 +42,34 @@ const emailModule = process.env.BREVO_API_KEY
     ]
   : []
 
+// Login social Google (storefront do comprador). So' sobrescreve o modulo
+// auth quando ha credenciais — e SEMPRE re-declara o emailpass, porque o
+// override substitui a lista default de providers inteira.
+const authModule =
+  process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
+    ? [
+        {
+          resolve: '@medusajs/medusa/auth',
+          options: {
+            providers: [
+              { resolve: '@medusajs/medusa/auth-emailpass', id: 'emailpass' },
+              {
+                resolve: '@medusajs/auth-google',
+                id: 'google',
+                options: {
+                  clientId: process.env.GOOGLE_CLIENT_ID,
+                  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+                  callbackUrl:
+                    process.env.GOOGLE_CALLBACK_URL ||
+                    `${process.env.STOREFRONT_URL || 'http://localhost:3010'}/br/auth/google/callback`,
+                },
+              },
+            ],
+          },
+        },
+      ]
+    : []
+
 module.exports = withMercur({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
@@ -82,6 +110,7 @@ module.exports = withMercur({
       }
     },
     ...emailModule,
+    ...authModule,
     {
       // Perguntas & respostas de produto + fotos de avaliacoes (AutoBaze)
       resolve: './src/modules/extras',
