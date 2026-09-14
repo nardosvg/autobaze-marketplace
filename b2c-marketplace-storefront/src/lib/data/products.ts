@@ -83,8 +83,10 @@ export const listProducts = async ({
         offset,
         region_id: region?.id,
         fields:
-          '*variants.calculated_price,+variants.inventory_quantity,+metadata,*seller,*variants,*seller.products,' +
-          '*seller.reviews,*seller.reviews.customer,*seller.reviews.seller,*seller.products.variants,*attribute_values,*attribute_values.attribute',
+          // O core 2.3.1 expoe o vinculo como "sellers" (lista); o campo
+          // "seller" singular nao existe. Normalizamos pra seller abaixo.
+          '*variants.calculated_price,+variants.inventory_quantity,+metadata,*sellers,*variants,*sellers.products,' +
+          '*sellers.reviews,*sellers.reviews.customer,*sellers.products.variants,*attribute_values,*attribute_values.attribute',
         ...queryParams
       },
       headers,
@@ -92,24 +94,28 @@ export const listProducts = async ({
       cache: useCached ? 'force-cache' : 'no-cache'
     })
     .then(({ products: productsRaw, count }) => {
-      const products = productsRaw.filter(product => product.seller?.store_status !== 'SUSPENDED');
+      // Normaliza sellers[0] -> seller (modelo ML: 1 anuncio = 1 vendedor);
+      // o resto do storefront segue lendo product.seller.
+      const normalizados = productsRaw.map(prod => {
+        // @ts-ignore o core devolve "sellers" (lista) no 2.3.1
+        const sellerDoAnuncio = prod.seller ?? prod.sellers?.[0] ?? null;
+        if (!sellerDoAnuncio) return prod;
+        const reviews =
+          sellerDoAnuncio.reviews?.filter((item: unknown) => !!item) ?? [];
+        return {
+          ...prod,
+          seller: { ...sellerDoAnuncio, reviews }
+        };
+      });
+
+      const products = normalizados.filter(
+        // @ts-ignore
+        product => product.seller?.store_status !== 'SUSPENDED'
+      );
 
       const nextPage = count > offset + limit ? pageParam + 1 : null;
 
-      // Produto master do modelo de ofertas nao tem `seller` proprio (quem
-      // tem e' cada oferta), entao nao filtramos por seller: so normalizamos
-      // reviews quando o seller existir.
-      const response = products.map(prod => {
-        // @ts-ignore Property 'seller' exists but TypeScript doesn't recognize it
-        if (!prod?.seller) return prod;
-        // @ts-ignore
-        const reviews = prod.seller?.reviews?.filter((item: unknown) => !!item) ?? [];
-        return {
-          ...prod,
-          // @ts-ignore
-          seller: { ...prod.seller, reviews }
-        };
-      });
+      const response = products;
 
       return {
         response: {

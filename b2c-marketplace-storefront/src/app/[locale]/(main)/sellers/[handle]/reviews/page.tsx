@@ -1,36 +1,33 @@
-import { SellerTabs } from "@/components/organisms"
+import { Suspense } from "react"
+
+import { SellerReviewTab } from "@/components/cells"
 import { SellerPageHeader } from "@/components/sections"
 import { retrieveCustomer } from "@/lib/data/customer"
-import { getRegion } from "@/lib/data/regions"
 import { getSellerByHandle } from "@/lib/data/seller"
 import { SellerProps } from "@/types/seller"
 
+// Avaliacoes da loja
 export default async function SellerReviewsPage({
   params,
 }: {
   params: Promise<{ handle: string; locale: string }>
 }) {
-  const { handle, locale } = await params
+  const { handle } = await params
 
   const seller = (await getSellerByHandle(handle)) as SellerProps
-  const currency_code = (await getRegion(locale))?.currency_code || "usd"
-
   const user = await retrieveCustomer()
 
-  const tab = "reviews"
+  if (!seller?.id) {
+    return null
+  }
 
   return (
-    // Sem .container no main: a capa da loja e' full-bleed, colada no navbar
     <main>
-      <SellerPageHeader seller={seller} user={user} />
-      <div className="container !pt-0">
-        <SellerTabs
-          tab={tab}
-          seller_id={seller.id}
-          seller_handle={seller.handle}
-          locale={locale}
-          currency_code={currency_code}
-        />
+      <SellerPageHeader seller={seller} user={user} tab="avaliacoes" />
+      <div className="container !pt-4">
+        <Suspense fallback={<div data-testid="seller-reviews-loading">Carregando...</div>}>
+          <SellerReviewTab seller_handle={seller.handle} />
+        </Suspense>
       </div>
     </main>
   )

@@ -348,6 +348,27 @@ export default async function seedUniversal({ container }: ExecArgs) {
     logger.info(`[universal] ${products.length} produtos criados.`);
   }
 
+  // Vinculo produto->seller (tabela product_seller): sem ele o anuncio nao
+  // aparece na pagina da loja nem resolve product.sellers no store API.
+  {
+    const link = container.resolve(ContainerRegistrationKeys.LINK) as any;
+    const { data: criados } = await query.graph({
+      entity: "product",
+      fields: ["id", "sellers.id"],
+      filters: { handle: handles },
+    });
+    let linkados = 0;
+    for (const p of criados as any[]) {
+      if (p.sellers?.length) continue;
+      await link.create({
+        [Modules.PRODUCT]: { product_id: p.id },
+        seller: { seller_id: sellers[0].id },
+      });
+      linkados++;
+    }
+    if (linkados) logger.info(`[universal] ${linkados} produtos linkados ao seller.`);
+  }
+
   // -------------------------------------------------------------------------
   // 5. Ofertas: modelo ML — 1 anuncio = 1 vendedor. So a A. Silva oferta
   //    (anuncios proprios de outros sellers viram produtos separados).

@@ -1,10 +1,11 @@
-import { SellerTabs } from "@/components/organisms"
+import { MLProductCard } from "@/components/sections/HomeML/MLProductCard"
 import { SellerPageHeader } from "@/components/sections"
 import { retrieveCustomer } from "@/lib/data/customer"
-import { getRegion } from "@/lib/data/regions"
+import { listProducts } from "@/lib/data/products"
 import { getSellerByHandle } from "@/lib/data/seller"
 import { SellerProps } from "@/types/seller"
 
+// Inicio da loja (padrao ML): header com nav + grade "Produtos recomendados"
 export default async function SellerPage({
   params,
 }: {
@@ -13,29 +14,38 @@ export default async function SellerPage({
   const { handle, locale } = await params
 
   const seller = (await getSellerByHandle(handle)) as SellerProps
-
   const user = await retrieveCustomer()
 
-  const currency_code = (await getRegion(locale))?.currency_code || "usd"
-
-  const tab = "products"
-
-  if (!seller) {
+  if (!seller?.id) {
     return null
   }
 
+  // Anuncios mais recentes da loja (modelo ML: 1 anuncio = 1 vendedor)
+  const recomendados = await listProducts({
+    countryCode: locale,
+    queryParams: { limit: 100, order: "created_at" },
+  })
+    .then(({ response }) =>
+      response.products.filter((p) => p.seller?.id === seller.id).slice(0, 15)
+    )
+    .catch(() => [])
+
   return (
-    // Sem .container no main: a capa da loja e' full-bleed, colada no navbar
     <main>
-      <SellerPageHeader seller={seller} user={user} />
-      <div className="container !pt-0">
-        <SellerTabs
-          tab={tab}
-          seller_id={seller.id}
-          seller_handle={seller.handle}
-          locale={locale}
-          currency_code={currency_code}
-        />
+      <SellerPageHeader seller={seller} user={user} tab="inicio" />
+      <div className="container">
+        <h2 className="heading-md mb-6">Produtos recomendados</h2>
+        {recomendados.length === 0 ? (
+          <p className="text-md text-secondary">
+            Esta loja ainda não tem produtos publicados.
+          </p>
+        ) : (
+          <div className="flex flex-wrap gap-4 max-md:justify-center">
+            {recomendados.map((p) => (
+              <MLProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        )}
       </div>
     </main>
   )

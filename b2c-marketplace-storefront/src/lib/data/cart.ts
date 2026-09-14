@@ -41,13 +41,22 @@ export async function retrieveCart(cartId?: string) {
       query: {
         fields:
           '*items,*region, *items.product, *items.variant, *items.variant.options, items.variant.options.option.title,' +
-          '*items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name, *items.product.seller' +
+          '*items.thumbnail, *items.metadata, +items.total, *promotions, +shipping_methods.name, *items.product.sellers' +
           ''
       },
       headers,
       cache: 'no-cache'
     })
-    .then(({ cart }) => cart)
+    .then(({ cart }) => {
+      // Core 2.3.1 expoe o vinculo como "sellers" (lista) — normaliza pra
+      // product.seller, que e' o que o agrupamento do carrinho/frete le.
+      const items = cart.items?.map((item: any) => {
+        const produto = item?.product;
+        if (!produto || produto.seller || !produto.sellers?.length) return item;
+        return { ...item, product: { ...produto, seller: produto.sellers[0] } };
+      });
+      return { ...cart, items: items ?? cart.items };
+    })
     .catch(() => null);
 }
 
