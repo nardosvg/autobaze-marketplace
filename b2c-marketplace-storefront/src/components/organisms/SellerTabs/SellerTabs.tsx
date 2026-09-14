@@ -22,9 +22,10 @@ export const SellerTabs = ({
   currency_code: string
 }) => {
   const tabsList = [
-    { label: "products", link: `/sellers/${seller_handle}/` },
+    { label: "Produtos", value: "products", link: `/sellers/${seller_handle}/` },
     {
-      label: "reviews",
+      label: "Avaliações",
+      value: "reviews",
       link: `/sellers/${seller_handle}/reviews`,
     },
   ]

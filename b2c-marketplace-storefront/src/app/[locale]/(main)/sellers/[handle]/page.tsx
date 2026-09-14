@@ -25,15 +25,18 @@ export default async function SellerPage({
   }
 
   return (
-    <main className="container">
-      <SellerPageHeader header seller={seller} user={user} />
-      <SellerTabs
-        tab={tab}
-        seller_id={seller.id}
-        seller_handle={seller.handle}
-        locale={locale}
-        currency_code={currency_code}
-      />
+    // Sem .container no main: a capa da loja e' full-bleed, colada no navbar
+    <main>
+      <SellerPageHeader seller={seller} user={user} />
+      <div className="container !pt-0">
+        <SellerTabs
+          tab={tab}
+          seller_id={seller.id}
+          seller_handle={seller.handle}
+          locale={locale}
+          currency_code={currency_code}
+        />
+      </div>
     </main>
   )
 }

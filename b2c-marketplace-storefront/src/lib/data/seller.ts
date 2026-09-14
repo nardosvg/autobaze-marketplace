@@ -9,7 +9,7 @@ export const getSellerByHandle = async (handle: string) => {
       query: {
         handle,
         fields:
-          '+created_at,+email,+reviews.seller.name,+reviews.rating,+reviews.customer_note,+reviews.seller_note,+reviews.created_at,+reviews.updated_at,+reviews.customer.first_name,+reviews.customer.last_name'
+          '+created_at,+email,+banner,+logo,*products,+reviews.seller.name,+reviews.rating,+reviews.customer_note,+reviews.seller_note,+reviews.created_at,+reviews.updated_at,+reviews.customer.first_name,+reviews.customer.last_name'
       },
       cache: 'no-cache'
     })
